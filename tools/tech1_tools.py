@@ -7,7 +7,7 @@ from langchain_core.tools import tool
 
 class StockInput(BaseModel):
     """Stock input parameters"""
-    symbol: str = Field(description="股票代码")
+    symbol: str = Field(description="6位股票代码")
     start_date: str = Field(description="开始日期，格式YYYYMMDD") 
     end_date: str = Field(description="结束日期，格式YYYYMMDD")
 
@@ -69,12 +69,18 @@ def analyze_stock_technical(symbol: str, start_date: str, end_date: str) -> pd.D
         "KDJ信号": kdj_signal
     })
 
-    return result_df
+    return result_df.to_dict()
 
 # 示例调用
 if __name__ == "__main__":
     symbol = "600519"
     start_date = "20230101"
     end_date = "20231231"
-    result = analyze_stock_technical(symbol, start_date, end_date)
+    # langchain 调用工具tools
+    result=analyze_stock_technical.invoke({
+    "symbol": symbol,
+    "start_date": start_date,
+    "end_date": end_date
+})
+    result.to_csv("600519_tech.csv", index=False)
     print(result.head())
