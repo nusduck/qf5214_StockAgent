@@ -1,3 +1,5 @@
 .DS_store
 .env
 .venv/
+task_assign.md
+__pycache__/
