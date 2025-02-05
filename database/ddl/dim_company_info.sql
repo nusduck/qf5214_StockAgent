@@ -10,6 +10,6 @@ CREATE TABLE dim_company_info (
     total_shares DECIMAL(20,2) COMMENT '总股本',
     float_shares DECIMAL(20,2) COMMENT '流通股',
     snap_date DATE COMMENT '快照日期', -- 转换成DATE类型，YYYY-MM-DD格式
-  	etl_date DATE COMMENT 'ETL日期', -- 数据加载日期 YYYY-MM-DD
+    etl_date DATE COMMENT 'ETL日期', -- 数据加载日期 YYYY-MM-DD
     biz_date INT COMMENT '业务日期,快照日期'-- YYYYMMDD格式,快照表需要快照日期字段
 );
