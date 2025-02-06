@@ -19,7 +19,7 @@ class AnalystInput(BaseModel):
     add_date: str = Field(description="调入日期, 格式为YYYY-MM-DD")
 
 @tool(args_schema=AnalystInput)
-def get_analyst_data_tool(stock_code: str, add_date: str) -> Dict[str, Any]:
+def get_analyst_data_tool(stock_code: str, add_date: str) -> pd.DataFrame:
     """
     根据股票代码和调入日期查询最新跟踪成分股及分析师数据。
     
@@ -28,7 +28,7 @@ def get_analyst_data_tool(stock_code: str, add_date: str) -> Dict[str, Any]:
         add_date: 调入日期
     
     Returns:
-        包含股票分析师信息及评级的字典
+        返回 DataFrame 格式的结果（包括空 DataFrame)
     """
     # 获取分析师排行表
     all_analyst_df = ak.stock_analyst_rank_em(year=datetime.date.today().year)
@@ -68,9 +68,6 @@ def get_analyst_data_tool(stock_code: str, add_date: str) -> Dict[str, Any]:
         except:
             continue 
 
-    if all_stocks_df.empty:
-        return {"message": f"未找到股票代码 {stock_code} 和调入日期 {add_date} 的相关数据"}
-
     all_analyst_df["分析师ID"] = all_analyst_df["分析师ID"].astype(str)
     all_stocks_df["analyst_id"] = all_stocks_df["analyst_id"].astype(str)
 
@@ -96,18 +93,12 @@ def get_analyst_data_tool(stock_code: str, add_date: str) -> Dict[str, Any]:
         (pd.to_datetime(merged_df["add_date"], errors="coerce") >= pd.Timestamp(add_date))
     ]
 
-    if filtered_df.empty:
-        return {"message": f"未找到股票代码 {stock_code} 和调入日期 {add_date} 的相关数据"}
-
     return filtered_df
+
 
 # 调试用例
 if __name__ == "__main__":
-    stock_code = "603031"
+    stock_code = "605222"
     add_date = "2024-01-01"
     result = get_analyst_data_tool.invoke({"stock_code": stock_code, "add_date": add_date})
     print(result)
-
-
-
-
