@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
-from logger import setup_logger
+from helpers.logger import setup_logger
 
 class LanguageModelManager:
     def __init__(self):

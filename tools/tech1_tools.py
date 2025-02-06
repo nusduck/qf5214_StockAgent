@@ -7,11 +7,11 @@ from langchain_core.tools import tool
 
 class StockInput(BaseModel):
     """Stock input parameters"""
-    symbol: str = Field(description="股票代码")
+    symbol: str = Field(description="6位股票代码")
     start_date: str = Field(description="开始日期，格式YYYYMMDD") 
     end_date: str = Field(description="结束日期，格式YYYYMMDD")
 
-@tool(args_schema=StockInput)
+@tool(args_schema=StockInput,)
 def analyze_stock_technical(symbol: str, start_date: str, end_date: str) -> pd.DataFrame:
     """分析股票技术面信息，包括MACD、RSI、KDJ等指标及信号
     
