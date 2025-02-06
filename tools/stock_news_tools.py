@@ -5,7 +5,7 @@ import akshare as ak
 import pandas as pd
 from datetime import datetime, timedelta
 from pydantic import BaseModel, Field
-
+from langchain_core.tools import tool
 # 定义输入数据模型
 class StockInput(BaseModel):
     symbol: str = Field(description="股票代码")
@@ -59,5 +59,5 @@ stock_news_tool = Tool.from_function(
 )
 
 # 调用工具
-result = stock_news_tool.invoke({"symbol": "600519"})
+result = stock_news_tool.invoke({"symbol": "688047"})
 print(result)
