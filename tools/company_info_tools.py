@@ -5,7 +5,7 @@ from langchain_core.tools import tool
 
 class CompanyInput(BaseModel):
     """Stock company input parameters"""
-    symbol: str = Field(description="股票代码")
+    symbol: str = Field(description="6位股票代码")
 
 @tool(args_schema=CompanyInput)
 def analyze_company_info(symbol: str) -> pd.DataFrame:

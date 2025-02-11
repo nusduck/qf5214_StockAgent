@@ -8,9 +8,9 @@ def analyze_stock(symbol: str) -> dict:
     fundamental_analyst = StockAnalysisAgent()
     # 收集分析结果
     results = {
-        # "基本面分析": fundamental_analyst.analyze({
-        #     "input": f"首先根据你的知识回忆 {symbol} yfinance的公司代码通常为6位数字并以.sh 或者.sz结尾，然后调用所有工具获取所有信息进行股票基本面分析，并以表格形式展示获取到的数据内容。"
-        # }),
+        "基本面分析": fundamental_analyst.analyze({
+            "input": f"首先根据你的知识准确回忆 {symbol} 的股票代码，然后调用所有工具获取所有信息进行股票基本面分析"
+        }),
         "技术分析": technical_analyst.analyze({
             "input": f"首先根据你的知识准确回忆 {symbol} 的股票代码并利用工具进行股票2024-06到2025-01的技术面情况，并以表格形式展示获取到的数据内容"
         })
