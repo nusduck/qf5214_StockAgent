@@ -64,7 +64,7 @@ def get_stock_sector_data(sector: str, start_date: str, end_date: str) -> pd.Dat
 
 if __name__ == "__main__":
     # 示例调用
-    sector_name = "银行"
+    sector_name = "电池"
     result = get_stock_sector_data.invoke({
         "sector": sector_name,
         "start_date": "20250101",

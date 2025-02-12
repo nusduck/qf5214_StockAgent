@@ -8,5 +8,8 @@ def make_system_prompt(suffix: str) -> str:
         " prefix your response with FINAL ANSWER so the team knows to stop."
         f"\n{suffix}"
     )
+data_collect_prompt = f"""
+根据你的信息获取给定公司在中国股市的6位股票代码，利用所有的工具来获取各项数据。
+"""
 if __name__ == "__main__":
     print(make_system_prompt("What is the capital of France?"))

@@ -27,10 +27,13 @@ def analyze_company_info(symbol: str) -> pd.DataFrame:
     
     company_info['item'] = company_info['item'].map(field_mapping)
     
-    return company_info
+    # 将长表转换为宽表
+    company_info = company_info.pivot_table(index=None, columns='item', values='value', aggfunc='first')
+    
+    return company_info.to_dict()
 
 # 示例调用
 if __name__ == "__main__":
-    symbol = "000001"
+    symbol = "688047"
     result = analyze_company_info.invoke({"symbol": symbol})
-    print(result)
+    print(result[["stock_code", "stock_name", "total_market_cap", "float_market_cap", "total_shares", "float_shares", "industry", "ipo_date"]])

@@ -52,13 +52,14 @@ def get_stock_news(symbol: str) -> Dict[str, Any]:
         return {"error": str(e)}
 if __name__ == "__main__":
     # 使用 Tool.from_function 创建工具
-    stock_news_tool = Tool.from_function(
-        func=get_stock_news,
-        name="get_stock_news",
-        description="获取指定股票的新闻数据"
-    )
+    # stock_news_tool = Tool.from_function(
+    #     func=get_stock_news,
+    #     name="get_stock_news",
+    #     description="获取指定股票的新闻数据"
+    # )
 
-    # 调用工具
-    result = stock_news_tool.invoke({"symbol": "688047"})
+    # # 调用工具
+    # result = stock_news_tool.invoke({"symbol": "688047"})
+    result = get_stock_news.invoke({"symbol": "688047"})
     print(result)
 

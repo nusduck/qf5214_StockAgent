@@ -34,6 +34,6 @@ def analyze_stock_info(symbol: str) -> pd.DataFrame:
 
 # 示例调用
 if __name__ == "__main__":
-    symbol = "000001"
+    symbol = "600519"
     result = analyze_stock_info.invoke({"symbol": symbol})
     print(result)

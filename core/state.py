@@ -1,112 +1,168 @@
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from datetime import datetime
 import pandas as pd
 from pydantic import BaseModel, Field
 
-class StockAnalysisState(BaseModel):
-    """State class for stock analysis workflow"""
-    
-    # 基础信息
-    stock_code: Optional[str] = Field(default=None, description="股票代码")
-    stock_name: Optional[str] = Field(default=None, description="股票名称")
-    
-    # 公司基本信息 (来自 company_info_tools)
-    company_info: Optional[pd.DataFrame] = Field(default=None, description="公司基本信息")
-    
-    # 股票基本信息 (来自 stock_info_tools)
-    stock_info: Optional[pd.DataFrame] = Field(default=None, description="股票基本信息")
-    
-    # 交易数据 (来自 individual_stock_tools)
-    trade_data: Optional[pd.DataFrame] = Field(default=None, description="股票交易数据")
-    
-    # 财务数据 (来自 finance_info_tools)
-    financial_data: Optional[pd.DataFrame] = Field(default=None, description="财务数据")
-    
-    # 技术分析数据 (来自 tech1_tools)
-    technical_data: Optional[pd.DataFrame] = Field(default=None, description="技术分析数据")
-    
-    # 分析师数据 (来自 analyst_tools)
-    analyst_data: Optional[pd.DataFrame] = Field(default=None, description="分析师跟踪数据")
-    
-    # 板块数据 (来自 sector_tools)
-    sector_data: Optional[pd.DataFrame] = Field(default=None, description="板块数据")
-    
-    # 新闻数据 (来自 stock_news_tools)
-    news_data: Optional[Dict[str, Any]] = Field(default=None, description="新闻数据")
-    
-    # 工作流程控制
-    current_step: str = Field(default="init", description="当前执行步骤")
-    error_message: Optional[str] = Field(default=None, description="错误信息")
-    last_updated: datetime = Field(default_factory=datetime.now, description="最后更新时间")
+class StockDataState(BaseModel):
+    """股票数据状态基类"""
+    last_updated: datetime = Field(default_factory=datetime.now)
+    error_message: Optional[str] = None
 
     class Config:
         arbitrary_types_allowed = True
 
-    def update_stock_info(self, stock_code: str, stock_name: str) -> None:
+class BasicInfo(StockDataState):
+    """基础信息状态"""
+    stock_code: Optional[str] = None
+    stock_name: Optional[str] = None
+    industry: Optional[str] = None
+    company_info: Optional[pd.DataFrame] = None
+
+class MarketData(StockDataState):
+    """市场交易数据状态"""
+    trade_data: Optional[pd.DataFrame] = None  # from individual_stock_tools
+    sector_data: Optional[pd.DataFrame] = None  # from sector_tools
+    technical_data: Optional[pd.DataFrame] = None  # from tech1_tools
+
+class FinancialData(StockDataState):
+    """财务数据状态"""
+    financial_data: Optional[pd.DataFrame] = None  # from finance_info_tools
+    
+class ResearchData(StockDataState):
+    """研究数据状态"""
+    analyst_data: Optional[pd.DataFrame] = None  # from analyst_tools
+    news_data: Optional[Dict[str, Any]] = None  # from stock_news_tools
+
+class ReportState(StockDataState):
+    """分析报告状态"""
+    text_reports: Dict[str, str] = Field(default_factory=dict)  # 文本报告
+    charts: Dict[str, str] = Field(default_factory=dict)  # 图表路径
+    attachments: Dict[str, str] = Field(default_factory=dict)  # 附件路径
+
+class StockAnalysisState(BaseModel):
+    """股票分析完整工作流状态"""
+    
+    # 工作流控制
+    current_step: str = Field(default="init", description="当前执行步骤")
+    completed_steps: List[str] = Field(default_factory=list, description="已完成步骤")
+    messages: List[Any] = Field(default_factory=list, description="消息历史")
+    
+    # 数据状态
+    basic_info: BasicInfo = Field(default_factory=BasicInfo, description="基础信息")
+    market_data: MarketData = Field(default_factory=MarketData, description="市场交易数据")
+    financial_data: FinancialData = Field(default_factory=FinancialData, description="财务数据")
+    research_data: ResearchData = Field(default_factory=ResearchData, description="研究数据")
+    report_state: ReportState = Field(default_factory=ReportState, description="报告状态")
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    def __init__(self):
+        # First initialize the parent class (MessagesState)
+        super().__init__()
+        
+        # Then initialize our attributes
+        self.current_step = "init"
+        self.completed_steps = []
+        self.basic_info = BasicInfo()
+        self.market_data = MarketData()
+        self.financial_data = FinancialData()
+        self.research_data = ResearchData()
+        self.report_state = ReportState()
+        
+        # Initialize the messages list from parent class
+        self.messages = []
+
+    def update_stock_info(self, stock_code: str, stock_name: str, industry: str) -> None:
         """更新股票基本信息"""
-        self.stock_code = stock_code
-        self.stock_name = stock_name
-        self.last_updated = datetime.now()
+        self.basic_info.stock_code = stock_code
+        self.basic_info.stock_name = stock_name
+        self.basic_info.industry = industry
+        self.basic_info.last_updated = datetime.now()
 
     def update_company_info(self, data: pd.DataFrame) -> None:
         """更新公司信息"""
-        self.company_info = data
-        self.last_updated = datetime.now()
+        self.basic_info.company_info = data
+        self.basic_info.last_updated = datetime.now()
 
     def update_trade_data(self, data: pd.DataFrame) -> None:
         """更新交易数据"""
-        self.trade_data = data
-        self.last_updated = datetime.now()
+        self.market_data.trade_data = data
+        self.market_data.last_updated = datetime.now()
 
     def update_financial_data(self, data: pd.DataFrame) -> None:
         """更新财务数据"""
-        self.financial_data = data
-        self.last_updated = datetime.now()
+        self.financial_data.financial_data = data
+        self.financial_data.last_updated = datetime.now()
 
     def update_technical_data(self, data: pd.DataFrame) -> None:
         """更新技术分析数据"""
-        self.technical_data = data
-        self.last_updated = datetime.now()
+        self.market_data.technical_data = data
+        self.market_data.last_updated = datetime.now()
 
     def update_analyst_data(self, data: pd.DataFrame) -> None:
         """更新分析师数据"""
-        self.analyst_data = data
-        self.last_updated = datetime.now()
+        self.research_data.analyst_data = data
+        self.research_data.last_updated = datetime.now()
 
     def update_sector_data(self, data: pd.DataFrame) -> None:
         """更新板块数据"""
-        self.sector_data = data
-        self.last_updated = datetime.now()
+        self.market_data.sector_data = data
+        self.market_data.last_updated = datetime.now()
 
     def update_news_data(self, data: Dict[str, Any]) -> None:
         """更新新闻数据"""
-        self.news_data = data
-        self.last_updated = datetime.now()
+        self.research_data.news_data = data
+        self.research_data.last_updated = datetime.now()
 
-    def set_error(self, error_msg: str) -> None:
+    def add_report(self, report_type: str, content: str) -> None:
+        """添加分析报告"""
+        self.report_state.text_reports[report_type] = content
+        self.report_state.last_updated = datetime.now()
+
+    def add_chart(self, chart_name: str, file_path: str) -> None:
+        """添加图表"""
+        self.report_state.charts[chart_name] = file_path
+        self.report_state.last_updated = datetime.now()
+
+    def set_error(self, component: str, error_msg: str) -> None:
         """设置错误信息"""
-        self.error_message = error_msg
-        self.last_updated = datetime.now()
+        if hasattr(self, component):
+            getattr(self, component).error_message = error_msg
+            getattr(self, component).last_updated = datetime.now()
 
-    def clear_error(self) -> None:
+    def clear_error(self, component: str) -> None:
         """清除错误信息"""
-        self.error_message = None
-        self.last_updated = datetime.now()
+        if hasattr(self, component):
+            getattr(self, component).error_message = None
+            getattr(self, component).last_updated = datetime.now()
 
     def to_dict(self) -> Dict[str, Any]:
         """将状态转换为字典格式"""
         return {
-            "stock_code": self.stock_code,
-            "stock_name": self.stock_name,
-            "company_info": self.company_info.to_dict() if self.company_info is not None else None,
-            "stock_info": self.stock_info.to_dict() if self.stock_info is not None else None,
-            "trade_data": self.trade_data.to_dict() if self.trade_data is not None else None,
-            "financial_data": self.financial_data.to_dict() if self.financial_data is not None else None,
-            "technical_data": self.technical_data.to_dict() if self.technical_data is not None else None,
-            "analyst_data": self.analyst_data.to_dict() if self.analyst_data is not None else None,
-            "sector_data": self.sector_data.to_dict() if self.sector_data is not None else None,
-            "news_data": self.news_data,
             "current_step": self.current_step,
-            "error_message": self.error_message,
-            "last_updated": self.last_updated.isoformat()
+            "completed_steps": self.completed_steps,
+            "basic_info": {
+                "stock_code": self.basic_info.stock_code,
+                "stock_name": self.basic_info.stock_name,
+                "industry": self.basic_info.industry,
+                "company_info": self.basic_info.company_info.to_dict() if self.basic_info.company_info is not None else None,
+            },
+            "market_data": {
+                "trade_data": self.market_data.trade_data.to_dict() if self.market_data.trade_data is not None else None,
+                "sector_data": self.market_data.sector_data.to_dict() if self.market_data.sector_data is not None else None,
+                "technical_data": self.market_data.technical_data.to_dict() if self.market_data.technical_data is not None else None,
+            },
+            "financial_data": {
+                "financial_data": self.financial_data.financial_data.to_dict() if self.financial_data.financial_data is not None else None,
+            },
+            "research_data": {
+                "analyst_data": self.research_data.analyst_data.to_dict() if self.research_data.analyst_data is not None else None,
+                "news_data": self.research_data.news_data,
+            },
+            "report_state": {
+                "text_reports": self.report_state.text_reports,
+                "charts": self.report_state.charts,
+                "attachments": self.report_state.attachments,
+            }
         }
