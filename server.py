@@ -5,6 +5,7 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime
 from core.workflow import run_stock_analysis
 from helpers.hotspot_search import get_market_hotspots
+from helpers.utility import convert_numpy_types
 
 app = FastAPI(title="Stock Analysis API")
 
@@ -53,7 +54,7 @@ async def analyze_stock(request: StockAnalysisRequest):
                 "sector_data": results["market_data"].sector_data.to_dict() if results["market_data"].sector_data is not None else None,
                 "technical_data": results["market_data"].technical_data.to_dict() if results["market_data"].technical_data is not None else None
             },
-            "financial_data": results["financial_data"].to_dict() if results["financial_data"] is not None else None,
+            "financial_data": results["financial_data"].financial_data.to_dict() if results["financial_data"] is not None else None,
             "research_data": {
                 "analyst_data": results["research_data"].analyst_data.to_dict() if results["research_data"].analyst_data is not None else None,
                 "news_data": results["research_data"].news_data
@@ -62,7 +63,9 @@ async def analyze_stock(request: StockAnalysisRequest):
             "data_file_paths": results["data_file_paths"]
         }
         
-        return {"success": True, "data": response_data}
+        # 转换所有 NumPy 数据类型
+        converted_response = convert_numpy_types(response_data)
+        return {"success": True, "data": converted_response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

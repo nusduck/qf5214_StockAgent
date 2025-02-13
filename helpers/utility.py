@@ -1,6 +1,9 @@
 import os
 import json
 from typing import Dict
+from typing import Any
+import numpy as np
+import math
 from langchain_core.messages import  ToolMessage
 
 def extract_specific_tool_message(messages, tool_name=None, tool_call_id=None):
@@ -76,3 +79,26 @@ def save_state_to_database(state) -> Dict[str, str]:
     #     file_paths['news_data'] = path
     
     return file_paths
+
+
+def convert_numpy_types(obj):
+    """转换 NumPy 数据类型并处理特殊浮点数"""
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        if math.isnan(obj):
+            return None
+        elif math.isinf(obj):
+            return None  # 或者可以返回一个极大值，比如 1e308
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return [convert_numpy_types(x) for x in obj]
+    elif isinstance(obj, dict):
+        return {key: convert_numpy_types(value) for key, value in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [convert_numpy_types(x) for x in obj]
+    elif isinstance(obj, float):
+        if math.isnan(obj) or math.isinf(obj):
+            return None
+        return obj
+    return obj

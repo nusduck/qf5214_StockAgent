@@ -1,7 +1,9 @@
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Annotated
 from datetime import datetime
 import pandas as pd
 from pydantic import BaseModel, Field
+from operator import add
+
 
 class StockDataState(BaseModel):
     """股票数据状态基类"""
@@ -39,6 +41,21 @@ class ReportState(StockDataState):
     charts: Dict[str, str] = Field(default_factory=dict)  # 图表路径
     attachments: Dict[str, str] = Field(default_factory=dict)  # 附件路径
 
+class DataVisualizationState(StockDataState):
+    """数据可视化状态"""
+    visualization_paths: Annotated[List[str], add] = []
+    graph_description:  Annotated[List[str], add] = []
+
+    def add_visualization(self, path: str) -> None:
+        """添加可视化图表路径"""
+        self.visualization_paths.append(path)
+        self.last_updated = datetime.now()
+
+    def add_description(self, description: str) -> None:
+        """添加图表描述"""
+        self.graph_description.append(description)
+        self.last_updated = datetime.now()
+
 class StockAnalysisState(BaseModel):
     """股票分析完整工作流状态"""
     
@@ -54,9 +71,8 @@ class StockAnalysisState(BaseModel):
     research_data: ResearchData = Field(default_factory=ResearchData, description="研究数据")
     report_state: ReportState = Field(default_factory=ReportState, description="报告状态")
     data_file_paths: Dict[str, str] = Field(default_factory=dict, description="数据文件路径")
-
-    # Add to StockAnalysisState class:
-    visualization_paths: List[str] = []
+    data_visualization: DataVisualizationState = Field(default_factory=DataVisualizationState, description="数据可视化状态")
+    
     error: Optional[str] = None
 
     class Config:
@@ -147,6 +163,10 @@ class StockAnalysisState(BaseModel):
         if hasattr(self, component):
             getattr(self, component).error_message = None
             getattr(self, component).last_updated = datetime.now()
+            
+    def add_data_file_path(self, data_type: str, file_path: str) -> None:
+        """添加数据文件路径"""
+        self.data_file_paths[data_type] = file_path
 
     def to_dict(self) -> Dict[str, Any]:
         """将状态转换为字典格式"""
@@ -175,9 +195,12 @@ class StockAnalysisState(BaseModel):
                 "text_reports": self.report_state.text_reports,
                 "charts": self.report_state.charts,
                 "attachments": self.report_state.attachments,
+            },
+            "data_file_paths": self.data_file_paths,
+            "data_visualization": {
+                "visualization_paths": self.data_visualization.visualization_paths,
+                "graph_description": self.data_visualization.graph_description,
             }
         }
 
-    def add_data_file_path(self, data_type: str, file_path: str) -> None:
-        """添加数据文件路径"""
-        self.data_file_paths[data_type] = file_path
+

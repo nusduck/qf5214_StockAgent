@@ -1,5 +1,4 @@
 import streamlit as st
-from agents.demo_stock_agent import TechnicalAnalysisAgent, StockAnalysisAgent
 import pandas as pd
 from core.workflow import run_stock_analysis
 from datetime import datetime
@@ -32,7 +31,8 @@ def analyze_stock(company_name: str):
             "analyst_data": final_state["research_data"].analyst_data,
             "news_data": final_state["research_data"].news_data
         },
-        "visualization_paths": final_state["visualization_paths"],
+        "visualization_paths": final_state["data_visualization"].visualization_paths,
+        "graph_description": final_state["data_visualization"].graph_description,
         "data_file_paths": final_state["data_file_paths"]
     }
     
@@ -107,6 +107,7 @@ def display_visualizations(visualization_paths, data_file_paths):
             try:
                 st.image(viz_path)
                 # If there's a description in data_file_paths, display it
+                
             except Exception as e:
                 st.error(f"无法加载图表: {str(e)}")
 

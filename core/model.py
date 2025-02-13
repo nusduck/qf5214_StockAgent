@@ -15,7 +15,7 @@ class LanguageModelManager:
     def initialize_llms(self):
         """Initialize language models"""
         try:
-            self.llm_oai_mini = ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
+            self.llm_oai_mini = ChatOpenAI(model="gpt-4o-mini", temperature=0)
             self.llm_google_flash = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp", temperature=0)
             self.llm_oai_4o = ChatOpenAI(model="gpt-4o", temperature=0.5)
             self.json_oai_llm = ChatOpenAI(
