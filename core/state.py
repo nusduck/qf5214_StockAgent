@@ -53,25 +53,36 @@ class StockAnalysisState(BaseModel):
     financial_data: FinancialData = Field(default_factory=FinancialData, description="财务数据")
     research_data: ResearchData = Field(default_factory=ResearchData, description="研究数据")
     report_state: ReportState = Field(default_factory=ReportState, description="报告状态")
+    data_file_paths: Dict[str, str] = Field(default_factory=dict, description="数据文件路径")
+
+    # Add to StockAnalysisState class:
+    visualization_paths: List[str] = []
+    error: Optional[str] = None
 
     class Config:
         arbitrary_types_allowed = True
 
-    def __init__(self):
-        # First initialize the parent class (MessagesState)
-        super().__init__()
+    def __init__(self, **kwargs):
+        # First initialize the parent class (BaseModel)
+        super().__init__(**kwargs)
         
-        # Then initialize our attributes
-        self.current_step = "init"
-        self.completed_steps = []
-        self.basic_info = BasicInfo()
-        self.market_data = MarketData()
-        self.financial_data = FinancialData()
-        self.research_data = ResearchData()
-        self.report_state = ReportState()
-        
-        # Initialize the messages list from parent class
-        self.messages = []
+        # Then initialize our attributes if they haven't been set
+        if not hasattr(self, 'current_step'):
+            self.current_step = "init"
+        if not hasattr(self, 'completed_steps'):
+            self.completed_steps = []
+        if not hasattr(self, 'messages'):
+            self.messages = []
+        if not hasattr(self, 'basic_info'):
+            self.basic_info = BasicInfo()
+        if not hasattr(self, 'market_data'):
+            self.market_data = MarketData()
+        if not hasattr(self, 'financial_data'):
+            self.financial_data = FinancialData()
+        if not hasattr(self, 'research_data'):
+            self.research_data = ResearchData()
+        if not hasattr(self, 'report_state'):
+            self.report_state = ReportState()
 
     def update_stock_info(self, stock_code: str, stock_name: str, industry: str) -> None:
         """更新股票基本信息"""
@@ -166,3 +177,7 @@ class StockAnalysisState(BaseModel):
                 "attachments": self.report_state.attachments,
             }
         }
+
+    def add_data_file_path(self, data_type: str, file_path: str) -> None:
+        """添加数据文件路径"""
+        self.data_file_paths[data_type] = file_path
