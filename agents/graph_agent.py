@@ -40,7 +40,6 @@ def create_visualization_agent(state: StockAnalysisState, file_path:str):
             "plt": plt,  # Use the already imported plt with Agg backend
             "sns": __import__("seaborn"),
             "np": __import__("numpy"),
-            "mpf": __import__("mplfinance")
         },
     )
     
@@ -54,29 +53,54 @@ def create_visualization_agent(state: StockAnalysisState, file_path:str):
     ]
     
     # Get LLM from model manager
-    llm = LanguageModelManager().get_models()["llm_oai_mini"]
+    llm = LanguageModelManager().get_models()["llm_oai_4o"]
     
     # Create prompt template with file paths
-    prompt = """You are an expert data analyst. Your task is to analyze data and create visualizations.
-        Always follow these rules:
-        1. First read and understand the data using pandas
-        2. Based on the data think deeply to illustrate the data in the best way
-        3. Create multiple relevant visualizations using matplotlib/seaborn/mplfinance
-        4. Save each plot using plt.savefig()
-        5. Clear the plot after saving using plt.clf()
-        6. Always include detailed comments in your code
-        7. Handle data cleaning and preprocessing when necessary
-        8. for the finanl you should output the whold code to the tools to avoid the error
-        9. the style should be unified and professional.
-        10. for time series data, you should present the data in a proper way
-        Available data files:
-        {file_path_str}
-        
-        Base visualization output directory: database/data/{stock_code}/visualizations/
-        
-        Please create insightful visualizations using the available data.
+    prompt = """Expert Data Visualization Analyst Guidelines:
+        Your task is to use python_repl tool to create graphs for the given data.
+        1. Data Understanding Phase:
+        - Always start with: df = pd.read_csv('{file_path}')
+        - Perform initial analysis: df.info(), df.describe(), df.head(3)
+        - Handle missing values and datetime conversion if needed
+        - Covert the date column to datetime format
+
+        2. Visualization Best Practices:
+        [新增专业规范]
+        - Use plt.figure(figsize=(12,6)) before each plot
+        - Apply sns.set_style('whitegrid') at beginning
+        - Try to capture the feature with multiple types of plots
+        - Add auxiliary lines, annotations, and legends for better understanding    
+        - Include title (fontsize=14), axis labels (fontsize=12), proper tick rotation
+        - Add grid lines with alpha=0.4
+        - Use tight_layout() before saving
+        - Save using plt.savefig()
+
+        3. Visualization Creation Workflow:
+        [严格顺序]
+        1. Preprocess data (e.g., set index for time series)
+        2. Create visualization object (figure and axes)
+        3. Plot using DataFrame's plot method or seaborn
+        4. Customize styling and annotations
+        5. Use plt.show()
+        6. For regular plots:
+           Save with: plt.savefig('database/data/{stock_code}/visualizations/{{filename}}.png', 
+                            bbox_inches='tight', 
+                            dpi=150,
+                            facecolor='white')
+        7. Close with plt.close()
+
+        4. Output Requirements:
+        - Generate 3-5 complementary visualizations
+        - Each visualization in separate code block
+        - Include detailed explanatory comments
+        - Use following filename pattern: 
+        '{stock_code}_chart-type_seq.png'
+        Example: {stock_code}_price-trend_01.png
+
+        Available Data:
+        {file_path}
     """.format(
-        file_path_str=file_path,   
+        file_path=file_path,   
         stock_code=state.basic_info.stock_code
     )
     
