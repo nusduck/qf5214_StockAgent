@@ -41,21 +41,6 @@ class ReportState(StockDataState):
     charts: Dict[str, str] = Field(default_factory=dict)  # 图表路径
     attachments: Dict[str, str] = Field(default_factory=dict)  # 附件路径
 
-class DataVisualizationState(StockDataState):
-    """数据可视化状态"""
-    visualization_paths: Annotated[List[str], add] = []
-    graph_description:  Annotated[List[str], add] = []
-
-    def add_visualization(self, path: str) -> None:
-        """添加可视化图表路径"""
-        self.visualization_paths.append(path)
-        self.last_updated = datetime.now()
-
-    def add_description(self, description: str) -> None:
-        """添加图表描述"""
-        self.graph_description.append(description)
-        self.last_updated = datetime.now()
-
 class StockAnalysisState(BaseModel):
     """股票分析完整工作流状态"""
     
@@ -71,7 +56,10 @@ class StockAnalysisState(BaseModel):
     research_data: ResearchData = Field(default_factory=ResearchData, description="研究数据")
     report_state: ReportState = Field(default_factory=ReportState, description="报告状态")
     data_file_paths: Dict[str, str] = Field(default_factory=dict, description="数据文件路径")
-    data_visualization: DataVisualizationState = Field(default_factory=DataVisualizationState, description="数据可视化状态")
+    
+    # 数据可视化属性
+    visualization_paths: Annotated[List[str],add] = Field(default_factory=list, description="可视化图表路径")
+    graph_description: Annotated[List[str], add] = Field(default_factory=list, description="图表描述")
     
     error: Optional[str] = None
 
@@ -168,6 +156,14 @@ class StockAnalysisState(BaseModel):
         """添加数据文件路径"""
         self.data_file_paths[data_type] = file_path
 
+    def add_visualization(self, path: str) -> None:
+        """添加可视化图表路径"""
+        self.visualization_paths.append(path)
+
+    def add_description(self, description: str) -> None:
+        """添加图表描述"""
+        self.graph_description.append(description)
+
     def to_dict(self) -> Dict[str, Any]:
         """将状态转换为字典格式"""
         return {
@@ -197,10 +193,8 @@ class StockAnalysisState(BaseModel):
                 "attachments": self.report_state.attachments,
             },
             "data_file_paths": self.data_file_paths,
-            "data_visualization": {
-                "visualization_paths": self.data_visualization.visualization_paths,
-                "graph_description": self.data_visualization.graph_description,
-            }
+            "visualization_paths": self.visualization_paths,
+            "graph_description": self.graph_description
         }
 
 

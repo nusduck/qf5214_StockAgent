@@ -19,7 +19,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
 
 
 
-def create_visualization_agent(state: StockAnalysisState, file_path:str):
+def create_visualization_agent(state: StockAnalysisState,stock_code:str, file_path:str, file_type:str,vis_dir: str) -> Any:
     """Create a Langchain agent for data visualization
     
     Args:
@@ -71,6 +71,7 @@ def create_visualization_agent(state: StockAnalysisState, file_path:str):
         - Try to capture the feature with multiple types of plots
         - Add auxiliary lines, annotations, and legends for better understanding    
         - Include title (fontsize=14), axis labels (fontsize=12), proper tick rotation
+            - title should start with '{file_type}' and describe the plot
         - Add grid lines with alpha=0.4
         - Use tight_layout() before saving
         - Save using plt.savefig()
@@ -83,7 +84,7 @@ def create_visualization_agent(state: StockAnalysisState, file_path:str):
         4. Customize styling and annotations
         5. Use plt.show()
         6. For regular plots:
-           Save with: plt.savefig('database/data/{stock_code}/visualizations/{{filename}}.png', 
+           Save with: plt.savefig('database/data/{stock_code}/visualizations/{file_type}/{{filename}}.png', 
                             bbox_inches='tight', 
                             dpi=150,
                             facecolor='white')
@@ -96,16 +97,18 @@ def create_visualization_agent(state: StockAnalysisState, file_path:str):
         - Use following filename pattern: 
         '{stock_code}_chart-type_seq.png'
         Example: {stock_code}_price-trend_01.png
+        - final output a summary about the feature or trend of these visualizations
 
         Available Data:
         {file_path}
     """.format(
-        file_path=file_path,   
-        stock_code=state.basic_info.stock_code
+        file_path=file_path, 
+        file_type=file_type,  
+        stock_code=stock_code
     )
     
     # Create visualization directory
-    vis_dir = f"database/data/{state.basic_info.stock_code}/visualizations"
+    vis_dir = vis_dir
     os.makedirs(vis_dir, exist_ok=True)
     # remove all the previous graph in the vis_dir
     # for file in os.listdir(vis_dir):

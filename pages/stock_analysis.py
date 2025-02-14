@@ -31,8 +31,8 @@ def analyze_stock(company_name: str):
             "analyst_data": final_state["research_data"].analyst_data,
             "news_data": final_state["research_data"].news_data
         },
-        "visualization_paths": final_state["data_visualization"].visualization_paths,
-        "graph_description": final_state["data_visualization"].graph_description,
+        "visualization_paths": final_state["visualization_paths"],
+        "graph_description": final_state["graph_description"],
         "data_file_paths": final_state["data_file_paths"]
     }
     
@@ -99,7 +99,7 @@ def display_research_data(research_data):
                     if news['News Link']:
                         st.write(f"**链接:** [{news['News Link']}]({news['News Link']})")
 
-def display_visualizations(visualization_paths, data_file_paths):
+def display_visualizations(visualization_paths, graph_description):
     if visualization_paths:
         st.subheader("📊 可视化分析")
         
@@ -110,6 +110,8 @@ def display_visualizations(visualization_paths, data_file_paths):
                 
             except Exception as e:
                 st.error(f"无法加载图表: {str(e)}")
+        for desc in graph_description:
+            st.markdown(desc)
 
 def main():
     st.title("📊 个股智能分析")
@@ -149,7 +151,7 @@ def main():
                             
                             display_visualizations(
                                 results["visualization_paths"],
-                                results["data_file_paths"]
+                                results["graph_description"]
                             )
                             
                     except Exception as e:

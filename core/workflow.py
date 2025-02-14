@@ -7,6 +7,8 @@ from node.start_node import process_company_node
 from node.data_acquire_node import data_acquire_node
 from node.graph_node import process_visualization_node
 
+from core.route import continue_to_graph
+
 def create_stock_analysis_workflow() -> StateGraph:
     """
     Create a workflow for stock analysis that connects different processing nodes
@@ -27,7 +29,8 @@ def create_stock_analysis_workflow() -> StateGraph:
     
     # Define edges between nodes
     workflow.add_edge("company_info", "data_acquisition")
-    workflow.add_edge("data_acquisition", "visualization")
+    workflow.add_conditional_edges("data_acquisition", continue_to_graph)
+    # workflow.add_edge("data_acquisition", "visualization")
     workflow.add_edge("visualization", END)
     
     # Compile the graph
