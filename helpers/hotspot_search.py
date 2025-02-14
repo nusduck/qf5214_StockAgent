@@ -1,9 +1,11 @@
 from google import genai
 from google.genai.types import Tool, GenerateContentConfig, GoogleSearch
 
+# from helpers.prompt import hot_spot_search_prompt
+
 def get_market_hotspots():
     client = genai.Client()
-    model_id = "gemini-2.0-flash-exp"
+    model_id = "gemini-2.0-flash"
 
     google_search_tool = Tool(
         google_search = GoogleSearch()
@@ -17,7 +19,7 @@ def get_market_hotspots():
             response_modalities=["TEXT"],
         )
     )
-
+    
     result_text = ""
     for candidate in response.candidates:
         for part in candidate.content.parts:
