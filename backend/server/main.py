@@ -10,10 +10,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import logging
-from server.api.stock_info import router as stock_router
+from api.stock_info import router as stock_router
 from server.api.market_data import router as market_router
 from server.api.financial import router as financial_router
 from server.api.research import router as research_router
+
 
 # 配置日志
 logging.basicConfig(level=logging.INFO)
@@ -21,10 +22,18 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Stock Analysis API")
 
-# CORS设置
+# CORS 配置
+origins = [
+    "http://localhost:3000",           # 本地开发环境
+    "http://ultraquanai.top",          # 生产环境 HTTP
+    "https://ultraquanai.top",         # 生产环境 HTTPS
+    "http://www.ultraquanai.top",      # 生产环境带 www
+    "https://www.ultraquanai.top",     # 生产环境带 www HTTPS
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 允许所有来源
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -47,7 +56,7 @@ async def general_exception_handler(request, exc):
         content={"error": "Internal server error"},
     )
 
-# API路由前缀
+# API 版本前缀
 PREFIX = "/api/v1"
 
 # 注册路由
@@ -58,7 +67,7 @@ app.include_router(research_router, prefix=f"{PREFIX}/research", tags=["研究�
 
 @app.get("/")
 async def root():
-    """API根路由，返回可用的接口信息"""
+    """API 根路径，返回所有可用的端点信息"""
     try:
         return {
             "status": "ok",

@@ -3,7 +3,6 @@ import logging
 from tools.individual_stock_tools import get_stock_trade_data
 from tools.sector_tools import get_stock_sector_data
 from tools.tech1_tools import analyze_stock_technical
-from tools.stock_info_tools import analyze_stock_info
 from typing import Dict, Any
 from datetime import datetime, timedelta
 
@@ -30,6 +29,7 @@ async def get_realtime_data(
             if not start_date:
                 start_date = (datetime.now() - timedelta(days=5)).strftime("%Y%m%d")
 
+            # 调用时使用字典形式传参
             trade_data = get_stock_trade_data.invoke({
                 "symbol": stock_code,
                 "start_date": start_date,
