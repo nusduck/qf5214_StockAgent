@@ -1,13 +1,24 @@
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+// 从环境变量获取 API URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+// 添加错误处理
+const handleApiError = (error: any) => {
+  console.error('API Error:', error);
+  throw error;
+};
 
 export const api = {
   stockInfo: {
     getBasicInfo: async (stockCode: string) => {
-      const response = await fetch(`${API_BASE_URL}/stock/basic-info/${stockCode}`);
-      if (!response.ok) {
-        throw new Error('获取股票信息失败');
+      try {
+        const response = await fetch(`${API_BASE_URL}/stock/basic-info/${stockCode}`);
+        if (!response.ok) {
+          throw new Error('获取股票信息失败');
+        }
+        return response.json();
+      } catch (error) {
+        return handleApiError(error);
       }
-      return response.json();
     }
   },
   marketData: {

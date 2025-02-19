@@ -1,6 +1,9 @@
 'use client';
 
+
+import { formatDate } from '@/lib/utils';
 import { useStockInfo } from '@/hooks/useStockInfo';
+
 
 export function StockInfo({ stockCode }: { stockCode: string }) {
   const { data, loading, error } = useStockInfo(stockCode);
