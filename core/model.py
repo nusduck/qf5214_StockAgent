@@ -7,6 +7,7 @@ class LanguageModelManager:
         """Initialize the language model manager"""
         self.logger = setup_logger("model_manager.log")
         self.llm_oai_mini = None
+        self.llm_oai_o3 = None
         self.llm_google_flash = None
         self.llm_oai_4o = None
         self.json_oai_llm = None
@@ -15,7 +16,8 @@ class LanguageModelManager:
     def initialize_llms(self):
         """Initialize language models"""
         try:
-            self.llm_oai_mini = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+            self.llm_oai_mini = ChatOpenAI(model="gpt-4o-mini", temperature=0.6)
+            self.llm_oai_o3 = ChatOpenAI(model="o3-mini-2025-01-31")
             self.llm_google_flash = ChatGoogleGenerativeAI(model="gemini-2.0-flash-exp", temperature=0)
             self.llm_oai_4o = ChatOpenAI(model="gpt-4o", temperature=0.5)
             self.json_oai_llm = ChatOpenAI(
@@ -33,6 +35,7 @@ class LanguageModelManager:
         """Return all initialized language models"""
         return {
             "llm_oai_mini": self.llm_oai_mini,
+            "llm_oai_o3": self.llm_oai_o3,
             "llm_google_flash": self.llm_google_flash,
             "llm_oai_4o": self.llm_oai_4o,
             "json_oai_llm": self.json_oai_llm

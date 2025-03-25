@@ -1,0 +1,26 @@
+{
+  "dockerfile_lines": [
+    "RUN apt-get update && apt-get install build-essential wget -y",
+    "",
+    "# Download and install TA-Lib 0.6.4",
+    "RUN wget https://github.com/ta-lib/ta-lib/releases/download/v0.6.4/ta-lib-0.6.4-src.tar.gz && \\",
+    "    tar -xzf ta-lib-0.6.4-src.tar.gz && \\",
+    "    cd ta-lib-0.6.4/ && \\",
+    "    ./configure --prefix=/usr && \\",
+    "    make && \\",
+    "    make install && \\",
+    "    cd .. && \\",
+    "    rm -rf ta-lib-0.6.4-src.tar.gz ta-lib-0.6.4/",
+    "",
+    "# If you're using Python with TA-Lib, you might also need:",
+    "RUN apt-get install python3-dev -y"
+  ],
+  "graphs": {
+    "agent": "./core/workflow.py:graph"
+  },
+  "env": ".env",
+  "python_version": "3.11",
+  "dependencies": [
+    "."
+  ]
+}

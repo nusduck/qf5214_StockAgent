@@ -6,6 +6,7 @@ from core.state import StockAnalysisState
 from node.start_node import process_company_node
 from node.data_acquire_node import data_acquire_node
 from node.graph_node import process_visualization_node
+from node.sentiment_node import sentiment_node
 
 from core.route import continue_to_graph
 
@@ -23,7 +24,7 @@ def create_stock_analysis_workflow() -> StateGraph:
     workflow.add_node("company_info", process_company_node)
     workflow.add_node("data_acquisition", data_acquire_node)
     workflow.add_node("visualization", process_visualization_node)
-    
+    workflow.add_node("sentiment", sentiment_node)
     # Set the entry point
     workflow.set_entry_point("company_info")
     
@@ -31,7 +32,8 @@ def create_stock_analysis_workflow() -> StateGraph:
     workflow.add_edge("company_info", "data_acquisition")
     workflow.add_conditional_edges("data_acquisition", continue_to_graph)
     # workflow.add_edge("data_acquisition", "visualization")
-    workflow.add_edge("visualization", END)
+    workflow.add_edge("visualization", "sentiment")
+    workflow.add_edge("sentiment", END)
     
     # Compile the graph
     return workflow.compile()

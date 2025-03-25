@@ -1,6 +1,7 @@
 from typing import Dict, Any, TypedDict
 from langchain_core.tools import Tool
 from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_community.tools.tavily_search import TavilySearchResults
 from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel, Field
 
@@ -23,10 +24,11 @@ def create_stock_code_search_agent(state: StockAnalysisState):
     Returns:
         Agent: 配置好的股票搜索代理
     """
-    llm = LanguageModelManager().get_models()["llm_google_flash"]
+    llm = LanguageModelManager().get_models()["llm_oai_mini"]
     logger = setup_logger("agent.log")
     # 初始化工具
-    search = DuckDuckGoSearchRun()
+    # search = DuckDuckGoSearchRun()
+    search = TavilySearchResults(max_results=3)
     tools = [
         Tool(
             name="web_search",

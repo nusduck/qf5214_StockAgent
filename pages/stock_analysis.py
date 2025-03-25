@@ -31,6 +31,7 @@ def analyze_stock(company_name: str):
             "analyst_data": final_state["research_data"].analyst_data,
             "news_data": final_state["research_data"].news_data
         },
+        "report_state": final_state["report_state"].text_reports,
         "visualization_paths": final_state["visualization_paths"],
         "graph_description": final_state["graph_description"],
         "data_file_paths": final_state["data_file_paths"]
@@ -112,6 +113,11 @@ def display_visualizations(visualization_paths, graph_description):
                 st.error(f"无法加载图表: {str(e)}")
         for desc in graph_description:
             st.markdown(desc)
+def display_report(report_state):
+    st.subheader("📝 分析报告")
+    for report_type, content in report_state.items():
+        st.markdown(f"### {report_type}")
+        st.markdown(content)
 
 def main():
     st.title("📊 个股智能分析")
@@ -153,7 +159,7 @@ def main():
                                 results["visualization_paths"],
                                 results["graph_description"]
                             )
-                            
+                            display_report(results["report_state"])
                     except Exception as e:
                         st.error(f"分析过程中出现错误: {str(e)}")
     

@@ -34,6 +34,6 @@ def analyze_company_info(symbol: str) -> pd.DataFrame:
 
 # 示例调用
 if __name__ == "__main__":
-    symbol = "688047"
+    symbol = "000001"
     result = analyze_company_info.invoke({"symbol": symbol})
-    print(result[["stock_code", "stock_name", "total_market_cap", "float_market_cap", "total_shares", "float_shares", "industry", "ipo_date"]])
+    print(result)

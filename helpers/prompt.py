@@ -24,5 +24,18 @@ hot_spot_search_prompt = """请使用英语或者中文搜索总结过去一周�
    - 事件描述清晰简明
    - 每个条目必须提供至少一个信息源链接"""
 
+sentiment_prompt = """
+目标：评估市场对个股的短期情绪波动与投资者行为倾向。
+
+推理步骤
+
+1. 首先通过搜索工具获取连续3日融资买入额增长情况
+2. 通过搜索工具获取北向资金流向：单日净流入占比流通市值
+3. 使用大模型分析个股相关新闻：
+    {news_data}
+
+结合上述内容输出{stock_name}的最终情感分析结果报告。
+"""
+
 if __name__ == "__main__":
     print(make_system_prompt("What is the capital of France?"))
