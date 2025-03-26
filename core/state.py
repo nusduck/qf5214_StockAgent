@@ -24,7 +24,7 @@ class MarketData(StockDataState):
     """市场交易数据状态"""
     trade_data: Optional[pd.DataFrame] = None  # from individual_stock_tools
     sector_data: Optional[pd.DataFrame] = None  # from sector_tools
-    technical_data: Optional[pd.DataFrame] = None  # from tech1_tools
+    technical_data: Optional[pd.DataFrame] = None  # from tech2_tools
 
 class FinancialData(StockDataState):
     """财务数据状态"""
