@@ -7,7 +7,7 @@ from tools.sector_tools import get_stock_sector_data
 from tools.individual_stock_tools import get_stock_trade_data
 from tools.finance_info_tools import analyze_stock_financial
 from tools.analyst_tools import get_analyst_data_tool
-from tools.tech1_tools import analyze_stock_technical
+from tools.tech2_tools import get_stock_data_with_indicators
 from helpers.logger import setup_logger
 from helpers.utility import save_state_to_database
 
@@ -27,7 +27,7 @@ async def get_analyst_async(stock_code: str, start_date: str):
     return await get_analyst_data_tool.ainvoke({"stock_code": stock_code, "add_date": start_date})
 
 async def get_technical_async(stock_code: str, start_date: str, end_date: str):
-    return await analyze_stock_technical.ainvoke({"symbol": stock_code, "start_date": start_date, "end_date": end_date})
+    return await get_stock_data_with_indicators.ainvoke({"symbol": stock_code, "start_date": start_date, "end_date": end_date})
 
 async def data_acquire_node_async(state: StockAnalysisState) -> StockAnalysisState:
     logger = setup_logger("node.log")
