@@ -12,8 +12,8 @@ def sentiment_node(state: StockAnalysisState) -> StockAnalysisState:
     agent = create_sentiment_agent(state)
     result = agent.invoke(state)
     logger.info("情感分析完成")
-    state.add_report("sentiment_report", result["messages"][-1].content)
-    return state
+    
+    return state.add_report("sentiment_report", result["messages"][-1].content)
 
 if __name__ == "__main__":
     state = StockAnalysisState()

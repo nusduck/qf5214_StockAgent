@@ -32,18 +32,16 @@ Please search and summarize major events and hot topics in the Chinese mainland 
 
 
 sentiment_prompt = """
-Objective: Assess short-term market sentiment and investor behavior tendencies related to a specific stock.
+目标：评估市场对个股的短期情绪波动与投资者行为倾向。
 
-Reasoning Steps:
+推理步骤
 
-1. Use a search tool to retrieve data on 3 consecutive days of margin purchase volume (融资买入额) growth.
-
-2. Use a search tool to get northbound capital flow information: net daily inflow as a percentage of the stock's free-float market cap.
-
-3. Analyze the following news content related to the stock using a large language model:
+1. 首先通过搜索工具获取连续3日融资买入额增长情况
+2. 通过搜索工具获取北向资金流向：单日净流入占比流通市值
+3. 使用大模型分析个股相关新闻：
     {news_data}
 
-Based on the above information, generate a sentiment analysis report for {stock_name}.
+结合上述内容输出{stock_name}的最终情感分析结果报告。
 """
 
 if __name__ == "__main__":

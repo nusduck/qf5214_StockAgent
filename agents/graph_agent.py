@@ -10,6 +10,7 @@ import matplotlib
 # Set the backend to 'Agg' before importing pyplot
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import time  # 添加 time 模块
 
 from core.model import LanguageModelManager
 from core.state import StockAnalysisState
@@ -40,6 +41,7 @@ def create_visualization_agent(state: StockAnalysisState,stock_code:str, file_pa
             "plt": plt,  # Use the already imported plt with Agg backend
             "sns": __import__("seaborn"),
             "np": __import__("numpy"),
+            "time": time,  # 添加 time 模块
         },
     )
     
@@ -82,23 +84,27 @@ def create_visualization_agent(state: StockAnalysisState,stock_code:str, file_pa
         2. Create visualization object (figure and axes)
         3. Plot using DataFrame's plot method or seaborn
         4. Customize styling and annotations
-        5. Use plt.show()
-        6. For regular plots:
+        5. Use plt.tight_layout() to ensure all elements are visible
+        6. Call plt.draw() to render the figure
+        7. For regular plots:
            Save with: plt.savefig('database/data/{stock_code}/visualizations/{file_type}/{{filename}}.png', 
                             bbox_inches='tight', 
                             dpi=150,
                             facecolor='white')
-        7. Close with plt.close()
+        8. Add a small delay: time.sleep(0.5)  # 等待 0.5 秒确保图表完全渲染
+        9. Close with plt.close()
 
         4. Output Requirements:
-        - Generate 3-5 complementary visualizations
+        - Generate 1-2 complementary visualizations
         - Each visualization in separate code block
         - Include detailed explanatory comments
         - Use following filename pattern: 
         '{stock_code}_chart-type_seq.png'
         Example: {stock_code}_price-trend_01.png
         - final output a summary about the feature or trend of these visualizations
-
+        - the summary should be concise and to the point, no more than 100 words
+        - the summary should be in the same language as the data
+        - summary should start with '{file_type} summary:'
         Available Data:
         {file_path}
     """.format(
