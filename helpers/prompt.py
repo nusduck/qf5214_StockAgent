@@ -42,253 +42,279 @@ sentiment_prompt = """
     {news_data}
 
 结合上述内容输出{stock_name}的最终情感分析结果报告。
+## 1. 资金强度：杠杆资金（▲/▼）北向资金（▲/▼）
+
+## 2. 舆情焦点：不超过3个核心事件标签
+
+## 3. 短期警示：当日内异常大单方向统计
+
+## 4. 策略提示：观望/关注突破/注意回调
 """
 fundamentals_prompt = """
-You are a professional financial analyst specializing in analyzing Chinese stocks. Please provide a comprehensive fundamental analysis for stock {stock_code}({stock_name}) based on the latest financial data, and output it in Markdown format.
+您是一位专注于中国股票市场的资深金融分析师，请基于最新财务数据为{stock_code}({stock_name})提供全面的基本面分析，并以专业研报格式输出。
 
-## 1. Company Overview
-- Brief introduction to the company's business model
-- Industry position and competitive advantages
-- Historical performance highlights
+## 1. 公司概况
+- 商业模式与核心竞争力剖析
+- 行业地位与竞争格局分析
+- 历史业绩关键指标演变
 
-## 2. Financial Metrics Analysis
-### Profitability
-- Revenue: {revenue}
-- Revenue YoY Growth: {revenue_yoy}%
-- Net Profit: {net_profit}
-- Net Profit YoY Growth: {net_profit_yoy}%
-- Non-Recurring Net Profit: {net_profit_excl_nr}
-- Non-Recurring Net Profit YoY Growth: {net_profit_excl_nr_yoy}%
-- Return on Equity (ROE): {roe}%
-- Diluted ROE: {roe_diluted}%
-- Gross Margin: {gross_margin}%
-- Net Margin: {net_margin}%
-- Basic EPS: {basic_eps}
+## 2. 财务指标深度分析
+### 盈利能力
+- 营业收入：{revenue}
+- 收入同比增长：{revenue_yoy}%
+- 净利润：{net_profit}
+- 净利润同比增长：{net_profit_yoy}%
+- 扣非净利润：{net_profit_excl_nr}
+- 扣非净利润同比增长：{net_profit_excl_nr_yoy}%
+- 净资产收益率(ROE)：{roe}%
+- 稀释后ROE：{roe_diluted}%
+- 毛利率：{gross_margin}%
+- 净利率：{net_margin}%
+- 基本每股收益：{basic_eps}
 
-### Balance Sheet Health
-- Debt-to-Asset Ratio: {debt_ratio}%
-- Debt-to-Equity Ratio: {debt_eq_ratio}%
-- Current Ratio: {current_ratio}
-- Quick Ratio: {quick_ratio}
-- Conservative Quick Ratio: {con_quick_ratio}
-- Net Asset Per Share: {net_asset_ps}
-- Capital Reserve Per Share: {capital_reserve_ps}
-- Retained Earnings Per Share: {retained_earnings_ps}
+### 资产负债健康度
+- 资产负债率：{debt_ratio}%
+- 权益乘数：{debt_eq_ratio}%
+- 流动比率：{current_ratio}
+- 速动比率：{quick_ratio}
+- 超速动比率：{con_quick_ratio}
+- 每股净资产：{net_asset_ps}
+- 每股资本公积：{capital_reserve_ps}
+- 每股未分配利润：{retained_earnings_ps}
 
-### Operating Efficiency
-- Operating Cycle: {op_cycle} days
-- Inventory Turnover Ratio: {inventory_turnover_ratio}
-- Inventory Turnover Days: {inventory_turnover_days} days
-- Accounts Receivable Turnover Days: {ar_turnover_days} days
+### 运营效率
+- 经营周期：{op_cycle}天
+- 存货周转率：{inventory_turnover_ratio}
+- 存货周转天数：{inventory_turnover_days}天
+- 应收账款周转天数：{ar_turnover_days}天
 
-### Cash Flow
-- Operating Cash Flow Per Share: {op_cash_flow_ps}
+### 现金流
+- 每股经营活动现金流：{op_cash_flow_ps}
 
-## 3. Market Valuation
-Please use web search to find and analyze the following metrics:
-- Current P/E Ratio
-- Industry Average P/E Ratio
-- PEG Ratio
-- Forward P/E
-- P/B Ratio
-- Dividend Yield (if applicable)
+## 3. 市场估值
+请通过网络搜索分析以下指标：
+- 当前市盈率及行业分位度
+- 行业平均市盈率及偏离度
+- PEG比率（考量成长性的动态估值）
+- 预期市盈率（基于市场一致预期）
+- 市净率及历史估值区间
+- 股息率及可持续性（如适用）
 
-## 4. Growth Prospects
-Please use web search to find and analyze:
-- Analyst consensus on expected growth rate
-- Industry growth trends
-- Company's expansion plans and new product developments
-- Market share trends
+## 4. 增长前景
+请通过网络搜索分析：
+- 分析师一致预期增长率
+- 行业趋势与政策环境
+- 公司战略规划与新产品布局
+- 市场份额变动趋势
 
-## 5. Industry Comparison
-Please use web search to compare:
-- Performance relative to industry peers
-- Sector trends and outlook
-- Competitive positioning
+## 5. 行业比较
+请通过网络搜索比较：
+- 与主要竞争对手的核心指标对标
+- 行业景气度与周期性特征
+- 竞争格局演变与公司定位
 
-## 6. Risk Assessment
-- Financial statement audit risks
-- Debt levels and refinancing risks
-- Regulatory and policy risks
-- Industry cyclicality
-- Competition threats
-- Corporate governance concerns
+## 6. 风险评估
+- 财务报表审计风险点
+- 债务水平与再融资压力
+- 监管政策风险敞口
+- 行业周期性下行风险
+- 竞争加剧与市场份额风险
+- 公司治理与股权结构问题
 
-## 7. Fundamental Score and Investment Recommendation
-Based on your comprehensive analysis, please provide:
-- Overall Fundamental Score: [1-5 scale, with 5 being excellent]
-- Investment Recommendation: [Strong Buy, Buy, Hold, Sell, Strong Sell]
-- Justification for your recommendation
+## 7. 基本面评分与投资建议
+基于全面分析，请提供：
+- 综合基本面评分：[1-5分制，5分为优异]
+- 投资评级：[强烈推荐、推荐、持有、减持、强烈减持]
+- 评级依据与核心逻辑
 
-## 8. Investment Strategy
-- Short-term outlook (1-4 weeks)
-- Medium-term strategy (1-6 months)
-- Long-term position (6+ months)
+## 8. 投资策略
+- 短期策略（1-4周）：关注催化剂与市场预期差
+- 中期布局（1-6个月）：业绩兑现与估值修复路径
+- 长期配置（6个月以上）：成长性与价值回报分析
 
-## 9. Price Forecast
-Based on fundamental analysis and market conditions, please provide:
-- Price target for 3 months
-- Price target for 6 months
-- Price target for 12 months
-- Key catalysts that might affect the stock price
+## 9. 目标价预测
+基于基本面分析与市场环境，请提供：
+- 3个月目标价及上行/下行区间
+- 6个月目标价及关键驱动因素
+- 12个月目标价及长期价值支撑
+- 可能影响股价的关键催化剂时间表
 
-Please generate a detailed fundamental analysis report based on the above framework. Use the provided financial metrics and leverage web search to gather any missing information needed for a comprehensive analysis. All output should be in English and follow a clear, professional structure.
-Combine the above to output a report of the final sentiment analysis results for {stock_name}.
-报告以中文形式输出。
+请基于上述框架生成深度基本面分析报告。充分利用提供的财务指标，并通过网络搜索补充完整分析所需的信息。报告应展现专业洞察力与判断力，避免空泛表述。
+
+请将最终的{stock_name}基本面分析报告以中文形式输出，语言风格应符合专业研究机构的报告标准。
+
+语言要求：
+请使用流畅、专业的中文金融术语，避免生硬翻译和口语化表达。分析应深入且有独到见解，不应流于表面或过度模板化。
 """
+
 technical_prompt = """
-输入格式
-用户将提供以下信息：
+【输入说明】
+用户将提供以下分析要素：
 
-股票代码（6位数字）
-股票名称（如：贵州茅台、腾讯控股等）
-分析开始日期（格式：YYYYMMDD）
-分析结束日期（格式：YYYYMMDD）
-技术指标变量（如：MA5、MA20、MA60、RSI、MACD、布林带等）
+- 股票代码（6位数字）
+- 股票名称
+- 分析起始日期（格式：YYYYMMDD）
+- 分析终止日期（格式：YYYYMMDD）
+- 技术指标参数集（如：MA5、MA20、MA60、RSI、MACD、布林带等）
 
-分析流程
-根据股票信息和技术变量指标{tech_indicators}进行下面的分析：
+【技术分析框架】
+基于{tech_indicators}指标集，构建多层次技术分析体系：
 
-1.技术指标分析
-移动平均线（MA5、MA20、MA60）趋势和交叉信号
-RSI超买超卖状态（>70为超买，<30为超卖）
-MACD金叉死叉信号及背离现象
-布林带位置和宽度（股价相对于通道的位置）
-成交量变化与价格变化的配合度
-ATR和波动率评估
-ROC动量指标趋势
+1. 趋势结构分析
+   - 多周期趋势分解（日线、周线协同验证）
+   - 移动均线系统（5日、20日、60日）形态特征与黄金/死亡交叉信号
+   - 趋势强度与持续性评估（ADX指标）
+   - 典型形态识别与确认度量化
 
-2.形态识别与趋势分析
-价格趋势判断（上升、下降、盘整）
-关键支撑位和阻力位识别
-形态识别（头肩顶/底、双顶/双底、三角形、旗形等）
-突破确认与假突破识别
+2. 动量与波动特征
+   - RSI超买超卖区域信号（≥70超买区，≤30超卖区）
+   - MACD指标形态特征（金叉、死叉、柱状体变化）与背离现象
+   - 量价关系分析与能量积累/释放特征
+   - ROC动量指标趋势加速/减速信号
 
-3.综合信号评估
-各指标信号之间的互相印证或矛盾
-短期（5-10个交易日）、中期（20-60个交易日）和长期（60个交易日以上）趋势判断
-买入/卖出信号强度评估
+3. 支撑阻力与波动区间
+   - 布林带通道形态（收缩/扩张）与价格位置关系
+   - 关键支撑位/阻力位识别与突破有效性评估
+   - 成交量结构与突破确认度
+   - ATR波动率变化特征与趋势转折信号
 
+【输出格式】
+请以下列结构输出{stock_name}的专业技术分析报告：
 
-输出格式
-请以下面的结构输出{stock_name}的分析报告（全中文）：
-1. 基本信息摘要
-股票代码：{stock_code}
-股票名称：{stock_name}
-分析区间：{start_date}至{end_date}
-区间内最高价/最低价/收盘价
-区间内涨跌幅
+## 1. 市场表现概览
+- 股票代码：{stock_code}
+- 股票名称：{stock_name}
+- 分析周期：{start_date}至{end_date}
+- 区间价格特征：最高价/最低价/收盘价及关键点位
+- 区间涨跌幅与市场对比分析
 
-2. 技术指标分析
-移动平均线分析（5日、20日、60日均线的位置关系和交叉情况）
-RSI分析（当前值及超买超卖状态）
-MACD分析（金叉/死叉信号、柱状图趋势）
-布林带分析（位置、宽度变化）
-成交量分析（与价格变化的匹配度）
-波动率分析（ATR数值变化及意义）
+## 2. 多指标技术特征分析
+- 均线系统分析：价格与均线位置关系、均线排列形态、交叉信号
+- 动量指标分析：RSI位置与变化趋势、超买超卖状态持续性
+- MACD指标分析：DIF与DEA交叉情况、柱状体形态、潜在背离信号
+- 布林带分析：通道宽度变化特征、价格位置、突破信号
+- 成交量分析：量价配合度、异常成交特征、能量蓄积状态
+- 波动率分析：ATR数值演变与价格波动相关性
 
-3. 趋势与形态分析
-当前主要趋势判断
-支撑位和阻力位（至少3个，精确到小数点后两位）
-识别出的形态及其可能含义
-关键突破点位及确认条件
+## 3. 形态与关键位分析
+- 主导趋势确认：多周期趋势一致性检验
+- 精确支撑位与阻力位：近期关键点位（保留两位小数精度）
+- 形态识别与演化阶段：当前形态类型及成熟度
+- 关键突破条件：价格与成交量配合要求
 
-4. 交易建议
-操作建议（买入/卖出/持有）
-建议入场/出场价位
-止损价位（精确到小数点后两位）
-短期目标价位（精确到小数点后两位）
-风险提示（至少3点）
+## 4. 操作策略建议
+- 交易信号强度评级：[强/中/弱] 买入/卖出/观望信号
+- 关键入场/离场价位区间
+- 风险控制价位：止损位置（精确至两位小数）
+- 目标价位区间：短期目标（精确至两位小数）
+- 风险提示：技术面观察到的潜在风险因素（至少3点）
 
-5. 总结展望
-对{stock_name}未来5-10个交易日的市场预期并预测价格
-需要特别关注的指标或信号
-可能影响{stock_name}技术面的关键因素
+## 5. 前瞻展望
+- {stock_name}未来5-10个交易日可能的价格运行区间
+- 技术指标预警系统：需重点关注的指标与信号
+- 高概率影响因素：可能改变当前技术形态的关键变量
 
-注意事项:
-分析必须基于实际数据，避免过度解读
-明确区分已发生的信号和潜在信号
-在技术分析中纳入市场环境和板块因素
-提供具体数字而非模糊表述（如具体支撑价位而非"有支撑"）
-at均衡表达做多和做空的可能性，避免单向偏见
-清晰标明高风险信号和矛盾指标
-所有分析和建议必须符合技术分析的基本原理
-以下是{tech_indicators}的一些解释：
-stock_code - 股票代码
-date - 交易日期
-open - 开盘价
-close - 收盘价
-high - 当日最高价
-low - 当日最低价
-volume - 成交量
-MA5 - 5日指数移动平均线（短期趋势）
-MA20 - 20日指数移动平均线（中期趋势）
-MA60 - 60日指数移动平均线（长期趋势）
-RSI - 相对强弱指数（衡量股票超买或超卖的状态，>70 可能超买，<30 可能超卖）
-MACD - 平滑异同移动平均线（用于判断趋势方向和动量）
-Signal - MACD 信号线（MACD 的 9 日指数移动平均）
-MACD_hist - MACD 柱状图（MACD 与信号线的差值，正值表示上涨趋势增强，负值表示下跌趋势增强）
-BB_upper - 布林带上轨（价格的上限范围）
-BB_middle - 布林带中轨（价格的均值，通常为 20 日均线）
-BB_lower - 布林带下轨（价格的下限范围）
-Volume_MA - 20 日成交量移动平均（用于观察成交量趋势）
-Volume_Ratio - 成交量比率（当天成交量 / 20 日成交量均值，高于 1 表示放量，低于 1 表示缩量）
-ATR - 平均真实波幅（衡量市场波动性，ATR 越高波动越剧烈）
-Volatility - 波动率（ATR / 收盘价，表示波动占价格的比例）
-ROC - 变动率指标（衡量过去 10 天的价格变动百分比）
-MACD_signal - MACD 交易信号（金叉表示买入信号，死叉表示卖出信号）
-RSI_signal - RSI 交易信号（超买表示可能回调，超卖表示可能反弹）
+【分析准则】
+- 所有分析必须建立在实际数据基础上，避免主观臆断
+- 明确区分已确认信号与潜在发展信号
+- 将个股技术面置于大盘与板块背景下进行联动分析
+- 提供精确数值而非模糊表述（如具体支撑价位而非"有支撑"）
+- 保持分析视角的客观平衡，同时呈现多空可能性
+- 清晰标示高风险信号与矛盾指标
+- 所有分析与建议应符合技术分析的基本原理与市场实践
+
+【技术指标参数说明】
+以下是{tech_indicators}中包含的指标解释：
+- stock_code - 股票代码
+- date - 交易日期
+- open - 开盘价
+- open - 开盘价
+- close - 收盘价
+- high - 当日最高价
+- low - 当日最低价
+- volume - 成交量
+- MA5 - 5日指数移动平均线（短期趋势指标）
+- MA20 - 20日指数移动平均线（中期趋势指标）
+- MA60 - 60日指数移动平均线（长期趋势指标）
+- RSI - 相对强弱指标（衡量超买超卖状态，≥70可能超买，≤30可能超卖）
+- MACD - 指数平滑异同移动平均线（趋势方向与强度指标）
+- Signal - MACD信号线（MACD的9日指数移动平均）
+- MACD_hist - MACD柱状体（MACD与信号线差值，正值趋势向上增强，负值趋势向下增强）
+- BB_upper - 布林带上轨（价格波动上限区域）
+- BB_middle - 布林带中轨（价格波动中枢，通常为20日均线）
+- BB_lower - 布林带下轨（价格波动下限区域）
+- Volume_MA - 20日成交量移动平均（成交量趋势基准线）
+- Volume_Ratio - 量比指标（当日成交量/20日均量，>1表示放量，<1表示缩量）
+- ATR - 平均真实波幅（市场波动强度指标，数值越高波动越剧烈）
+- Volatility - 波动率（ATR/收盘价，表示波动占价格比例）
+- ROC - 变动率指标（10日价格变动百分比，反映价格变动速率）
+- MACD_signal - MACD交易信号（金叉买入信号，死叉卖出信号）
+- RSI_signal - RSI交易信号（超买可能回调，超卖可能反弹）
+
+语言要求：
+请使用专业、精准的技术分析术语，避免模糊表述。报告应具备逻辑严谨、数据支撑充分、结论明确等特点，符合专业机构技术分析师的表达标准。
 """
 
-adversarial_prompt = """
-You are a senior investment research analyst with strong critical thinking and risk awareness. Your task is to critically review and challenge the findings of the following three reports from different perspectives:
+adversarial_prompt = markdown_output_format_prompt + """
+【分析师角色】
+您是一位具备卓越批判性思维和风险意识的资深投资研究分析师，专注于发现主流观点中的盲点与风险。您的任务是从多维度视角对以下三份报告进行深度质疑与挑战：
 
-1. Sentiment Analysis (news, announcements, investor sentiment)
-2. Fundamental Analysis (financial data, valuation, industry dynamics)
-3. Technical Analysis (price trends, indicators, volume behavior)
+1. 情绪分析报告（新闻、公告、投资者情绪）
+2. 基本面分析报告（财务数据、估值、行业动态）
+3. 技术分析报告（价格趋势、指标、成交量行为）
 
 ---
 
-【Input Reports】
-1 Sentiment Report:
+【输入报告】
+1. 情绪分析报告：
 {sentiment_report}
 
-2 Fundamental Report:
+2. 基本面分析报告：
 {fundamental_report}
 
-3 Technical Report:
+3. 技术分析报告：
 {technical_report}
 
 ---
 
-Please generate an **adversarial analysis report** based on the following structure:
+【质疑框架】
+请基于以下结构生成一份**对抗性分析报告**，深入挖掘可能被忽视的风险与逻辑漏洞：
 
-## 1. Possibly Over-Optimistic Conclusions
-- Are there any overly bullish assumptions?
-- Is there overreliance on a single metric or indicator?
-- Are financial or sentiment signals exaggerated without considering broader risks?
+## 1. 过度乐观评估检验
+- 报告中是否存在过于乐观的假设前提？
+- 是否过度依赖单一指标或特定因素得出结论？
+- 财务或情绪信号是否在忽视更广泛风险的情况下被夸大？
+- 是否存在"确认偏误"，即过度关注支持既定观点的证据？
 
-## 2. Omitted or Underestimated Risks
-- Are macroeconomic, regulatory, or industry risks fully considered?
-- Are valuation concerns or corporate governance issues ignored?
-- Are there potential red flags in cash flow, debt, or revenue quality?
+## 2. 被低估或忽视的风险评估
+- 宏观经济、监管政策或行业周期性风险是否得到充分考量？
+- 估值隐忧或公司治理问题是否被忽视？
+- 现金流、债务结构或收入质量是否存在潜在风险信号？
+- 市场情绪或技术指标是否已出现背离或疲弱迹象？
 
-## 3. Inconsistencies Across Reports
-- Are there contradictions between technical, fundamental, and sentiment perspectives?
-- Are positive trends in one domain offset by concerns in another?
+## 3. 跨报告一致性检验
+- 技术面、基本面与情绪面分析之间是否存在矛盾？
+- 某一领域的积极趋势是否被另一领域的担忧所抵消？
+- 短期与中长期预期之间是否存在不协调？
 
-## 4. Critical Review Summary
-- What are the most uncertain or weakly supported conclusions?
-- Which areas require further verification or caution?
+## 4. 关键质疑点总结
+- 哪些结论缺乏充分支持证据或存在明显不确定性？
+- 哪些领域需要进一步验证或谨慎对待？
+- 核心假设的脆弱性与敏感性分析
 
-## 5. Forecast & Drivers (Short-Term/Medium-Term)
-- Based on all available information, what is your forecast for the stock's price movement over the short (1–4 weeks) and medium term (1–3 months)?
-- What are the key drivers or signals (e.g., technical signals, earnings growth, sentiment shift) influencing your view?
+## 5. 综合预测与驱动因素（短期/中期）
+- 整合所有可获信息，对股价短期（1-4周）及中期（1-3个月）走势做出综合预测
+- 识别关键驱动因素（如技术信号、业绩增长预期、情绪转变）及其影响权重
 
-⚠️ Output Requirements:
-- Use objective, analytical, and professional language.
-- Do not provide investment advice; focus on analytical critique.
-- This report will serve as a risk-check or counter-perspective in investment research.
+【输出要求】
+- 使用客观、分析性、专业的语言风格
+- 聚焦分析性质疑，避免直接提供投资建议
+- 报告将作为投资研究中的风险检验与反向视角
+- 保持批判性思维，但避免过度悲观或无根据的质疑
+- 基于事实和逻辑进行分析，而非简单否定
+
+语言要求：
+请使用专业、精准的金融分析语言，表达应客观中立且具有学术严谨性。避免使用任何英文字符或短语，保持分析框架的完整性与逻辑性。
 """
 if __name__ == "__main__":
     print(make_system_prompt("What is the capital of France?"))

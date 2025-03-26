@@ -14,7 +14,7 @@ def fundamentals_node(state: StockAnalysisState) -> StockAnalysisState:
         StockAnalysisState: Updated state with analysis results
     """
     logger = setup_logger("node.log")
-    logger.info(f"fundamentals_node开始进行基本面分析: {state.basic_info.stock_code}")
+    logger.info(f"fundamentals_node开始进行基本面分析")
     agent = create_fundamentals_agent(state)
     result = agent.invoke(state)
     logger.info("基本面分析完成")

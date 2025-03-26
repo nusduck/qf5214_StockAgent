@@ -115,5 +115,5 @@ def create_fundamentals_agent(state: StockAnalysisState) -> Any:
         **metrics
     )
     
-    logger.info(f"Created fundamental analysis agent for {state.basic_info.stock_code}")
+    logger.info(f"Created fundamental analysis agent")
     return create_react_agent(llm, tools, prompt=prompt)
