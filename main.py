@@ -1,4 +1,12 @@
 import streamlit as st
+from dotenv import load_dotenv
+import os
+
+# 加载.env文件中的环境变量
+load_dotenv()
+
+# 现在可以访问环境变量
+# os.environ["OPENAI_API_KEY"] 应该已经可用
 
 # 强制设置页面配置为第一个命令
 st.set_page_config(
@@ -7,13 +15,12 @@ st.set_page_config(
     layout="wide",
 )
 
-
-
-# 隐藏默认的导航栏和页脚
+# 隐藏默认的导航栏和页脚，并统一设置所有内容的字体大小为 14px
 hide_streamlit_style = """
 <style>
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
+body {font-size: 14px;}
 </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)

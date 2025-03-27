@@ -1,15 +1,20 @@
 def make_system_prompt(suffix: str) -> str:
     return (
-        "You are a helpful AI assistant, collaborating with other assistants."
-        " Use the provided tools to progress towards answering the question."
-        " If you are unable to fully answer, that's OK, another assistant with different tools "
-        " will help where you left off. Execute what you can to make progress."
-        " If you or any of the other assistants have the final answer or deliverable,"
-        " prefix your response with FINAL ANSWER so the team knows to stop."
+        "你是一个乐于助人的AI助手，请确保所有回答均以Markdown格式输出，并且使用中文回答。"
+        "利用提供的工具来回答问题。如果你无法完整回答问题，也没有关系，会有其他工具协助完成。"
+        "如果你或其他助手得到了最终答案，请在回答前加上 'FINAL ANSWER' ，以通知团队停止操作。"
         f"\n{suffix}"
     )
+
 data_collection_prompt = f"""
 Based on the information you provide, retrieve the 6-digit stock code of the specified company listed in the Chinese stock market. Use all available tools to collect relevant data.
+请严格使用如下 Markdown 标题格式：
+
+- 使用 `##` 作为主标题
+- 使用 `###` 作为副标题
+- 段落间用一个空行分隔
+- 列表用 `- ` 表示无序列表；需要二级列表时在前面加 4 个空格
+- 所有数值或重点信息使用 `**粗体**` 标注
 """
 
 hot_spot_search_prompt = """
@@ -28,8 +33,14 @@ Please search and summarize major events and hot topics in the Chinese mainland 
    - Stock codes are accurate and include exchange suffixes
    - Event descriptions are clear and concise
    - Each entry includes at least one valid information source link
-"""
+请严格使用如下 Markdown 标题格式：
 
+- 使用 `##` 作为主标题
+- 使用 `###` 作为副标题
+- 段落间用一个空行分隔
+- 列表用 `- ` 表示无序列表；需要二级列表时在前面加 4 个空格
+- 所有数值或重点信息使用 `**粗体**` 标注
+"""
 
 sentiment_prompt = """
 目标：评估市场对个股的短期情绪波动与投资者行为倾向。
@@ -49,7 +60,15 @@ sentiment_prompt = """
 ## 3. 短期警示：当日内异常大单方向统计
 
 ## 4. 策略提示：观望/关注突破/注意回调
+请严格使用如下 Markdown 标题格式：
+
+- 使用 `##` 作为主标题
+- 使用 `###` 作为副标题
+- 段落间用一个空行分隔
+- 列表用 `- ` 表示无序列表；需要二级列表时在前面加 4 个空格
+- 所有数值或重点信息使用 `**粗体**` 标注
 """
+
 fundamentals_prompt = """
 您是一位专注于中国股票市场的资深金融分析师，请基于最新财务数据为{stock_code}({stock_name})提供全面的基本面分析，并以专业研报格式输出。
 
@@ -142,9 +161,13 @@ fundamentals_prompt = """
 请基于上述框架生成深度基本面分析报告。充分利用提供的财务指标，并通过网络搜索补充完整分析所需的信息。报告应展现专业洞察力与判断力，避免空泛表述。
 
 请将最终的{stock_name}基本面分析报告以中文形式输出，语言风格应符合专业研究机构的报告标准。
+请严格使用如下 Markdown 标题格式：
 
-语言要求：
-请使用流畅、专业的中文金融术语，避免生硬翻译和口语化表达。分析应深入且有独到见解，不应流于表面或过度模板化。
+- 使用 `##` 作为主标题
+- 使用 `###` 作为副标题
+- 段落间用一个空行分隔
+- 列表用 `- ` 表示无序列表；需要二级列表时在前面加 4 个空格
+- 所有数值或重点信息使用 `**粗体**` 标注
 """
 
 technical_prompt = """
@@ -214,15 +237,6 @@ technical_prompt = """
 - 技术指标预警系统：需重点关注的指标与信号
 - 高概率影响因素：可能改变当前技术形态的关键变量
 
-【分析准则】
-- 所有分析必须建立在实际数据基础上，避免主观臆断
-- 明确区分已确认信号与潜在发展信号
-- 将个股技术面置于大盘与板块背景下进行联动分析
-- 提供精确数值而非模糊表述（如具体支撑价位而非"有支撑"）
-- 保持分析视角的客观平衡，同时呈现多空可能性
-- 清晰标示高风险信号与矛盾指标
-- 所有分析与建议应符合技术分析的基本原理与市场实践
-
 【技术指标参数说明】
 以下是{tech_indicators}中包含的指标解释：
 - stock_code - 股票代码
@@ -250,9 +264,13 @@ technical_prompt = """
 - ROC - 变动率指标（10日价格变动百分比，反映价格变动速率）
 - MACD_signal - MACD交易信号（金叉买入信号，死叉卖出信号）
 - RSI_signal - RSI交易信号（超买可能回调，超卖可能反弹）
+请严格使用如下 Markdown 标题格式：
 
-语言要求：
-请使用专业、精准的技术分析术语，避免模糊表述。报告应具备逻辑严谨、数据支撑充分、结论明确等特点，符合专业机构技术分析师的表达标准。
+- 使用 `##` 作为主标题
+- 使用 `###` 作为副标题
+- 段落间用一个空行分隔
+- 列表用 `- ` 表示无序列表；需要二级列表时在前面加 4 个空格
+- 所有数值或重点信息使用 `**粗体**` 标注
 """
 
 adversarial_prompt = """
@@ -315,6 +333,28 @@ adversarial_prompt = """
 
 语言要求：
 请使用专业、精准的金融分析语言，表达应客观中立且具有学术严谨性。避免使用任何英文字符或短语，保持分析框架的完整性与逻辑性。
+请严格使用如下 Markdown 标题格式：
+
+- 使用 `##` 作为主标题
+- 使用 `###` 作为副标题
+- 段落间用一个空行分隔
+- 列表用 `- ` 表示无序列表；需要二级列表时在前面加 4 个空格
+- 所有数值或重点信息使用 `**粗体**` 标注
 """
+
+# 新增辅助函数，用于在各个提示文本后统一追加Markdown输出和中文回答的指令
+def enforce_markdown_chinese(prompt: str) -> str:
+    additional_instructions = "\n\n请确保所有回答均以Markdown格式输出，并且使用中文回答。"
+    return prompt + additional_instructions
+
+# 更新各个提示文本，使其统一要求Markdown输出和中文回答
+data_collection_prompt = enforce_markdown_chinese(data_collection_prompt)
+hot_spot_search_prompt = enforce_markdown_chinese(hot_spot_search_prompt)
+sentiment_prompt = enforce_markdown_chinese(sentiment_prompt)
+fundamentals_prompt = enforce_markdown_chinese(fundamentals_prompt)
+technical_prompt = enforce_markdown_chinese(technical_prompt)
+adversarial_prompt = enforce_markdown_chinese(adversarial_prompt)
+
+
 if __name__ == "__main__":
     print(make_system_prompt("What is the capital of France?"))

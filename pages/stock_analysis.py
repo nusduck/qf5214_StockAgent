@@ -115,9 +115,28 @@ def display_visualizations(visualization_paths, graph_description):
             st.markdown(desc)
 def display_report(report_state):
     st.subheader("📝 分析报告")
+    
+    # 定义报告名称的映射字典
+    report_name_mapping = {
+        "sentiment_report": "SENTIMENT REPORT",
+        "technical_report": "TECHNICAL REPORT",
+        "fundamentals_report": "FUNDAMENTAL REPORT",
+        "adversarial_report": "ADVERSARIAL REPORT"
+    }
+    
     for report_type, content in report_state.items():
-        st.markdown(f"### {report_type}")
+        # 根据字典获取转换后的标题，如果不存在则转为大写
+        display_name = report_name_mapping.get(report_type, report_type.upper())
+        st.markdown(
+            f"""
+            <h2 style="font-size:24px; font-weight:bold; color:#D35400; margin-top:1em;">
+                {display_name}
+            </h2>
+            """,
+            unsafe_allow_html=True
+        )
         st.markdown(content)
+
 
 def main():
     st.title("📊 个股智能分析")
