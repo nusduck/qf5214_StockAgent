@@ -50,15 +50,15 @@ def save_state_to_database(state) -> Dict[str, str]:
         state.market_data.trade_data.to_csv(path)
         file_paths['trade_data'] = path
         
-    if state.market_data.sector_data is not None:
-        path = f"{base_dir}/sector_data.csv"
-        state.market_data.sector_data.to_csv(path)
-        file_paths['sector_data'] = path
+    # if state.market_data.sector_data is not None:
+    #     path = f"{base_dir}/sector_data.csv"
+    #     state.market_data.sector_data.to_csv(path)
+    #     file_paths['sector_data'] = path
         
-    # if state.market_data.technical_data is not None:
-    #     path = f"{base_dir}/technical_data.csv"
-    #     state.market_data.technical_data.to_csv(path)
-    #     file_paths['technical_data'] = path
+    if state.market_data.technical_data is not None:
+        path = f"{base_dir}/technical_data.csv"
+        state.market_data.technical_data.to_csv(path)
+        file_paths['technical_data'] = path
         
     # Save financial data
     # if state.financial_data.financial_data is not None:

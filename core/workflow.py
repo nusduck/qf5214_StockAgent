@@ -5,7 +5,7 @@ from langchain_core.messages import HumanMessage
 from core.state import StockAnalysisState
 from node.start_node import process_company_node
 from node.data_acquire_node import data_acquire_node
-from node.graph_node import process_visualization_node
+from node.graph_node_new import process_visualization_node
 from node.sentiment_node import sentiment_node
 from node.technical_node import technical_node
 from node.fundamentals_node import fundamentals_node
