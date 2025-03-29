@@ -6,6 +6,7 @@ from tools.stock_news_tools import get_stock_news
 from tools.sector_tools import get_stock_sector_data
 from tools.individual_stock_tools import get_stock_trade_data
 from tools.finance_info_tools import analyze_stock_financial
+from tools.stock_a_indicator_tools import analyze_stock_indicators
 from tools.analyst_tools import get_analyst_data_tool
 from tools.tech2_tools import get_stock_data_with_indicators
 from helpers.logger import setup_logger
@@ -22,6 +23,9 @@ async def get_trade_async(stock_code: str, start_date: str, end_date: str):
 
 async def get_financial_async(stock_code: str, start_date: str, end_date: str):
     return await analyze_stock_financial.ainvoke({"symbol": stock_code, "start_date": start_date, "end_date": end_date})
+
+async def get_indicators_async(stock_code: str, start_date: str, end_date: str):
+    return await analyze_stock_indicators.ainvoke({"symbol": stock_code, "start_date": start_date, "end_date": end_date})
 
 async def get_analyst_async(stock_code: str, start_date: str):
     return await get_analyst_data_tool.ainvoke({"stock_code": stock_code, "add_date": start_date})
@@ -44,23 +48,25 @@ async def data_acquire_node_async(state: StockAnalysisState) -> StockAnalysisSta
         sector_task = get_sector_async(industry, start_date, end_date)
         trade_task = get_trade_async(stock_code, start_date, end_date)
         financial_task = get_financial_async(stock_code, start_date, end_date)
+        indicators_task = get_indicators_async(stock_code, start_date, end_date)
         analyst_task = get_analyst_async(stock_code, start_date)
         technical_task = get_technical_async(stock_code, start_date, end_date)
 
         # 等待所有任务完成
         results = await asyncio.gather(
             news_task, sector_task, trade_task,
-            financial_task, analyst_task, technical_task,
+            financial_task, indicators_task ,analyst_task, technical_task,
             return_exceptions=True
         )
 
         # 更新状态
-        news_data, sector_data, trade_data, financial_data, analyst_data, technical_data = results
+        news_data, sector_data, trade_data, financial_data, indicator_data, analyst_data, technical_data = results
 
         state.update_news_data(news_data)
         state.update_sector_data(sector_data)
         state.update_trade_data(trade_data)
         state.update_financial_data(financial_data)
+        state.update_indicator_data(indicator_data)
         state.update_analyst_data(analyst_data)
         state.update_technical_data(technical_data)
 

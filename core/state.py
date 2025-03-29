@@ -29,6 +29,7 @@ class MarketData(StockDataState):
 class FinancialData(StockDataState):
     """财务数据状态"""
     financial_data: Optional[pd.DataFrame] = None  # from finance_info_tools
+    indicator_data: Optional[pd.DataFrame] = None  # from stock_indicator_tools
     
 class ResearchData(StockDataState):
     """研究数据状态"""
@@ -109,6 +110,11 @@ class StockAnalysisState(BaseModel):
         """更新财务数据"""
         self.financial_data.financial_data = data
         self.financial_data.last_updated = datetime.now()
+        
+    def update_indicator_data(self, data: pd.DataFrame) -> None:
+        """更新交易指标数据"""
+        self.financial_data.indicator_data = data
+        self.financial_data.last_updated = datetime.now()
 
     def update_technical_data(self, data: pd.DataFrame) -> None:
         """更新技术分析数据"""
@@ -182,6 +188,7 @@ class StockAnalysisState(BaseModel):
             },
             "financial_data": {
                 "financial_data": self.financial_data.financial_data.to_dict() if self.financial_data.financial_data is not None else None,
+                "indicator_data": self.financial_data.indicator_data.to_dict() if self.financial_data.indicator_data is not None else None,
             },
             "research_data": {
                 "analyst_data": self.research_data.analyst_data.to_dict() if self.research_data.analyst_data is not None else None,

@@ -17,7 +17,7 @@ def parse_financial_value(value: str) -> float:
         if "亿" in value:
             return float(value.replace("亿", "").replace(",", "")) * 1e8
         elif "万" in value:
-            return float(value.replace("万", "").replace(",", ""))
+            return float(value.replace("万", "").replace(",", "")) * 1e4
         else:
             return float(value.replace(",", ""))
     return value
@@ -98,6 +98,7 @@ def analyze_stock_financial(symbol: str, start_date: str, end_date: str) -> pd.D
             'debt_eq_ratio': safe_get_value(financial_data, '产权比率', i),
             'debt_asset_ratio': safe_get_value(financial_data, '资产负债率', i)
         }
+       
         metrics_list.append(metrics)
 
     return pd.DataFrame(metrics_list)
