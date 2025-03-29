@@ -5,3 +5,4 @@ task_assign.md
 __pycache__/
 test.py
 *.log
+config.py
