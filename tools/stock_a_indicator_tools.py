@@ -11,16 +11,6 @@ class StockIndicatorInput(BaseModel):
     start_date: str = Field(description="开始日期，格式YYYYMMDD")
     end_date: str = Field(description="结束日期，格式YYYYMMDD")
     
-def parse_financial_value(value: str) -> float:
-    """将包含单位的财务数据转换为标准单位（元）"""
-    if isinstance(value, str):
-        if "亿" in value:
-            return float(value.replace("亿", "").replace(",", "")) * 1e8
-        elif "万" in value:
-            return float(value.replace("万", "").replace(",", "")) * 1e4
-        else:
-            return float(value.replace(",", ""))
-    return value
 
 def safe_get_value(df, column, index, default=None):
     """安全地从DataFrame获取值"""
@@ -70,21 +60,22 @@ def analyze_stock_indicators(symbol: str, start_date: str, end_date: str) -> pd.
         ps_ttm = safe_get_value(indicator_data, 'ps_ttm', i)
         dv_ratio = safe_get_value(indicator_data, 'dv_ratio', i)
         dv_ttm = safe_get_value(indicator_data, 'dv_ttm', i)
-        total_mv = safe_get_value(indicator_data, 'total_mv', i)
+        total_mv = safe_get_value(indicator_data, 'total_mv', i)/10000
+
 
         metrics = {
-            'stock_code': symbol,
-            'stock_name': stock_name,
-            'trade_date': indicator_data['trade_date'].iloc[i],
-            'pe': pe,  # 市盈率
-            'pe_ttm': pe_ttm,  # 市盈率TTM
-            'pb': pb,  # 市净率
-            'ps': ps,  # 市销率
-            'ps_ttm': ps_ttm,  # 市销率TTM
-            'dv_ratio': dv_ratio,  # 股息率
-            'dv_ttm': dv_ttm,  # 股息率TTM
-            'total_mv': total_mv,  # 总市值
-        }
+        'stock_code': symbol,
+        'stock_name': stock_name,
+        'trade_date': indicator_data['trade_date'].iloc[i],
+        'pe': pe,           # 市盈率
+        'pe_ttm': pe_ttm,   # 市盈率TTM
+        'pb': pb,           # 市净率
+        'ps': ps,           # 市销率
+        'ps_ttm': ps_ttm,   # 市销率TTM
+        'dv_ratio': dv_ratio,   # 股息率
+        'dv_ttm': dv_ttm,       # 股息率TTM
+        'total_mv': total_mv,  # 总市值：以亿元为单位，保留两位小数
+    }
         
         # 添加一些派生指标
         if pe and pe > 0:
@@ -117,7 +108,7 @@ def analyze_stock_indicators(symbol: str, start_date: str, end_date: str) -> pd.
 
 if __name__ == "__main__":
     # 示例参数
-    symbol = "000001"
+    symbol = "600004"
     start_date = "20230101"
     end_date = "20241231"
 
