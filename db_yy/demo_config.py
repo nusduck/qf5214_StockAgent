@@ -7,9 +7,9 @@
 
 # 数据库配置
 DB_CONFIG = {
-    'host': '34.124.141.103',
+    'host': 'IP',
     'user': 'root',
-    'password': '{(gJ4rkQ',  # 请替换为您的实际密码
+    'password': '密码',  # 请替换为您的实际密码
     'database': 'qf',  # 请替换为您的实际数据库名
     'port': 3306
 }
