@@ -4,12 +4,17 @@
 """
 数据库配置文件
 """
+from dotenv import load_dotenv
+import os
 
-# 数据库配置
+# 加载 .env 文件
+load_dotenv()
+
+# 从环境变量中读取数据库配置
 DB_CONFIG = {
-    'host': 'IP',
-    'user': 'root',
-    'password': '密码',  # 请替换为您的实际密码
-    'database': 'qf',  # 请替换为您的实际数据库名
-    'port': 3306
+    'host': os.getenv('DB_HOST'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'database': os.getenv('DB_NAME'),
+    'port': int(os.getenv('DB_PORT', 3306))
 }
