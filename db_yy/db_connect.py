@@ -21,6 +21,7 @@ import logging
 import traceback
 import time
 from demo_config import DB_CONFIG
+from db_pool import get_connection, release_connection
 
 # 设置日志记录
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -41,23 +42,43 @@ TODAY_DATE = datetime.now().strftime('%Y%m%d')
 def create_db_connection():
     """创建数据库连接"""
     try:
-        connection = mysql.connector.connect(**DB_CONFIG)
+        connection = get_connection()
         return connection
-    except Error as e:
+    except Exception as e:
         logger.error(f"数据库连接错误: {e}")
         return None
 
 def get_table_columns(connection, table_name):
     """获取表的列名"""
+    cursor = None
     try:
         cursor = connection.cursor()
         cursor.execute(f"SHOW COLUMNS FROM {table_name}")
         columns = [row[0] for row in cursor.fetchall()]
-        cursor.close()
         return columns
     except Error as e:
         logger.error(f"获取表 {table_name} 列名时出错: {e}")
+        # 以下是新增的连接恢复逻辑
+        if 'Connection not available' in str(e):  # 新增: 检测连接不可用的错误
+            try:
+                # 新增: 尝试关闭旧连接
+                if connection and hasattr(connection, 'close'):
+                    try:
+                        connection.close()
+                    except:
+                        pass
+                # 新增: 获取新连接并重试
+                new_connection = get_connection()
+                cursor = new_connection.cursor()
+                cursor.execute(f"SHOW COLUMNS FROM {table_name}")
+                columns = [row[0] for row in cursor.fetchall()]
+                return columns
+            except Error as e2:
+                logger.error(f"尝试刷新连接后获取表 {table_name} 列名时出错: {e2}")
         return []
+    finally:
+        if cursor:  # 新增: 确保游标关闭
+            cursor.close()
 
 def convert_datetime_to_string(df):
     """将DataFrame中的datetime对象转换为字符串"""
@@ -84,6 +105,7 @@ def parse_amount(value):
 
 def dataframe_to_sql(connection, df, table_name, if_exists='replace'):
     """将DataFrame数据写入MySQL表"""
+    cursor = None
     try:
         if df.empty:
             logger.warning(f"DataFrame为空，无数据写入 {table_name}")
@@ -155,11 +177,14 @@ def dataframe_to_sql(connection, df, table_name, if_exists='replace'):
         connection.commit()
         
         logger.info(f"成功将 {len(data_values)} 条记录写入 {table_name} 表")
-        cursor.close()
         
     except Exception as e:
         logger.error(f"写入数据到 {table_name} 表时出错: {e}")
         traceback.print_exc()
+    finally:
+        if cursor:
+            cursor.close()
+        # 不在这里关闭连接，让调用函数处理它
 
 def format_date(date_str):
     """格式化日期字符串，确保没有连字符"""
@@ -208,8 +233,8 @@ def download_company_info(connection, max_symbols=None):
                 field_mapping = {
                     '股票代码': 'stock_code',
                     '股票简称': 'stock_name',
-                    '总市值': 'total_market_cap',
-                    '流通市值': 'float_market_cap',
+                    '总市值': 'total_market_cap_100M',  # 修改为db_init.py中定义的字段名
+                    '流通市值': 'float_market_cap_100M',  # 修改为db_init.py中定义的字段名
                     '总股本': 'total_shares',
                     '流通股': 'float_shares',
                     '行业': 'industry',
@@ -222,6 +247,23 @@ def download_company_info(connection, max_symbols=None):
                 # 将长表转换为宽表
                 wide_info = company_info.pivot_table(index=None, columns='item', values='value', aggfunc='first')
                 wide_info_dict = wide_info.to_dict('records')[0] if not wide_info.empty else {}
+                
+                # 将总市值和流通市值转换为亿元单位
+                if 'total_market_cap_100M' in wide_info_dict and wide_info_dict['total_market_cap_100M'] is not None:
+                    try:
+                        value = parse_amount(wide_info_dict['total_market_cap_100M'])
+                        if value is not None:
+                            wide_info_dict['total_market_cap_100M'] = value / 1e8  # 转换为亿元
+                    except:
+                        pass
+                
+                if 'float_market_cap_100M' in wide_info_dict and wide_info_dict['float_market_cap_100M'] is not None:
+                    try:
+                        value = parse_amount(wide_info_dict['float_market_cap_100M'])
+                        if value is not None:
+                            wide_info_dict['float_market_cap_100M'] = value / 1e8  # 转换为亿元
+                    except:
+                        pass
                 
                 all_company_info.append(wide_info_dict)
                 logger.info(f"成功获取公司信息: {symbol}")
@@ -282,11 +324,11 @@ def download_finance_info(connection, max_symbols=None):
                     # 重命名列
                     column_mapping = {
                         '报告期': 'report_date',
-                        '净利润': 'net_profit',
+                        '净利润': 'net_profit_100M',  # 修改为db_init.py中定义的字段名
                         '净利润同比增长率': 'net_profit_yoy',
-                        '扣非净利润': 'net_profit_excl_nr',
+                        '扣非净利润': 'net_profit_excl_nr_100M',  # 修改为db_init.py中定义的字段名
                         '扣非净利润同比增长率': 'net_profit_excl_nr_yoy',
-                        '营业总收入': 'total_revenue',
+                        '营业总收入': 'total_revenue_100M',  # 修改为db_init.py中定义的字段名
                         '营业总收入同比增长率': 'total_revenue_yoy',
                         '基本每股收益': 'basic_eps',
                         '每股净资产': 'net_asset_ps',
@@ -313,11 +355,17 @@ def download_finance_info(connection, max_symbols=None):
                             finance_df.rename(columns={old_col: new_col}, inplace=True)
                     
                     # 金额字段转换
-                    for col in ['net_profit', 'net_profit_excl_nr', 'total_revenue',
+                    for col in ['net_profit_100M', 'net_profit_excl_nr_100M', 'total_revenue_100M',
                                 'basic_eps', 'net_asset_ps', 'capital_reserve_ps',
                                 'retained_earnings_ps', 'op_cash_flow_ps']:
                         if col in finance_df.columns:
-                            finance_df[col] = finance_df[col].apply(parse_amount)
+                            if col in ['total_revenue_100M', 'net_profit_100M', 'net_profit_excl_nr_100M']:
+                                # 将这些金额转换为亿元单位
+                                finance_df[col] = finance_df[col].apply(
+                                    lambda x: parse_amount(x) / 1e8 if parse_amount(x) is not None else None
+                                )
+                            else:
+                                finance_df[col] = finance_df[col].apply(parse_amount)
                     
                     # 日期过滤
                     if 'report_date' in finance_df.columns:
@@ -326,6 +374,7 @@ def download_finance_info(connection, max_symbols=None):
                         finance_df = finance_df[finance_df['report_date'] >= fixed_start_date_dt]
                     
                     all_finance_data.append(finance_df)
+                    logger.info(f"成功获取财务信息: {symbol}")
             
             except Exception as e:
                 logger.error(f"获取股票 {symbol} 的财务信息时出错: {e}")
@@ -390,7 +439,7 @@ def download_individual_stock(connection, max_symbols=None):
                         '最高': 'High',
                         '最低': 'Low',
                         '成交量': 'Volume',
-                        '成交额': 'Amount',
+                        '成交额': 'Amount_100M',  # 修改为db_init.py中定义的字段名
                         '振幅': 'Amplitude',
                         '涨跌幅': 'Price_Change_percent',
                         '涨跌额': 'Price_Change',
@@ -400,6 +449,10 @@ def download_individual_stock(connection, max_symbols=None):
                     for old_col, new_col in column_mapping.items():
                         if old_col in stock_df.columns:
                             stock_df.rename(columns={old_col: new_col}, inplace=True)
+                    
+                    # 将成交额转换为亿元单位
+                    if 'Amount_100M' in stock_df.columns:
+                        stock_df['Amount_100M'] = stock_df['Amount_100M'] / 1e8
                     
                     all_stock_data.append(stock_df)
             
@@ -433,15 +486,20 @@ def download_individual_stock(connection, max_symbols=None):
         traceback.print_exc()
 
 def download_stock_news(connection, max_symbols=None):
-    """下载股票新闻并存储到数据库"""
-    logger.info("开始下载股票新闻...")
+    """下载股票新闻并存储到数据库，仅获取最近一个月的新闻"""
+    logger.info("开始下载股票新闻（最近一个月）...")
     try:
         # 获取股票列表
         stock_list_df = get_stock_list()
         symbols = stock_list_df['代码'].tolist()
         
+        # 使用max_symbols参数限制处理的股票数量
         if max_symbols and len(symbols) > max_symbols:
-            symbols = symbols[:50]  # 对于新闻，我们取前50只股票就足够了
+            symbols = symbols[:max_symbols]
+        
+        # 计算一个月前的日期
+        one_month_ago = (datetime.now() - timedelta(days=30)).strftime('%Y%m%d')
+        logger.info(f"获取从 {one_month_ago} 开始的新闻")
         
         all_news_data = []
         total = len(symbols)
@@ -473,11 +531,12 @@ def download_stock_news(connection, max_symbols=None):
                     # 添加快照时间
                     news_df['snapshot_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     
-                    # 过滤日期
+                    # 过滤日期为最近一个月
                     if 'publish_time' in news_df.columns:
                         news_df['publish_time'] = pd.to_datetime(news_df['publish_time'])
-                        fixed_start_date_dt = pd.to_datetime(FIXED_START_DATE, format='%Y%m%d')
-                        news_df = news_df[news_df['publish_time'] >= fixed_start_date_dt]
+                        one_month_ago_dt = pd.to_datetime(one_month_ago, format='%Y%m%d')
+                        news_df = news_df[news_df['publish_time'] >= one_month_ago_dt]
+                        
                         # 转换为字符串，避免timestamp类型转换问题
                         news_df['publish_time'] = news_df['publish_time'].dt.strftime('%Y-%m-%d %H:%M:%S')
                     
@@ -547,7 +606,7 @@ def download_sector_data(connection):
                         '涨跌幅': 'change_percent',
                         '涨跌额': 'change_amount',
                         '成交量': 'volume',
-                        '成交额': 'amount',
+                        '成交额': 'amount_100M', # 修改为db_init.py中定义的字段名
                         '振幅': 'amplitude',
                         '换手率': 'turnover_rate'
                     }
@@ -555,6 +614,10 @@ def download_sector_data(connection):
                     for old_col, new_col in column_mapping.items():
                         if old_col in sector_df.columns:
                             sector_df.rename(columns={old_col: new_col}, inplace=True)
+                    
+                    # 将成交额转换为亿元单位
+                    if 'amount_100M' in sector_df.columns:
+                        sector_df['amount_100M'] = sector_df['amount_100M'] / 1e8
                     
                     all_sector_data.append(sector_df)
             
@@ -585,7 +648,7 @@ def download_sector_data(connection):
     except Exception as e:
         logger.error(f"下载行业数据时出错: {e}")
         traceback.print_exc()
-
+        
 def download_analyst_ratings(connection):
     """下载分析师评级并存储到数据库"""
     logger.info("开始下载分析师评级...")
@@ -754,6 +817,11 @@ def download_stock_a_indicator(connection, max_symbols=None):
                     indicator_df['trade_date'] = pd.to_datetime(indicator_df['trade_date'])
                     fixed_start_date_dt = pd.to_datetime(FIXED_START_DATE, format='%Y%m%d')
                     indicator_df = indicator_df[indicator_df['trade_date'] >= fixed_start_date_dt]
+                    
+                    # 将总市值转换为亿元单位
+                    if 'total_mv' in indicator_df.columns:
+                        indicator_df['total_mv_100M'] = indicator_df['total_mv'] / 1e8  # 修改列名并转换单位
+                        indicator_df.drop('total_mv', axis=1, inplace=True)  # 删除原列
                     
                     # 计算一些额外指标
                     if 'pe' in indicator_df.columns and indicator_df['pe'].notna().any():
@@ -1062,8 +1130,8 @@ def main():
         logger.error(f"数据下载过程中出错: {e}")
         traceback.print_exc()
     finally:
-        if connection:
-            connection.close()
+        # 正确地将连接释放回连接池
+        release_connection(connection)
 
 if __name__ == "__main__":
     main()
