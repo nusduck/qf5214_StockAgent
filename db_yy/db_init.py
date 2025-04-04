@@ -31,7 +31,8 @@ def create_connection(host_name, user_name, user_password, db_name=None):
             host=host_name,
             user=user_name,
             passwd=user_password,
-            database=db_name
+            database=db_name,
+            auth_plugin='mysql_native_password'  # 明确指定使用传统认证插件
         )
         logger.info("MySQL数据库连接成功")
     except Error as e:
@@ -78,8 +79,8 @@ def create_tables(connection):
         CREATE TABLE IF NOT EXISTS company_info (
             stock_code VARCHAR(10) COMMENT '股票代码',
             stock_name VARCHAR(50) COMMENT '股票简称',
-            total_market_cap VARCHAR(255) COMMENT '总市值',
-            float_market_cap VARCHAR(255) COMMENT '流通市值',
+            total_market_cap_100M VARCHAR(255) COMMENT '总市值',
+            float_market_cap_100M VARCHAR(255) COMMENT '流通市值',
             industry VARCHAR(255) COMMENT '行业',
             ipo_date VARCHAR(255) COMMENT '上市时间',
             total_shares VARCHAR(255) COMMENT '总股本',
@@ -95,11 +96,11 @@ def create_tables(connection):
             stock_code VARCHAR(50) NOT NULL,
             stock_name VARCHAR(255),
             report_date DATE,
-            net_profit DECIMAL(18, 2),
+            net_profit_100M DECIMAL(18, 2),
             net_profit_yoy DECIMAL(10, 2),
-            net_profit_excl_nr DECIMAL(18, 2),
+            net_profit_excl_nr_100M DECIMAL(18, 2),
             net_profit_excl_nr_yoy DECIMAL(10, 2),
-            total_revenue DECIMAL(18, 2),
+            total_revenue_100M DECIMAL(18, 2),
             total_revenue_yoy DECIMAL(10, 2),
             basic_eps DECIMAL(10, 4),
             net_asset_ps DECIMAL(18, 2),
@@ -134,7 +135,7 @@ def create_tables(connection):
             High DECIMAL(18, 2) COMMENT 'Highest Price',
             Low DECIMAL(18, 2) COMMENT 'Lowest Price',
             Volume BIGINT COMMENT 'Trading Volume',
-            Amount DECIMAL(20, 2) COMMENT 'Trading Amount',
+            Amount_100M DECIMAL(20, 2) COMMENT 'Trading Amount',
             Amplitude DECIMAL(10, 2) COMMENT 'Amplitude',
             Price_Change_percent DECIMAL(10, 2) COMMENT 'Price Change Percentage',
             Price_Change DECIMAL(18, 2) COMMENT 'Price Change Amount',
@@ -156,7 +157,7 @@ def create_tables(connection):
             change_percent DECIMAL(5, 2),
             change_amount DECIMAL(10, 2),
             volume BIGINT,
-            amount DECIMAL(20, 4),
+            amount_100M DECIMAL(20, 4),
             amplitude DECIMAL(5, 2),
             turnover_rate DECIMAL(5, 2),
             etl_date DATE
@@ -175,25 +176,12 @@ def create_tables(connection):
             ps_ttm DECIMAL(18, 2),
             dv_ratio DECIMAL(18, 2),
             dv_ttm DECIMAL(18, 2),
-            total_mv DECIMAL(20, 2),
+            total_mv_100M DECIMAL(20, 2),
             earnings_yield DECIMAL(18, 2),
             pb_inverse DECIMAL(18, 2),
             graham_index DECIMAL(18, 2),
             etl_date DATE,
             PRIMARY KEY (stock_code, trade_date)
-        )
-        """,
-
-        'stock_info': """
-        CREATE TABLE IF NOT EXISTS stock_info (
-            stock_code VARCHAR(255) COMMENT '股票代码',
-            stock_name VARCHAR(255) COMMENT '股票简称',
-            total_shares VARCHAR(255) COMMENT '总股本',
-            industry VARCHAR(255) COMMENT '行业',
-            ipo_date VARCHAR(255) COMMENT '上市时间',
-            snap_date VARCHAR(255) COMMENT '快照日期',
-            etl_date DATE COMMENT 'ETL日期',
-            biz_date INT COMMENT '业务日期'
         )
         """,
 
