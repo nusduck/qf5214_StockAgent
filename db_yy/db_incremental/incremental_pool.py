@@ -43,7 +43,7 @@ class DatabaseConnectionPool:
                 'pool_size': self.pool_size,
                 'pool_reset_session': True,
                 'auth_plugin': 'mysql_native_password',  # 明确指定使用传统认证插件
-                'use_pure': True,  # 使用纯Python实现，避免C扩展问题
+                # 'use_pure': True,  # 使用纯Python实现，避免C扩展问题
                 'connection_timeout': self.connection_timeout,
                 'autocommit': True,  # 自动提交，避免事务遗留问题
                 'get_warnings': True,  # 获取警告

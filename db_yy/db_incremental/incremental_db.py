@@ -23,7 +23,21 @@ import traceback
 import time
 from demo_config import DB_CONFIG
 from db_pool import get_connection, release_connection
-from db_connect import (
+
+# 修复导入路径
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
+
+# 确保 database_connect 目录在路径中
+database_connect_dir = os.path.join(parent_dir, 'database_connect')
+if database_connect_dir not in sys.path:
+    sys.path.insert(0, database_connect_dir)
+
+# 现在导入 db_connect 模块
+from database_connect.db_connect import (
     get_stock_list, format_date, dataframe_to_sql, parse_amount, 
     convert_datetime_to_string, get_table_columns, TODAY_DATE, FIXED_START_DATE
 )
@@ -649,7 +663,7 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
         
         # 获取该日期已处理的股票代码
         processed_stocks = []
-        if latest_date and not is_empty:
+        if (latest_date and not is_empty):
             processed_stocks = get_processed_stocks(connection, 'individual_stock', 'Date', 'Stock_Code')
             logger.info(f"最新交易日期: {latest_date}, 已处理 {len(processed_stocks)} 只股票")
         else:

@@ -1,0 +1,283 @@
+2025-04-05 23:08:42,049 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:08:42,052 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,053 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,053 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,053 - __main__ - ERROR - 任务 公司信息增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,054 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,055 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,055 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,060 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,060 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,061 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,061 - __main__ - ERROR - 任务 财务信息增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,061 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,062 - __main__ - ERROR - 任务 个股历史数据增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,062 - __main__ - ERROR - 任务 股票新闻增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,062 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,063 - __main__ - ERROR - 任务 行业数据增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,063 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,063 - incremental_pool - ERROR - 初始化连接池出错: Connection configuration not valid: Unsupported argument 'use_pure'
+2025-04-05 23:08:42,064 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,064 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,065 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:08:42,065 - __main__ - ERROR - 任务 分析师评级增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,065 - __main__ - ERROR - 任务 技术指标增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,066 - __main__ - ERROR - 任务 股票指标增量: 无法获取数据库连接，任务退出
+2025-04-05 23:08:42,068 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:10:10,566 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:10:10,576 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,577 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,577 - __main__ - ERROR - 任务 公司信息增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,580 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,581 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,581 - __main__ - ERROR - 任务 财务信息增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,583 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,583 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,584 - __main__ - ERROR - 任务 股票新闻增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,608 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,609 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,610 - __main__ - ERROR - 任务 行业数据增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,611 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,611 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,612 - __main__ - ERROR - 任务 分析师评级增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,612 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,613 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,613 - __main__ - ERROR - 任务 技术指标增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,613 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,614 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,614 - __main__ - ERROR - 任务 股票指标增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,615 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:10:10,615 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:10:10,616 - __main__ - ERROR - 任务 个股历史数据增量: 无法获取数据库连接，任务退出
+2025-04-05 23:10:10,617 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:12:21,214 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:12:21,221 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,221 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,222 - __main__ - ERROR - 任务 公司信息增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,222 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,223 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,223 - __main__ - ERROR - 任务 财务信息增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,225 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,225 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,226 - __main__ - ERROR - 任务 股票新闻增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,226 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,226 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,227 - __main__ - ERROR - 任务 行业数据增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,227 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,229 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,229 - __main__ - ERROR - 任务 分析师评级增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,229 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,229 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,230 - __main__ - ERROR - 任务 个股历史数据增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,230 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,230 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,231 - __main__ - ERROR - 任务 股票指标增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,231 - incremental_pool - ERROR - 初始化连接池出错: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:12:21,231 - incremental_pool - ERROR - 获取数据库连接池连接时出错: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:12:21,232 - __main__ - ERROR - 任务 技术指标增量: 无法获取数据库连接，任务退出
+2025-04-05 23:12:21,232 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:16:35,269 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:16:35,271 - __main__ - ERROR - 增量任务失败: 公司信息增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,272 - __main__ - ERROR - 增量任务失败: 财务信息增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,272 - __main__ - ERROR - 增量任务失败: 个股历史数据增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,272 - __main__ - ERROR - 增量任务失败: 股票新闻增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,273 - __main__ - ERROR - 增量任务失败: 行业数据增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,273 - __main__ - ERROR - 增量任务失败: 分析师评级增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,273 - __main__ - ERROR - 增量任务失败: 技术指标增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,273 - __main__ - ERROR - 增量任务失败: 股票指标增量, 错误信息: mysql.connector.pooling.MySQLConnectionPool() got multiple values for keyword argument 'auth_plugin'
+2025-04-05 23:16:35,275 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:17:18,042 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:17:18,047 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,048 - __main__ - ERROR - 增量任务失败: 公司信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,050 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,050 - __main__ - ERROR - 增量任务失败: 财务信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,051 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,052 - __main__ - ERROR - 增量任务失败: 股票新闻增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,053 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,054 - __main__ - ERROR - 增量任务失败: 行业数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,055 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,055 - __main__ - ERROR - 增量任务失败: 分析师评级增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,056 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,057 - __main__ - ERROR - 增量任务失败: 技术指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,057 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,058 - __main__ - ERROR - 增量任务失败: 个股历史数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,058 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:17:18,060 - __main__ - ERROR - 增量任务失败: 股票指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:17:18,061 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:22:35,337 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:22:35,342 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,342 - __main__ - ERROR - 增量任务失败: 公司信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,343 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,344 - __main__ - ERROR - 增量任务失败: 财务信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,344 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,345 - __main__ - ERROR - 增量任务失败: 股票新闻增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,345 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,346 - __main__ - ERROR - 增量任务失败: 行业数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,346 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,347 - __main__ - ERROR - 增量任务失败: 个股历史数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,348 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,348 - __main__ - ERROR - 增量任务失败: 分析师评级增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,349 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,349 - __main__ - ERROR - 增量任务失败: 技术指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,350 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:22:35,350 - __main__ - ERROR - 增量任务失败: 股票指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:22:35,351 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:29:13,997 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:29:13,997 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,002 - __main__ - ERROR - 增量任务失败: 公司信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,002 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,002 - __main__ - ERROR - 增量任务失败: 财务信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,002 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,002 - __main__ - ERROR - 增量任务失败: 股票新闻增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,005 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,005 - __main__ - ERROR - 增量任务失败: 行业数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,005 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,005 - __main__ - ERROR - 增量任务失败: 分析师评级增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,007 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,007 - __main__ - ERROR - 增量任务失败: 技术指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,007 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,009 - __main__ - ERROR - 增量任务失败: 股票指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,009 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:14,009 - __main__ - ERROR - 增量任务失败: 个股历史数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:14,009 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:29:21,533 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:29:21,539 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,540 - __main__ - ERROR - 增量任务失败: 公司信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,541 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,542 - __main__ - ERROR - 增量任务失败: 财务信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,542 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,543 - __main__ - ERROR - 增量任务失败: 股票新闻增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,543 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,545 - __main__ - ERROR - 增量任务失败: 个股历史数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,545 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,546 - __main__ - ERROR - 增量任务失败: 行业数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,547 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,548 - __main__ - ERROR - 增量任务失败: 分析师评级增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,548 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,549 - __main__ - ERROR - 增量任务失败: 股票指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,550 - db_pool - ERROR - Error initializing connection pool: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+2025-04-05 23:29:21,550 - __main__ - ERROR - 增量任务失败: 技术指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:29:21,551 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:33:59,244 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:33:59,265 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,267 - __main__ - ERROR - 增量任务失败: 公司信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,280 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,280 - __main__ - ERROR - 增量任务失败: 财务信息增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,296 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,297 - __main__ - ERROR - 增量任务失败: 股票新闻增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,310 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,311 - __main__ - ERROR - 增量任务失败: 分析师评级增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,332 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,333 - __main__ - ERROR - 增量任务失败: 个股历史数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,349 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,350 - __main__ - ERROR - 增量任务失败: 行业数据增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,366 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,367 - __main__ - ERROR - 增量任务失败: 技术指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,381 - db_pool - ERROR - Error initializing connection pool: Authentication plugin 'caching_sha2_password' is not supported
+2025-04-05 23:33:59,382 - __main__ - ERROR - 增量任务失败: 股票指标增量, 错误信息: 'DatabaseConnectionPool' object has no attribute 'connection_pool'
+2025-04-05 23:33:59,383 - __main__ - INFO - 所有增量任务执行完毕
+2025-04-05 23:36:21,263 - __main__ - INFO - 开始多线程增量数据获取，最大线程数: 4，最大股票数: 99999，批处理大小: 300
+2025-04-05 23:36:23,383 - db_pool - INFO - Database connection pool initialized with size: 10
+2025-04-05 23:36:24,133 - db_pool - INFO - Database connection pool initialized with size: 10
+2025-04-05 23:36:24,477 - __main__ - INFO - 开始执行增量任务: 财务信息增量
+2025-04-05 23:36:24,478 - incremental_db - INFO - 开始下载财务信息增量...
+2025-04-05 23:36:24,486 - __main__ - INFO - 开始执行增量任务: 公司信息增量
+2025-04-05 23:36:24,486 - incremental_db - INFO - 开始下载公司信息增量...
+2025-04-05 23:36:24,532 - incremental_db - INFO - 最新报告期日期: 2024-12-31, 已处理 18 只股票
+2025-04-05 23:36:24,653 - db_pool - INFO - Database connection pool initialized with size: 10
+2025-04-05 23:36:25,365 - db_pool - INFO - Database connection pool initialized with size: 10
+2025-04-05 23:36:25,426 - __main__ - INFO - 开始执行增量任务: 股票新闻增量
+2025-04-05 23:36:25,427 - incremental_db - INFO - 开始下载股票新闻增量...
+2025-04-05 23:36:25,436 - __main__ - INFO - 开始执行增量任务: 个股历史数据增量
+2025-04-05 23:36:25,437 - incremental_db - INFO - 开始下载个股历史数据增量...
+2025-04-05 23:36:25,477 - incremental_db - INFO - 最新新闻发布时间: 2025-04-05 17:17:55
+2025-04-05 23:36:25,585 - incremental_db - INFO - 最新交易日期: 2025-04-03, 已处理 6 只股票
+2025-04-05 23:36:25,587 - incremental_db - INFO - 增量数据起始日期: 20250404, 结束日期: 20250405
+2025-04-05 23:36:45,033 - incremental_db - INFO - 发现 4919 只股票需要获取公司信息
+2025-04-05 23:36:45,033 - incremental_db - INFO - 处理 [1/4919] 股票 001322 的公司信息
+2025-04-05 23:36:45,835 - incremental_db - INFO - 处理 [1/5406] 股票 000001 的新闻增量
+2025-04-05 23:36:46,220 - incremental_db - INFO - 发现 5388 只股票需要获取财务信息
+2025-04-05 23:36:46,220 - incremental_db - INFO - 处理 [1/5388] 股票 000004 的财务信息
+2025-04-05 23:36:46,709 - incremental_db - INFO - 成功插入股票 001322 的公司信息
+2025-04-05 23:36:46,709 - incremental_db - INFO - 处理 [2/4919] 股票 001323 的公司信息
+2025-04-05 23:36:46,730 - incremental_db - INFO - 过滤后新闻数: 0/100
+2025-04-05 23:36:46,730 - incremental_db - INFO - 股票 000001 没有新的新闻数据
+2025-04-05 23:36:46,732 - incremental_db - INFO - 处理 [2/5406] 股票 000002 的新闻增量
+2025-04-05 23:36:47,722 - incremental_db - INFO - 过滤后新闻数: 0/100
+2025-04-05 23:36:47,723 - incremental_db - INFO - 股票 000002 没有新的新闻数据
+2025-04-05 23:36:47,724 - incremental_db - INFO - 处理 [3/5406] 股票 000004 的新闻增量
+2025-04-05 23:36:47,735 - incremental_db - INFO - 成功插入股票 001323 的公司信息
+2025-04-05 23:36:47,736 - incremental_db - INFO - 处理 [3/4919] 股票 001324 的公司信息
+2025-04-05 23:36:48,273 - incremental_db - INFO - 股票 000004 没有新的财务信息数据
+2025-04-05 23:36:48,273 - incremental_db - INFO - 处理 [2/5388] 股票 000006 的财务信息
+2025-04-05 23:36:48,459 - incremental_db - INFO - 过滤后新闻数: 2/100
+2025-04-05 23:36:48,541 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 2 条记录
+2025-04-05 23:36:48,541 - incremental_db - INFO - 成功插入股票 000004 的新闻: 2 条
+2025-04-05 23:36:48,541 - incremental_db - INFO - 处理 [4/5406] 股票 000006 的新闻增量
+2025-04-05 23:36:48,894 - incremental_db - INFO - 成功插入股票 001324 的公司信息
+2025-04-05 23:36:48,894 - incremental_db - INFO - 处理 [4/4919] 股票 001326 的公司信息
+2025-04-05 23:36:49,573 - incremental_db - INFO - 发现 5400 只股票在最新日期 2025-04-03 尚未处理
+2025-04-05 23:36:49,575 - incremental_db - INFO - 处理 [1/5406] 股票 000001 的历史数据增量
+2025-04-05 23:36:50,429 - incremental_db - INFO - 股票 000006 没有新的财务信息数据
+2025-04-05 23:36:50,430 - incremental_db - INFO - 处理 [3/5388] 股票 000007 的财务信息
+2025-04-05 23:36:50,660 - incremental_db - INFO - 成功插入股票 001326 的公司信息
+2025-04-05 23:36:50,661 - incremental_db - INFO - 处理 [5/4919] 股票 001328 的公司信息
+2025-04-05 23:36:51,008 - incremental_db - INFO - 过滤后新闻数: 4/100
+2025-04-05 23:36:51,065 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 4 条记录
+2025-04-05 23:36:51,066 - incremental_db - INFO - 成功插入股票 000006 的新闻: 4 条
+2025-04-05 23:36:51,066 - incremental_db - INFO - 处理 [5/5406] 股票 000007 的新闻增量
+2025-04-05 23:36:51,367 - incremental_db - INFO - 股票 000001 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:51,367 - incremental_db - INFO - 处理 [2/5406] 股票 000002 的历史数据增量
+2025-04-05 23:36:51,755 - incremental_db - INFO - 成功插入股票 001328 的公司信息
+2025-04-05 23:36:51,756 - incremental_db - INFO - 处理 [6/4919] 股票 001330 的公司信息
+2025-04-05 23:36:52,091 - incremental_db - INFO - 过滤后新闻数: 1/100
+2025-04-05 23:36:52,128 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 1 条记录
+2025-04-05 23:36:52,129 - incremental_db - INFO - 成功插入股票 000007 的新闻: 1 条
+2025-04-05 23:36:52,307 - incremental_db - INFO - 股票 000002 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:52,308 - incremental_db - INFO - 处理 [3/5406] 股票 000004 的历史数据增量
+2025-04-05 23:36:52,495 - incremental_db - INFO - 股票 000007 没有新的财务信息数据
+2025-04-05 23:36:52,495 - incremental_db - INFO - 处理 [4/5388] 股票 000008 的财务信息
+2025-04-05 23:36:52,806 - incremental_db - INFO - 成功插入股票 001330 的公司信息
+2025-04-05 23:36:52,807 - incremental_db - INFO - 处理 [7/4919] 股票 001331 的公司信息
+2025-04-05 23:36:53,130 - incremental_db - INFO - 处理 [6/5406] 股票 000008 的新闻增量
+2025-04-05 23:36:53,786 - incremental_db - INFO - 成功插入股票 001331 的公司信息
+2025-04-05 23:36:53,787 - incremental_db - INFO - 处理 [8/4919] 股票 001332 的公司信息
+2025-04-05 23:36:54,656 - incremental_db - INFO - 股票 000004 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:54,656 - incremental_db - INFO - 处理 [4/5406] 股票 000006 的历史数据增量
+2025-04-05 23:36:54,772 - incremental_db - INFO - 成功插入股票 001332 的公司信息
+2025-04-05 23:36:54,773 - incremental_db - INFO - 处理 [9/4919] 股票 001333 的公司信息
+2025-04-05 23:36:54,910 - incremental_db - INFO - 股票 000008 没有新的财务信息数据
+2025-04-05 23:36:54,910 - incremental_db - INFO - 处理 [5/5388] 股票 000009 的财务信息
+2025-04-05 23:36:55,639 - incremental_db - INFO - 股票 000006 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:55,640 - incremental_db - INFO - 处理 [5/5406] 股票 000007 的历史数据增量
+2025-04-05 23:36:55,814 - incremental_db - INFO - 成功插入股票 001333 的公司信息
+2025-04-05 23:36:55,814 - incremental_db - INFO - 处理 [10/4919] 股票 001336 的公司信息
+2025-04-05 23:36:56,539 - incremental_db - INFO - 股票 000007 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:56,540 - incremental_db - INFO - 处理 [6/5406] 股票 000008 的历史数据增量
+2025-04-05 23:36:56,763 - incremental_db - INFO - 股票 000009 没有新的财务信息数据
+2025-04-05 23:36:56,764 - incremental_db - INFO - 处理 [6/5388] 股票 000010 的财务信息
+2025-04-05 23:36:56,811 - incremental_db - INFO - 过滤后新闻数: 5/100
+2025-04-05 23:36:56,876 - incremental_db - INFO - 成功插入股票 001336 的公司信息
+2025-04-05 23:36:56,925 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 5 条记录
+2025-04-05 23:36:56,926 - incremental_db - INFO - 成功插入股票 000008 的新闻: 5 条
+2025-04-05 23:36:56,926 - incremental_db - INFO - 处理 [7/5406] 股票 000009 的新闻增量
+2025-04-05 23:36:57,473 - incremental_db - INFO - 股票 000008 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:57,475 - incremental_db - INFO - 处理 [7/5406] 股票 000009 的历史数据增量
+2025-04-05 23:36:57,508 - incremental_db - INFO - 过滤后新闻数: 0/100
+2025-04-05 23:36:57,510 - incremental_db - INFO - 股票 000009 没有新的新闻数据
+2025-04-05 23:36:57,510 - incremental_db - INFO - 处理 [8/5406] 股票 000010 的新闻增量
+2025-04-05 23:36:57,877 - incremental_db - INFO - 处理 [11/4919] 股票 001337 的公司信息
+2025-04-05 23:36:58,327 - incremental_db - INFO - 过滤后新闻数: 2/100
+2025-04-05 23:36:58,431 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 2 条记录
+2025-04-05 23:36:58,435 - incremental_db - INFO - 成功插入股票 000010 的新闻: 2 条
+2025-04-05 23:36:58,441 - incremental_db - INFO - 股票 000009 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:58,443 - incremental_db - INFO - 处理 [9/5406] 股票 000011 的新闻增量
+2025-04-05 23:36:58,512 - incremental_db - INFO - 处理 [8/5406] 股票 000010 的历史数据增量
+2025-04-05 23:36:58,552 - incremental_db - INFO - 股票 000010 没有新的财务信息数据
+2025-04-05 23:36:58,552 - incremental_db - INFO - 处理 [7/5388] 股票 000012 的财务信息
+2025-04-05 23:36:58,975 - incremental_db - INFO - 成功插入股票 001337 的公司信息
+2025-04-05 23:36:58,975 - incremental_db - INFO - 处理 [12/4919] 股票 001338 的公司信息
+2025-04-05 23:36:59,412 - incremental_db - INFO - 股票 000010 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:36:59,413 - incremental_db - INFO - 处理 [9/5406] 股票 000011 的历史数据增量
+2025-04-05 23:37:00,474 - incremental_db - INFO - 成功插入股票 001338 的公司信息
+2025-04-05 23:37:00,474 - incremental_db - INFO - 处理 [13/4919] 股票 001339 的公司信息
