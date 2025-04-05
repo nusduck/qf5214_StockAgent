@@ -281,3 +281,204 @@
 2025-04-05 23:36:59,413 - incremental_db - INFO - 处理 [9/5406] 股票 000011 的历史数据增量
 2025-04-05 23:37:00,474 - incremental_db - INFO - 成功插入股票 001338 的公司信息
 2025-04-05 23:37:00,474 - incremental_db - INFO - 处理 [13/4919] 股票 001339 的公司信息
+2025-04-05 23:37:01,070 - incremental_db - INFO - 过滤后新闻数: 2/100
+2025-04-05 23:37:01,073 - incremental_db - INFO - 股票 000012 没有新的财务信息数据
+2025-04-05 23:37:01,075 - incremental_db - INFO - 处理 [8/5388] 股票 000016 的财务信息
+2025-04-05 23:37:01,133 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 2 条记录
+2025-04-05 23:37:01,134 - incremental_db - INFO - 成功插入股票 000011 的新闻: 2 条
+2025-04-05 23:37:01,134 - incremental_db - INFO - 处理 [10/5406] 股票 000012 的新闻增量
+2025-04-05 23:37:01,711 - incremental_db - INFO - 股票 000011 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:01,712 - incremental_db - INFO - 处理 [10/5406] 股票 000012 的历史数据增量
+2025-04-05 23:37:02,470 - incremental_db - INFO - 成功插入股票 001339 的公司信息
+2025-04-05 23:37:02,470 - incremental_db - INFO - 处理 [14/4919] 股票 001356 的公司信息
+2025-04-05 23:37:02,685 - incremental_db - INFO - 股票 000012 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:02,919 - incremental_db - INFO - 股票 000016 没有新的财务信息数据
+2025-04-05 23:37:02,919 - incremental_db - INFO - 处理 [9/5388] 股票 000017 的财务信息
+2025-04-05 23:37:03,597 - incremental_db - INFO - 成功插入股票 001356 的公司信息
+2025-04-05 23:37:03,598 - incremental_db - INFO - 处理 [15/4919] 股票 001358 的公司信息
+2025-04-05 23:37:03,687 - incremental_db - INFO - 处理 [11/5406] 股票 000014 的历史数据增量
+2025-04-05 23:37:04,642 - incremental_db - INFO - 成功插入股票 001358 的公司信息
+2025-04-05 23:37:04,642 - incremental_db - INFO - 处理 [16/4919] 股票 001359 的公司信息
+2025-04-05 23:37:04,824 - incremental_db - INFO - 股票 000014 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:04,824 - incremental_db - INFO - 处理 [12/5406] 股票 000016 的历史数据增量
+2025-04-05 23:37:05,716 - incremental_db - INFO - 股票 000016 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:05,718 - incremental_db - INFO - 处理 [13/5406] 股票 000017 的历史数据增量
+2025-04-05 23:37:06,355 - incremental_db - INFO - 股票 000017 没有新的财务信息数据
+2025-04-05 23:37:06,355 - incremental_db - INFO - 处理 [10/5388] 股票 000019 的财务信息
+2025-04-05 23:37:06,630 - incremental_db - INFO - 股票 000017 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:06,631 - incremental_db - INFO - 处理 [14/5406] 股票 000019 的历史数据增量
+2025-04-05 23:37:06,682 - incremental_db - INFO - 成功插入股票 001359 的公司信息
+2025-04-05 23:37:06,683 - incremental_db - INFO - 处理 [17/4919] 股票 001360 的公司信息
+2025-04-05 23:37:07,584 - incremental_db - INFO - 股票 000019 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:07,585 - incremental_db - INFO - 处理 [15/5406] 股票 000020 的历史数据增量
+2025-04-05 23:37:07,679 - incremental_db - INFO - 成功插入股票 001360 的公司信息
+2025-04-05 23:37:07,680 - incremental_db - INFO - 处理 [18/4919] 股票 001366 的公司信息
+2025-04-05 23:37:08,505 - incremental_db - INFO - 股票 000020 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:08,506 - incremental_db - INFO - 处理 [16/5406] 股票 000021 的历史数据增量
+2025-04-05 23:37:09,423 - incremental_db - INFO - 股票 000019 没有新的财务信息数据
+2025-04-05 23:37:09,431 - incremental_db - INFO - 成功插入股票 001366 的公司信息
+2025-04-05 23:37:09,431 - incremental_db - INFO - 处理 [19/4919] 股票 001367 的公司信息
+2025-04-05 23:37:09,455 - incremental_db - INFO - 股票 000021 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:09,456 - incremental_db - INFO - 处理 [17/5406] 股票 000025 的历史数据增量
+2025-04-05 23:37:10,390 - incremental_db - INFO - 股票 000025 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:10,390 - incremental_db - INFO - 处理 [18/5406] 股票 000026 的历史数据增量
+2025-04-05 23:37:10,424 - incremental_db - INFO - 处理 [11/5388] 股票 000020 的财务信息
+2025-04-05 23:37:10,476 - incremental_db - INFO - 成功插入股票 001367 的公司信息
+2025-04-05 23:37:10,477 - incremental_db - INFO - 处理 [20/4919] 股票 001368 的公司信息
+2025-04-05 23:37:11,402 - incremental_db - INFO - 股票 000026 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:11,403 - incremental_db - INFO - 处理 [19/5406] 股票 000027 的历史数据增量
+2025-04-05 23:37:12,372 - incremental_db - INFO - 股票 000027 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:12,373 - incremental_db - INFO - 处理 [20/5406] 股票 000028 的历史数据增量
+2025-04-05 23:37:12,419 - incremental_db - INFO - 股票 000020 没有新的财务信息数据
+2025-04-05 23:37:12,420 - incremental_db - INFO - 处理 [12/5388] 股票 000021 的财务信息
+2025-04-05 23:37:13,227 - incremental_db - INFO - 成功插入股票 001368 的公司信息
+2025-04-05 23:37:14,061 - incremental_db - INFO - 股票 000028 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:14,228 - incremental_db - INFO - 处理 [21/4919] 股票 001373 的公司信息
+2025-04-05 23:37:15,062 - incremental_db - INFO - 处理 [21/5406] 股票 000029 的历史数据增量
+2025-04-05 23:37:15,211 - incremental_db - INFO - 成功插入股票 001373 的公司信息
+2025-04-05 23:37:15,212 - incremental_db - INFO - 处理 [22/4919] 股票 001376 的公司信息
+2025-04-05 23:37:16,080 - incremental_db - INFO - 股票 000029 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:16,082 - incremental_db - INFO - 处理 [22/5406] 股票 000030 的历史数据增量
+2025-04-05 23:37:16,083 - incremental_db - INFO - 股票 000021 没有新的财务信息数据
+2025-04-05 23:37:16,085 - incremental_db - INFO - 处理 [13/5388] 股票 000027 的财务信息
+2025-04-05 23:37:16,233 - incremental_db - INFO - 成功插入股票 001376 的公司信息
+2025-04-05 23:37:16,234 - incremental_db - INFO - 处理 [23/4919] 股票 001378 的公司信息
+2025-04-05 23:37:17,015 - incremental_db - INFO - 股票 000030 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:17,016 - incremental_db - INFO - 处理 [23/5406] 股票 000031 的历史数据增量
+2025-04-05 23:37:17,362 - incremental_db - INFO - 成功插入股票 001378 的公司信息
+2025-04-05 23:37:17,362 - incremental_db - INFO - 处理 [24/4919] 股票 001379 的公司信息
+2025-04-05 23:37:17,999 - incremental_db - INFO - 股票 000031 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:18,001 - incremental_db - INFO - 处理 [24/5406] 股票 000032 的历史数据增量
+2025-04-05 23:37:18,005 - incremental_db - INFO - 股票 000027 没有新的财务信息数据
+2025-04-05 23:37:18,006 - incremental_db - INFO - 处理 [14/5388] 股票 000028 的财务信息
+2025-04-05 23:37:18,910 - incremental_db - INFO - 股票 000032 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:18,911 - incremental_db - INFO - 处理 [25/5406] 股票 000034 的历史数据增量
+2025-04-05 23:37:19,389 - incremental_db - INFO - 成功插入股票 001379 的公司信息
+2025-04-05 23:37:19,389 - incremental_db - INFO - 处理 [25/4919] 股票 001380 的公司信息
+2025-04-05 23:37:19,829 - incremental_db - INFO - 股票 000034 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:19,830 - incremental_db - INFO - 处理 [26/5406] 股票 000035 的历史数据增量
+2025-04-05 23:37:20,418 - incremental_db - INFO - 成功插入股票 001380 的公司信息
+2025-04-05 23:37:20,418 - incremental_db - INFO - 处理 [26/4919] 股票 001382 的公司信息
+2025-04-05 23:37:20,769 - incremental_db - INFO - 股票 000028 没有新的财务信息数据
+2025-04-05 23:37:20,770 - incremental_db - INFO - 股票 000035 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:20,770 - incremental_db - INFO - 处理 [15/5388] 股票 000030 的财务信息
+2025-04-05 23:37:20,770 - incremental_db - INFO - 处理 [27/5406] 股票 000036 的历史数据增量
+2025-04-05 23:37:21,733 - incremental_db - INFO - 股票 000036 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:21,733 - incremental_db - INFO - 处理 [28/5406] 股票 000037 的历史数据增量
+2025-04-05 23:37:22,183 - incremental_db - ERROR - 处理股票 000012 的新闻时出错: HTTPConnectionPool(host='search-api-web.eastmoney.com', port=80): Max retries exceeded with url: /search/jsonp?cb=jQuery3510875346244069884_1668256937995&param=%7B%22uid%22%3A%22%22%2C%22keyword%22%3A%22000012%22%2C%22type%22%3A%5B%22cmsArticleWebOld%22%5D%2C%22client%22%3A%22web%22%2C%22clientType%22%3A%22web%22%2C%22clientVersion%22%3A%22curr%22%2C%22param%22%3A%7B%22cmsArticleWebOld%22%3A%7B%22searchScope%22%3A%22default%22%2C%22sort%22%3A%22default%22%2C%22pageIndex%22%3A1%2C%22pageSize%22%3A100%2C%22preTag%22%3A%22%3Cem%3E%22%2C%22postTag%22%3A%22%3C%2Fem%3E%22%7D%7D%7D (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x0000029B89478DD0>, 'Connection to search-api-web.eastmoney.com timed out. (connect timeout=None)'))
+2025-04-05 23:37:22,216 - incremental_db - INFO - 成功插入股票 001382 的公司信息
+2025-04-05 23:37:22,216 - incremental_db - INFO - 处理 [27/4919] 股票 001387 的公司信息
+2025-04-05 23:37:22,361 - incremental_db - ERROR - Traceback (most recent call last):
+  File "D:\Anaconda3\Lib\site-packages\urllib3\connection.py", line 196, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\urllib3\util\connection.py", line 85, in create_connection
+    raise err
+  File "D:\Anaconda3\Lib\site-packages\urllib3\util\connection.py", line 73, in create_connection
+    sock.connect(sa)
+TimeoutError: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Anaconda3\Lib\site-packages\urllib3\connectionpool.py", line 789, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\urllib3\connectionpool.py", line 495, in _make_request
+    conn.request(
+  File "D:\Anaconda3\Lib\site-packages\urllib3\connection.py", line 398, in request
+    self.endheaders()
+  File "D:\Anaconda3\Lib\http\client.py", line 1331, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "D:\Anaconda3\Lib\http\client.py", line 1091, in _send_output
+    self.send(msg)
+  File "D:\Anaconda3\Lib\http\client.py", line 1035, in send
+    self.connect()
+  File "D:\Anaconda3\Lib\site-packages\urllib3\connection.py", line 236, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\urllib3\connection.py", line 205, in _new_conn
+    raise ConnectTimeoutError(
+urllib3.exceptions.ConnectTimeoutError: (<urllib3.connection.HTTPConnection object at 0x0000029B89478DD0>, 'Connection to search-api-web.eastmoney.com timed out. (connect timeout=None)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Anaconda3\Lib\site-packages\requests\adapters.py", line 589, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='search-api-web.eastmoney.com', port=80): Max retries exceeded with url: /search/jsonp?cb=jQuery3510875346244069884_1668256937995&param=%7B%22uid%22%3A%22%22%2C%22keyword%22%3A%22000012%22%2C%22type%22%3A%5B%22cmsArticleWebOld%22%5D%2C%22client%22%3A%22web%22%2C%22clientType%22%3A%22web%22%2C%22clientVersion%22%3A%22curr%22%2C%22param%22%3A%7B%22cmsArticleWebOld%22%3A%7B%22searchScope%22%3A%22default%22%2C%22sort%22%3A%22default%22%2C%22pageIndex%22%3A1%2C%22pageSize%22%3A100%2C%22preTag%22%3A%22%3Cem%3E%22%2C%22postTag%22%3A%22%3C%2Fem%3E%22%7D%7D%7D (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x0000029B89478DD0>, 'Connection to search-api-web.eastmoney.com timed out. (connect timeout=None)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "c:\Users\Lenovo\Desktop\QF5214\project\qf5214_StockAgent\db_yy\db_incremental\incremental_db.py", line 813, in download_stock_news_incremental
+    news_df = ak.stock_news_em(symbol=symbol)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\AppData\Roaming\Python\Python312\site-packages\akshare\news\news_stock.py", line 33, in stock_news_em
+    r = requests.get(url, params=params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\requests\api.py", line 73, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Anaconda3\Lib\site-packages\requests\adapters.py", line 610, in send
+    raise ConnectTimeout(e, request=request)
+requests.exceptions.ConnectTimeout: HTTPConnectionPool(host='search-api-web.eastmoney.com', port=80): Max retries exceeded with url: /search/jsonp?cb=jQuery3510875346244069884_1668256937995&param=%7B%22uid%22%3A%22%22%2C%22keyword%22%3A%22000012%22%2C%22type%22%3A%5B%22cmsArticleWebOld%22%5D%2C%22client%22%3A%22web%22%2C%22clientType%22%3A%22web%22%2C%22clientVersion%22%3A%22curr%22%2C%22param%22%3A%7B%22cmsArticleWebOld%22%3A%7B%22searchScope%22%3A%22default%22%2C%22sort%22%3A%22default%22%2C%22pageIndex%22%3A1%2C%22pageSize%22%3A100%2C%22preTag%22%3A%22%3Cem%3E%22%2C%22postTag%22%3A%22%3C%2Fem%3E%22%7D%7D%7D (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x0000029B89478DD0>, 'Connection to search-api-web.eastmoney.com timed out. (connect timeout=None)'))
+
+2025-04-05 23:37:23,020 - incremental_db - INFO - 股票 000030 没有新的财务信息数据
+2025-04-05 23:37:23,021 - incremental_db - INFO - 处理 [16/5388] 股票 000031 的财务信息
+2025-04-05 23:37:23,201 - incremental_db - INFO - 股票 000037 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:23,203 - incremental_db - INFO - 处理 [29/5406] 股票 000039 的历史数据增量
+2025-04-05 23:37:23,365 - incremental_db - INFO - 处理 [11/5406] 股票 000014 的新闻增量
+2025-04-05 23:37:24,125 - incremental_db - INFO - 股票 000039 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:24,126 - incremental_db - INFO - 处理 [30/5406] 股票 000040 的历史数据增量
+2025-04-05 23:37:24,215 - incremental_db - INFO - 成功插入股票 001387 的公司信息
+2025-04-05 23:37:24,216 - incremental_db - INFO - 处理 [28/4919] 股票 001389 的公司信息
+2025-04-05 23:37:25,064 - incremental_db - INFO - 过滤后新闻数: 2/100
+2025-04-05 23:37:25,109 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 2 条记录
+2025-04-05 23:37:25,110 - incremental_db - INFO - 成功插入股票 000014 的新闻: 2 条
+2025-04-05 23:37:25,111 - incremental_db - INFO - 处理 [12/5406] 股票 000016 的新闻增量
+2025-04-05 23:37:25,250 - incremental_db - INFO - 成功插入股票 001389 的公司信息
+2025-04-05 23:37:25,251 - incremental_db - INFO - 股票 000040 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:25,251 - incremental_db - INFO - 处理 [29/4919] 股票 001391 的公司信息
+2025-04-05 23:37:26,224 - incremental_db - INFO - 成功插入股票 001391 的公司信息
+2025-04-05 23:37:26,225 - incremental_db - INFO - 处理 [30/4919] 股票 001395 的公司信息
+2025-04-05 23:37:26,253 - incremental_db - INFO - 处理 [31/5406] 股票 000042 的历史数据增量
+2025-04-05 23:37:26,654 - incremental_db - INFO - 股票 000031 没有新的财务信息数据
+2025-04-05 23:37:26,654 - incremental_db - INFO - 处理 [17/5388] 股票 000032 的财务信息
+2025-04-05 23:37:27,029 - incremental_db - INFO - 过滤后新闻数: 2/100
+2025-04-05 23:37:27,063 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 2 条记录
+2025-04-05 23:37:27,065 - incremental_db - INFO - 成功插入股票 000016 的新闻: 2 条
+2025-04-05 23:37:27,065 - incremental_db - INFO - 处理 [13/5406] 股票 000017 的新闻增量
+2025-04-05 23:37:27,175 - incremental_db - INFO - 股票 000042 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:27,175 - incremental_db - INFO - 处理 [32/5406] 股票 000045 的历史数据增量
+2025-04-05 23:37:27,265 - incremental_db - INFO - 成功插入股票 001395 的公司信息
+2025-04-05 23:37:28,126 - incremental_db - INFO - 股票 000045 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:28,127 - incremental_db - INFO - 处理 [33/5406] 股票 000048 的历史数据增量
+2025-04-05 23:37:28,266 - incremental_db - INFO - 处理 [31/4919] 股票 001696 的公司信息
+2025-04-05 23:37:28,570 - incremental_db - INFO - 过滤后新闻数: 0/100
+2025-04-05 23:37:28,572 - incremental_db - INFO - 股票 000017 没有新的新闻数据
+2025-04-05 23:37:28,573 - incremental_db - INFO - 处理 [14/5406] 股票 000019 的新闻增量
+2025-04-05 23:37:29,259 - incremental_db - INFO - 成功插入股票 001696 的公司信息
+2025-04-05 23:37:29,260 - incremental_db - INFO - 处理 [32/4919] 股票 001872 的公司信息
+2025-04-05 23:37:29,313 - incremental_db - INFO - 股票 000048 在时间段 20250404 至 20250405 没有数据
+2025-04-05 23:37:29,313 - incremental_db - INFO - 处理 [34/5406] 股票 000049 的历史数据增量
+2025-04-05 23:37:29,657 - incremental_db - INFO - 过滤后新闻数: 3/100
+2025-04-05 23:37:29,695 - incremental_db - INFO - 批量插入批次 1/1 到表 stock_news 成功: 3 条记录
+2025-04-05 23:37:29,696 - incremental_db - INFO - 成功插入股票 000019 的新闻: 3 条
+2025-04-05 23:37:29,696 - incremental_db - INFO - 处理 [15/5406] 股票 000020 的新闻增量
