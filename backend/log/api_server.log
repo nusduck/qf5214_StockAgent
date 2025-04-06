@@ -1,0 +1,107 @@
+2025-04-03 14:48:26,178 - helpers.logger - INFO - 接收到分析请求: 宁德时代
+2025-04-03 14:48:26,179 - helpers.logger - INFO - 使用执行器运行工作流
+2025-04-03 14:48:26,179 - helpers.logger - INFO - 开始执行股票分析工作流: 宁德时代
+2025-04-03 15:22:55,044 - helpers.logger - INFO - 接收到分析请求: 宁德时代
+2025-04-03 15:22:55,044 - helpers.logger - INFO - 使用执行器运行工作流
+2025-04-03 15:22:55,045 - helpers.logger - INFO - 开始执行股票分析工作流: 宁德时代
+2025-04-03 15:38:56,533 - helpers.logger - INFO - 接收到分析请求: 宁德时代
+2025-04-03 15:38:56,533 - helpers.logger - INFO - 使用执行器运行工作流
+2025-04-03 15:38:56,533 - helpers.logger - INFO - 开始执行股票分析工作流: 宁德时代
+2025-04-03 22:02:00,204 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 22:27:19,863 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 22:27:41,077 - helpers.logger - INFO - 创建任务 562a1163-4cae-456d-9f35-e4faafd705d7 - 公司: 宁德时代
+2025-04-03 22:27:41,078 - helpers.logger - INFO - 开始处理任务 562a1163-4cae-456d-9f35-e4faafd705d7 - 公司: 宁德时代
+2025-04-03 22:27:41,080 - helpers.logger - INFO - 创建任务 41116c05-ff44-4727-8bdf-fda1e53c368c - 公司: 宁德时代
+2025-04-03 22:27:41,083 - helpers.logger - INFO - 开始处理任务 41116c05-ff44-4727-8bdf-fda1e53c368c - 公司: 宁德时代
+2025-04-03 22:51:44,402 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 22:51:56,089 - helpers.logger - INFO - 创建任务 49d19ffc-df46-45c2-9509-1fc72d207665 - 公司: 宁德时代
+2025-04-03 22:51:56,090 - helpers.logger - INFO - 开始处理任务 49d19ffc-df46-45c2-9509-1fc72d207665 - 公司: 宁德时代
+2025-04-03 22:51:56,093 - helpers.logger - INFO - 创建任务 3b3bdb88-4478-49f8-86ce-73f0258e9baf - 公司: 宁德时代
+2025-04-03 22:51:56,093 - helpers.logger - INFO - 开始处理任务 3b3bdb88-4478-49f8-86ce-73f0258e9baf - 公司: 宁德时代
+2025-04-03 23:10:21,862 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 23:10:57,305 - helpers.logger - INFO - 创建任务 f06f2bc6-9cfe-4dcc-9e9e-43c2ee76b33f - 公司: 回盛生物
+2025-04-03 23:10:57,306 - helpers.logger - INFO - 开始处理任务 f06f2bc6-9cfe-4dcc-9e9e-43c2ee76b33f - 公司: 回盛生物
+2025-04-03 23:18:15,788 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 23:18:29,178 - helpers.logger - INFO - 创建任务 40e2dabd-e773-4278-a25f-7586804e1188 - 公司: 回盛生物
+2025-04-03 23:18:29,179 - helpers.logger - INFO - 开始处理任务 40e2dabd-e773-4278-a25f-7586804e1188 - 公司: 回盛生物
+2025-04-03 23:30:55,565 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 23:31:06,134 - helpers.logger - INFO - 创建任务 686a7091-f23c-4a0f-b68e-296e04d3d2c4 - 公司: 回盛生物
+2025-04-03 23:31:06,135 - helpers.logger - INFO - 开始处理任务 686a7091-f23c-4a0f-b68e-296e04d3d2c4 - 公司: 回盛生物
+2025-04-03 23:51:27,062 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 23:51:39,997 - helpers.logger - INFO - 创建任务 573cad21-1065-4162-bdc6-0da2845a6dad - 公司: 宁德时代
+2025-04-03 23:51:39,997 - helpers.logger - INFO - 开始处理任务 573cad21-1065-4162-bdc6-0da2845a6dad - 公司: 宁德时代
+2025-04-03 23:58:05,186 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-03 23:58:32,900 - helpers.logger - INFO - 创建任务 50cbb2aa-8127-44ca-9cb0-7cbe5882b2ab - 公司: 宁德时代
+2025-04-03 23:58:32,901 - helpers.logger - INFO - 开始处理任务 50cbb2aa-8127-44ca-9cb0-7cbe5882b2ab - 公司: 宁德时代
+2025-04-04 00:07:19,040 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 00:08:08,813 - helpers.logger - INFO - 创建任务 9a5718f6-2236-42ed-949e-f9595ada2666 - 公司: 回盛生物
+2025-04-04 00:08:08,814 - helpers.logger - INFO - 开始处理任务 9a5718f6-2236-42ed-949e-f9595ada2666 - 公司: 回盛生物
+2025-04-04 16:31:48,892 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 16:32:25,262 - helpers.logger - INFO - 创建任务 c6aac057-577d-40a2-a8ee-2f3e7a40e79e - 公司: 宁德时代
+2025-04-04 16:32:25,263 - helpers.logger - INFO - 开始处理任务 c6aac057-577d-40a2-a8ee-2f3e7a40e79e - 公司: 宁德时代
+2025-04-04 16:32:25,267 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 16:32:25,268 - helpers.logger - ERROR - 任务 c6aac057-577d-40a2-a8ee-2f3e7a40e79e 处理失败: run_stock_analysis() got an unexpected keyword argument 'recursion_limit'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 225, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200)
+TypeError: run_stock_analysis() got an unexpected keyword argument 'recursion_limit'
+
+2025-04-04 16:34:19,188 - helpers.logger - INFO - 创建任务 b8441af6-3f27-4960-8ea9-1314ee12561c - 公司: 宁德时代
+2025-04-04 16:34:19,189 - helpers.logger - INFO - 开始处理任务 b8441af6-3f27-4960-8ea9-1314ee12561c - 公司: 宁德时代
+2025-04-04 16:34:19,190 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 16:34:19,190 - helpers.logger - ERROR - 任务 b8441af6-3f27-4960-8ea9-1314ee12561c 处理失败: run_stock_analysis() got an unexpected keyword argument 'recursion_limit'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 225, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200)
+TypeError: run_stock_analysis() got an unexpected keyword argument 'recursion_limit'
+
+2025-04-04 16:35:08,509 - helpers.logger - INFO - 创建任务 289ccdec-d5b6-4f7f-bca6-16e01bbf1947 - 公司: 宁德时代
+2025-04-04 16:35:08,510 - helpers.logger - INFO - 开始处理任务 289ccdec-d5b6-4f7f-bca6-16e01bbf1947 - 公司: 宁德时代
+2025-04-04 16:35:08,510 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 16:35:08,512 - helpers.logger - ERROR - 任务 289ccdec-d5b6-4f7f-bca6-16e01bbf1947 处理失败: run_stock_analysis() got an unexpected keyword argument 'recursion_limit'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 225, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200)
+TypeError: run_stock_analysis() got an unexpected keyword argument 'recursion_limit'
+
+2025-04-04 16:40:15,610 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 16:40:21,815 - helpers.logger - INFO - 创建任务 70dffe90-259c-4719-9ba4-400a5fdc88ed - 公司: 宁德时代
+2025-04-04 16:40:21,815 - helpers.logger - INFO - 开始处理任务 70dffe90-259c-4719-9ba4-400a5fdc88ed - 公司: 宁德时代
+2025-04-04 16:40:21,818 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 16:48:11,621 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 16:48:17,948 - helpers.logger - INFO - 创建任务 df2aeb74-69d0-4c19-9103-bd85ca578179 - 公司: 宁德时代
+2025-04-04 16:48:17,948 - helpers.logger - INFO - 开始处理任务 df2aeb74-69d0-4c19-9103-bd85ca578179 - 公司: 宁德时代
+2025-04-04 16:48:17,949 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 16:58:41,547 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 16:58:51,816 - helpers.logger - INFO - 创建任务 aa68b7a5-6386-4ca4-b433-d4f8994fb16e - 公司: 宁德时代
+2025-04-04 16:58:51,818 - helpers.logger - INFO - 开始处理任务 aa68b7a5-6386-4ca4-b433-d4f8994fb16e - 公司: 宁德时代
+2025-04-04 16:58:51,823 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 17:12:06,970 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 17:12:16,630 - helpers.logger - INFO - 创建任务 ed69f10b-0b13-4ecc-83f9-31485eaf8f0f - 公司: 宁德时代
+2025-04-04 17:12:16,631 - helpers.logger - INFO - 开始处理任务 ed69f10b-0b13-4ecc-83f9-31485eaf8f0f - 公司: 宁德时代
+2025-04-04 17:12:16,633 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 17:22:59,661 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 17:23:34,164 - helpers.logger - INFO - 创建任务 33c84397-21c6-400e-9bc3-f702c23ab1c7 - 公司: 宁德时代
+2025-04-04 17:23:34,165 - helpers.logger - INFO - 开始处理任务 33c84397-21c6-400e-9bc3-f702c23ab1c7 - 公司: 宁德时代
+2025-04-04 17:23:34,169 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 17:35:26,129 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 17:35:33,947 - helpers.logger - INFO - 创建任务 51193d66-6718-4860-afe6-eb807cd99ef7 - 公司: 宁德时代
+2025-04-04 17:35:33,947 - helpers.logger - INFO - 开始处理任务 51193d66-6718-4860-afe6-eb807cd99ef7 - 公司: 宁德时代
+2025-04-04 17:35:33,950 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-04 18:27:36,986 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-04 18:27:46,863 - helpers.logger - INFO - 创建任务 323e8114-8103-4773-bf8a-9f6e953f5bb2 - 公司: 宁德时代
+2025-04-04 18:27:46,864 - helpers.logger - INFO - 开始处理任务 323e8114-8103-4773-bf8a-9f6e953f5bb2 - 公司: 宁德时代
+2025-04-04 18:27:46,868 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-05 19:37:34,422 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-05 19:37:57,610 - helpers.logger - INFO - 创建任务 936ad8af-a5d6-4088-bc6b-50c433bbcda7 - 公司: 宁德时代
+2025-04-05 19:37:57,611 - helpers.logger - INFO - 开始处理任务 936ad8af-a5d6-4088-bc6b-50c433bbcda7 - 公司: 宁德时代
+2025-04-05 19:37:57,613 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-05 19:50:33,320 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-05 19:52:16,455 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-05 19:53:04,596 - helpers.logger - INFO - 创建任务 a264845b-4876-4e8d-a8e5-45194dce4652 - 公司: 宁德时代
+2025-04-05 19:53:04,597 - helpers.logger - INFO - 开始处理任务 a264845b-4876-4e8d-a8e5-45194dce4652 - 公司: 宁德时代
+2025-04-05 19:53:04,601 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-05 20:19:16,579 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-05 20:19:48,369 - helpers.logger - INFO - 创建任务 16faa77e-2aa4-4850-887e-890df6d907e9 - 公司: 宁德时代
+2025-04-05 20:19:48,370 - helpers.logger - INFO - 开始处理任务 16faa77e-2aa4-4850-887e-890df6d907e9 - 公司: 宁德时代
+2025-04-05 20:19:48,373 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)

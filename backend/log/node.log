@@ -1,0 +1,602 @@
+2025-04-02 22:46:58,715 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-02 22:50:11,840 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-02 22:50:36,262 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-02 22:50:40,858 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-02 23:54:42,254 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-02 23:58:25,115 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 00:01:47,049 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 00:04:15,766 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 00:04:27,463 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 00:04:45,826 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 00:04:45,837 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 00:04:45,837 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 00:04:45,879 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 00:04:45,879 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 00:04:45,879 - helpers.logger - INFO - Start agent coder
+2025-04-03 00:04:45,879 - helpers.logger - INFO - Start agent coder
+2025-04-03 00:04:45,896 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 00:04:45,896 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 00:04:45,896 - helpers.logger - INFO - Start agent coder
+2025-04-03 00:04:45,896 - helpers.logger - INFO - Start agent coder
+2025-04-03 00:05:11,750 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 00:05:11,750 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 00:05:11,751 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 00:05:11,750 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 00:05:11,750 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 00:06:49,352 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 14:32:19,004 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 14:33:52,465 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 14:35:17,928 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 14:39:24,870 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 14:39:34,953 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 14:39:55,553 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 14:39:55,571 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 14:39:55,572 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 14:39:55,660 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 14:39:55,660 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 14:39:55,660 - helpers.logger - INFO - Start agent coder
+2025-04-03 14:39:55,660 - helpers.logger - INFO - Start agent coder
+2025-04-03 14:39:55,688 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 14:39:55,688 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 14:39:55,688 - helpers.logger - INFO - Start agent coder
+2025-04-03 14:39:55,688 - helpers.logger - INFO - Start agent coder
+2025-04-03 14:48:26,219 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 15:22:55,087 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 15:38:56,573 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 15:39:09,051 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 15:39:35,213 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 15:39:35,228 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 15:39:35,229 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 15:39:35,270 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 15:39:35,270 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 15:39:35,270 - helpers.logger - INFO - Start agent coder
+2025-04-03 15:39:35,270 - helpers.logger - INFO - Start agent coder
+2025-04-03 15:39:35,286 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 15:39:35,286 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 15:39:35,286 - helpers.logger - INFO - Start agent coder
+2025-04-03 15:39:35,286 - helpers.logger - INFO - Start agent coder
+2025-04-03 15:40:02,719 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 15:40:02,719 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 15:40:02,720 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 15:40:30,673 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 22:27:41,255 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:27:41,255 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:27:41,255 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:27:41,255 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:27:52,948 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 22:27:55,930 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-03 22:27:55,941 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 22:28:14,709 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:28:14,723 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 22:28:14,723 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 22:28:14,773 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:28:14,773 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:28:14,774 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:28:14,774 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:28:14,799 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:28:14,799 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:28:14,800 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:28:14,800 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:28:22,026 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:28:22,026 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:28:22,037 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 22:28:22,037 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 22:28:22,037 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 22:28:22,037 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 22:28:22,091 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:28:22,091 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:28:22,091 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:28:22,091 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:28:22,110 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:28:22,110 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:28:22,110 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:28:22,110 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:29:07,014 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 22:29:07,014 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 22:29:07,014 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 22:29:07,014 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 22:29:07,017 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 22:29:31,937 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 22:30:15,887 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 22:30:15,887 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 22:30:15,887 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 22:30:15,887 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 22:30:15,890 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 22:30:54,003 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 22:46:52,778 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:46:52,778 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:46:52,778 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:46:52,778 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:47:01,466 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 22:47:03,843 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-03 22:47:03,847 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 22:48:16,543 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:48:16,552 - helpers.logger - ERROR - Error in async data acquisition: 'Exception' object has no attribute 'to_csv'
+2025-04-03 22:48:16,562 - helpers.logger - ERROR - 任务 3a8fe8ed-5ad0-49e2-9b88-8ee24b90b380 处理失败: 'Exception' object has no attribute 'to_csv'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 207, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 113, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/.venv/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/.venv/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/data_acquire_node.py", line 92, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/data_acquire_node.py", line 76, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/helpers/utility.py", line 60, in save_state_to_database
+    state.market_data.technical_data.to_csv(path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Exception' object has no attribute 'to_csv'
+During task with name 'data_acquisition' and id '75c4c891-7fee-0917-f948-68867db6bc9b'
+
+2025-04-03 22:48:21,134 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:51:56,259 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:51:56,283 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 22:52:06,134 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 22:52:06,389 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-03 22:52:06,394 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 22:52:25,791 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:52:25,805 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 22:52:25,806 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 22:52:25,857 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:52:25,857 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:52:25,857 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:52:25,857 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:52:25,879 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:52:25,879 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:52:25,880 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:52:25,880 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:52:26,567 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:52:26,567 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 22:52:26,582 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 22:52:26,582 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 22:52:26,582 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 22:52:26,582 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 22:52:26,635 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:52:26,635 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 22:52:26,636 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:52:26,636 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:52:26,655 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:52:26,655 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 22:52:26,655 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:52:26,655 - helpers.logger - INFO - Start agent coder
+2025-04-03 22:53:00,403 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 22:53:00,403 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 22:53:00,403 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 22:53:00,403 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 22:53:00,403 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 22:53:00,403 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 22:53:16,240 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 22:53:16,240 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 22:53:16,241 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 22:53:25,410 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 22:53:46,383 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 23:10:57,485 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 23:11:08,185 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 23:12:28,057 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 23:12:28,075 - helpers.logger - INFO - 保存trade_data数据到: database/data/300871/trade_data.csv
+2025-04-03 23:12:28,075 - helpers.logger - INFO - 保存technical_data数据到: database/data/300871/technical_data.csv
+2025-04-03 23:12:28,126 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:12:28,126 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:12:28,126 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:12:28,126 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:12:28,150 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:12:28,150 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:12:28,151 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:12:28,151 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:12:52,932 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 23:12:52,932 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 23:12:52,932 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 23:12:52,932 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 23:12:52,932 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 23:12:52,932 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 23:13:23,383 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 23:18:29,346 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 23:18:38,319 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 23:18:56,181 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 23:18:56,197 - helpers.logger - INFO - 保存trade_data数据到: database/data/300871/trade_data.csv
+2025-04-03 23:18:56,197 - helpers.logger - INFO - 保存technical_data数据到: database/data/300871/technical_data.csv
+2025-04-03 23:18:56,250 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:18:56,250 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:18:56,250 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:18:56,250 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:18:56,273 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:18:56,273 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:18:56,273 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:18:56,273 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:19:24,861 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 23:19:24,861 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 23:19:24,861 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 23:19:24,861 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 23:19:24,864 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 23:19:48,351 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 23:22:13,249 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 23:22:22,369 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 23:22:40,408 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 23:31:06,307 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 23:31:16,893 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 23:31:33,592 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 23:31:33,608 - helpers.logger - INFO - 保存trade_data数据到: database/data/300871/trade_data.csv
+2025-04-03 23:31:33,608 - helpers.logger - INFO - 保存technical_data数据到: database/data/300871/technical_data.csv
+2025-04-03 23:31:33,660 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:31:33,660 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:31:33,661 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:31:33,661 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:31:33,682 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:31:33,682 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:31:33,682 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:31:33,682 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:32:06,655 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 23:32:06,656 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 23:32:06,656 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 23:32:36,411 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-03 23:51:40,167 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 23:51:52,005 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 23:53:07,052 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 23:53:07,060 - helpers.logger - ERROR - Error in async data acquisition: 'Exception' object has no attribute 'to_csv'
+2025-04-03 23:53:07,069 - helpers.logger - ERROR - 任务 573cad21-1065-4162-bdc6-0da2845a6dad 处理失败: 'Exception' object has no attribute 'to_csv'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 207, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 113, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/.venv/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/.venv/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/data_acquire_node.py", line 92, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/data_acquire_node.py", line 76, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/helpers/utility.py", line 60, in save_state_to_database
+    state.market_data.technical_data.to_csv(path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Exception' object has no attribute 'to_csv'
+During task with name 'data_acquisition' and id '5db2b81e-17fd-c1e5-bcc3-28f50374c196'
+
+2025-04-03 23:58:33,077 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-03 23:58:42,317 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-03 23:59:00,387 - helpers.logger - INFO - 检查数据获取结果
+2025-04-03 23:59:00,387 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-03 23:59:00,402 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-03 23:59:00,402 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-03 23:59:00,458 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:59:00,458 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-03 23:59:00,458 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:59:00,458 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:59:00,482 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:59:00,482 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-03 23:59:00,482 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:59:00,482 - helpers.logger - INFO - Start agent coder
+2025-04-03 23:59:30,061 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 23:59:30,061 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 23:59:30,061 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-03 23:59:30,061 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-03 23:59:30,061 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-03 23:59:30,061 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 00:00:22,201 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-04 00:08:09,013 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 00:08:18,326 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 00:08:34,808 - helpers.logger - INFO - 检查数据获取结果
+2025-04-04 00:08:34,809 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 00:08:34,825 - helpers.logger - INFO - 保存trade_data数据到: database/data/300871/trade_data.csv
+2025-04-04 00:08:34,825 - helpers.logger - INFO - 保存technical_data数据到: database/data/300871/technical_data.csv
+2025-04-04 00:08:34,878 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 00:08:34,878 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 00:08:34,878 - helpers.logger - INFO - Start agent coder
+2025-04-04 00:08:34,878 - helpers.logger - INFO - Start agent coder
+2025-04-04 00:08:34,900 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 00:08:34,900 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 00:08:34,900 - helpers.logger - INFO - Start agent coder
+2025-04-04 00:08:34,900 - helpers.logger - INFO - Start agent coder
+2025-04-04 00:09:20,924 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 00:09:20,924 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 00:09:20,926 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 00:09:44,920 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-04 00:17:35,653 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 00:17:46,986 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 00:18:16,549 - helpers.logger - INFO - 检查数据获取结果
+2025-04-04 00:18:16,551 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 00:18:16,564 - helpers.logger - INFO - 保存trade_data数据到: database/data/300871/trade_data.csv
+2025-04-04 00:18:16,564 - helpers.logger - INFO - 保存technical_data数据到: database/data/300871/technical_data.csv
+2025-04-04 00:18:16,614 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 00:18:16,614 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 00:18:16,614 - helpers.logger - INFO - Start agent coder
+2025-04-04 00:18:16,614 - helpers.logger - INFO - Start agent coder
+2025-04-04 00:18:16,633 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 00:18:16,633 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 00:18:16,633 - helpers.logger - INFO - Start agent coder
+2025-04-04 00:18:16,633 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:29:30,992 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 16:29:36,011 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 16:30:06,883 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 16:30:06,898 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 16:30:06,899 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 16:40:21,855 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 16:40:34,251 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 16:40:53,686 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 16:40:53,701 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 16:40:53,701 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 16:40:53,745 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 16:40:53,745 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 16:40:53,745 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:40:53,745 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:40:53,760 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 16:40:53,760 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 16:40:53,760 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:40:53,760 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:41:36,516 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 16:41:36,517 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 16:41:36,516 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 16:43:08,214 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-04 16:48:17,994 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 16:48:29,045 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 16:48:47,381 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 16:48:47,395 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 16:48:47,395 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 16:48:47,435 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 16:48:47,435 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 16:48:47,435 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:48:47,435 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:48:47,449 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 16:48:47,449 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 16:48:47,449 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:48:47,449 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:49:19,021 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 16:49:19,021 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 16:49:19,021 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 16:49:19,021 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 16:49:19,021 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 16:49:19,021 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 16:49:59,079 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-04 16:58:51,885 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 16:59:01,538 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 16:59:20,717 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 16:59:20,730 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 16:59:20,730 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 16:59:20,773 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 16:59:20,773 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 16:59:20,774 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:59:20,774 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:59:20,788 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 16:59:20,788 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 16:59:20,788 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:59:20,788 - helpers.logger - INFO - Start agent coder
+2025-04-04 16:59:54,113 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 16:59:54,114 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 16:59:54,113 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 17:00:43,019 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-04 17:12:16,693 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 17:12:27,424 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 17:12:48,755 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 17:12:48,768 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 17:12:48,768 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 17:12:48,809 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 17:12:48,809 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 17:12:48,810 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:12:48,810 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:12:48,824 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 17:12:48,824 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 17:12:48,824 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:12:48,824 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:13:17,101 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 17:13:17,101 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 17:13:17,101 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 17:13:53,201 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-04 17:23:34,227 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 17:23:44,459 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 17:24:51,132 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 17:24:51,157 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 17:24:51,157 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 17:24:51,203 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 17:24:51,203 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 17:24:51,203 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:24:51,203 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:24:51,218 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 17:24:51,218 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 17:24:51,218 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:24:51,218 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:25:19,655 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 17:25:19,656 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 17:25:19,657 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 17:25:47,141 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-04 17:35:33,994 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 17:35:44,034 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 17:36:02,443 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 17:36:02,459 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 17:36:02,459 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 17:36:02,504 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 17:36:02,504 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 17:36:02,511 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:36:02,511 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:36:02,521 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 17:36:02,521 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 17:36:02,521 - helpers.logger - INFO - Start agent coder
+2025-04-04 17:36:02,521 - helpers.logger - INFO - Start agent coder
+2025-04-04 18:27:46,935 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-04 18:27:58,323 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-04 18:28:15,333 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-04 18:28:15,348 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-04 18:28:15,349 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-04 18:28:15,402 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 18:28:15,402 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-04 18:28:15,402 - helpers.logger - INFO - Start agent coder
+2025-04-04 18:28:15,402 - helpers.logger - INFO - Start agent coder
+2025-04-04 18:28:15,423 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 18:28:15,423 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-04 18:28:15,423 - helpers.logger - INFO - Start agent coder
+2025-04-04 18:28:15,423 - helpers.logger - INFO - Start agent coder
+2025-04-04 18:28:52,660 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 18:28:52,660 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 18:28:52,660 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-04 18:28:52,661 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 18:28:52,660 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-04 18:28:52,661 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-04 18:29:19,347 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-05 19:37:57,691 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-05 19:38:07,549 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-05 19:38:25,976 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-05 19:38:25,991 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-05 19:38:25,991 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-05 19:38:26,049 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 19:38:26,049 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 19:38:26,049 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:38:26,049 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:38:26,083 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 19:38:26,083 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 19:38:26,083 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:38:26,083 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:38:50,178 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 19:38:50,178 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 19:38:50,178 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 19:38:50,178 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 19:38:50,178 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 19:38:50,178 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 19:38:50,178 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 19:39:10,733 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-05 19:53:04,674 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-05 19:53:14,689 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-05 19:53:32,866 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-05 19:53:32,881 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-05 19:53:32,881 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-05 19:53:32,933 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 19:53:32,933 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 19:53:32,933 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:53:32,933 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:53:32,955 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 19:53:32,955 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 19:53:32,955 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:53:32,955 - helpers.logger - INFO - Start agent coder
+2025-04-05 19:54:24,079 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 19:54:24,079 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 19:54:24,079 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 19:54:24,079 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 19:54:24,079 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 19:54:24,079 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 19:56:39,921 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-05 20:03:32,663 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-05 20:03:44,260 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-05 20:05:01,619 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-05 20:05:01,715 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-05 20:05:01,715 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-05 20:05:01,767 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:05:01,767 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:05:01,767 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:05:01,767 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:05:01,785 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:05:01,785 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:05:01,785 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:05:01,785 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:07:01,440 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 20:07:01,441 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 20:07:01,441 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 20:07:01,441 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 20:07:31,632 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-05 20:10:21,219 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-05 20:10:33,535 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-05 20:10:58,597 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-05 20:10:58,612 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-05 20:10:58,612 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-05 20:10:58,666 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:10:58,666 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:10:58,666 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:10:58,666 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:10:58,688 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:10:58,688 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:10:58,688 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:10:58,688 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:11:47,690 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 20:11:47,691 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 20:11:47,691 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 20:11:47,691 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 20:11:47,691 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 20:12:20,979 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-05 20:19:48,433 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-05 20:20:02,433 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-05 20:20:33,264 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-05 20:20:33,279 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-05 20:20:33,279 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-05 20:20:33,332 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:20:33,332 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:20:33,332 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:20:33,332 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:20:33,353 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:20:33,353 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:20:33,353 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:20:33,353 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:21:42,401 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 20:21:42,401 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 20:21:42,401 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 20:21:42,401 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-05 20:21:42,401 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 20:21:42,402 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 20:21:42,402 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 20:21:42,401 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-05 20:21:42,402 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-05 20:22:17,806 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-05 20:45:17,435 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-05 20:45:27,329 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-05 20:45:44,998 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-05 20:45:45,012 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-05 20:45:45,012 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-05 20:45:45,065 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:45:45,065 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-05 20:45:45,065 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:45:45,065 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:45:45,086 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:45:45,086 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-05 20:45:45,086 - helpers.logger - INFO - Start agent coder
+2025-04-05 20:45:45,086 - helpers.logger - INFO - Start agent coder
