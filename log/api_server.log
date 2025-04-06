@@ -1,4 +1,0 @@
-2025-04-05 19:43:45,382 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
-2025-04-05 19:45:25,515 - helpers.logger - INFO - 创建任务 6412ff26-bd51-4701-9183-89af71cfa978 - 公司: 宁德时代
-2025-04-05 19:45:25,516 - helpers.logger - INFO - 开始处理任务 6412ff26-bd51-4701-9183-89af71cfa978 - 公司: 宁德时代
-2025-04-05 19:45:25,517 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
