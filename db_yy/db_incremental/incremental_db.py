@@ -491,6 +491,9 @@ def download_finance_info_incremental(connection, max_symbols=None, batch_size=3
         total = len(unprocessed_symbols)
         processed_count = 0
         
+        # 设置固定起始日期 - 确保一定会处理2024-09-24之后的所有数据
+        fixed_start_date_dt = pd.to_datetime('20240924', format='%Y%m%d')
+        
         for i, symbol in enumerate(unprocessed_symbols):
             try:
                 logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} 的财务信息")
@@ -595,17 +598,22 @@ def download_finance_info_incremental(connection, max_symbols=None, batch_size=3
                         if 'report_date' in new_df.columns:
                             new_df['report_date'] = pd.to_datetime(new_df['report_date'])
                             
-                            # 如果有最新日期，筛选较新的报告期
+                            # 修改过滤逻辑：考虑日期和已处理的股票
                             if latest_report_date:
                                 latest_date_dt = pd.to_datetime(latest_report_date)
-                                new_df = new_df[new_df['report_date'] > latest_date_dt]
+                                
+                                # 1. 新报告期的数据保留 OR
+                                # 2. 当前最新报告期但股票未处理过的数据保留 OR
+                                # 3. 确保2024-09-24之后的所有数据都保留
+                                mask = (
+                                    (new_df['report_date'] > latest_date_dt) |  # 新的报告期
+                                    ((new_df['report_date'] == latest_date_dt) & ~(new_df['stock_code'].isin(processed_stocks))) |  # 相同报告期但未处理的股票
+                                    (new_df['report_date'] >= fixed_start_date_dt)  # 2024-09-24之后的所有数据
+                                )
+                                new_df = new_df[mask]
                             else:
-                                # 如果没有最新日期，筛选大于等于固定起始日期的数据
-                                try:
-                                    fixed_start_date_dt = pd.to_datetime(FIXED_START_DATE, format='%Y%m%d')
-                                    new_df = new_df[new_df['report_date'] >= fixed_start_date_dt]
-                                except:
-                                    pass
+                                # 如果没有最新日期，确保获取2024-09-24之后的数据
+                                new_df = new_df[new_df['report_date'] >= fixed_start_date_dt]
                             
                             # 转换回字符串格式
                             new_df['report_date'] = new_df['report_date'].dt.strftime('%Y-%m-%d')
@@ -669,13 +677,9 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
         else:
             logger.info("个股历史数据表为空或无法获取最新日期，将执行全量下载")
         
-        # 将日期转换为标准格式
-        start_date = FIXED_START_DATE  # 默认从固定日期开始
-        if latest_date and not is_empty:
-            latest_date_dt = pd.to_datetime(latest_date)
-            start_date = (latest_date_dt + timedelta(days=1)).strftime('%Y%m%d')
-        
-        logger.info(f"增量数据起始日期: {start_date}, 结束日期: {TODAY_DATE}")
+        # 设置固定起始日期 - 确保一定会处理2024-09-24之后的所有数据
+        fixed_start_date = '20240924'
+        fixed_start_date_dt = pd.to_datetime(fixed_start_date)
         
         # 获取股票列表
         stock_list_df = get_stock_list()
@@ -683,15 +687,11 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
         
         if max_symbols and len(symbols) > max_symbols:
             symbols = symbols[:max_symbols]
-            
-        # 如果有最新日期但没有全部处理完，则优先处理未处理的股票
-        if latest_date and not is_empty and len(processed_stocks) < len(symbols):
-            unprocessed_symbols = [symbol for symbol in symbols if symbol not in processed_stocks]
-            logger.info(f"发现 {len(unprocessed_symbols)} 只股票在最新日期 {latest_date} 尚未处理")
-            # 只处理未处理的股票，使用最新日期
-            if pd.to_datetime(start_date) >= pd.to_datetime(TODAY_DATE):
-                symbols = unprocessed_symbols
-                start_date = latest_date.replace('-', '')
+        
+        # 确定未处理的股票
+        unprocessed_symbols = [symbol for symbol in symbols if symbol not in processed_stocks]
+        
+        logger.info(f"总股票数: {len(symbols)}, 已处理: {len(processed_stocks)}, 未处理: {len(unprocessed_symbols)}")
         
         # 处理每只股票
         total = len(symbols)
@@ -699,9 +699,24 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
         
         for i, symbol in enumerate(symbols):
             try:
-                logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} 的历史数据增量")
+                # 确定此股票的起始日期
+                if latest_date and symbol in processed_stocks:
+                    # 已处理过的股票，从最新日期后一天开始增量获取
+                    latest_date_dt = pd.to_datetime(latest_date)
+                    next_day = latest_date_dt + timedelta(days=1)
+                    start_date = next_day.strftime('%Y%m%d')
+                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 已在数据库中，从 {start_date} 获取增量数据")
+                else:
+                    # 未处理过的股票，从固定起始日期开始获取
+                    start_date = fixed_start_date
+                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 新股票，从 {start_date} 获取历史数据")
                 
-                # 获取个股历史数据增量
+                # 如果起始日期已经超过今天，跳过这只股票
+                if pd.to_datetime(start_date) > pd.to_datetime(TODAY_DATE):
+                    logger.info(f"股票 {symbol} 的起始日期 {start_date} 超过今天 {TODAY_DATE}，跳过")
+                    continue
+                
+                # 获取个股历史数据
                 stock_df = ak.stock_zh_a_hist(
                     symbol=symbol, 
                     start_date=start_date,
@@ -709,7 +724,7 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
                     adjust="qfq"
                 )
                 
-                # 如果获取到数据，记录数据大小和日期范围用于调试
+                # 如果获取到数据，处理并存储
                 if not stock_df.empty:
                     logger.info(f"获取到股票 {symbol} 从 {start_date} 到 {TODAY_DATE} 的 {len(stock_df)} 条数据")
                     if '日期' in stock_df.columns:
@@ -740,25 +755,40 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
                     if 'Amount_100M' in stock_df.columns:
                         stock_df['Amount_100M'] = stock_df['Amount_100M'] / 1e8
                     
-                    # 日期格式化
-                    stock_df['Date'] = pd.to_datetime(stock_df['Date']).dt.strftime('%Y-%m-%d')
+                    # 添加股票代码
+                    stock_df['Stock_Code'] = symbol
+                    
+                    # 日期格式化与过滤
+                    stock_df['Date'] = pd.to_datetime(stock_df['Date'])
+                    
+                    # 确保只处理2024-09-24之后的数据（对于初次获取的股票）
+                    if symbol not in processed_stocks:
+                        # 过滤出2024-09-24及之后的数据
+                        stock_df = stock_df[stock_df['Date'] >= fixed_start_date_dt]
+                    
+                    # 转换日期为字符串格式
+                    stock_df['Date'] = stock_df['Date'].dt.strftime('%Y-%m-%d')
                     
                     # 添加ETL字段
                     today_str = datetime.now().strftime('%Y-%m-%d')
                     stock_df['etl_date'] = today_str
                     stock_df['biz_date'] = int(datetime.now().strftime('%Y%m%d'))
                     
-                    # 批量插入数据库，使用传入的batch_size
-                    if insert_dataframe_in_batches(connection, stock_df, 'individual_stock', batch_size=batch_size):
-                        processed_count += 1
-                        logger.info(f"成功插入股票 {symbol} 的历史数据: {len(stock_df)} 条")
+                    # 如果过滤后还有数据，批量插入数据库
+                    if not stock_df.empty:
+                        if insert_dataframe_in_batches(connection, stock_df, 'individual_stock', batch_size=batch_size):
+                            processed_count += 1
+                            logger.info(f"成功插入股票 {symbol} 的历史数据: {len(stock_df)} 条")
+                        else:
+                            logger.warning(f"插入股票 {symbol} 的历史数据全部或部分失败")
                     else:
-                        logger.warning(f"插入股票 {symbol} 的历史数据全部或部分失败")
+                        logger.info(f"过滤后股票 {symbol} 没有符合条件的数据")
                 else:
                     logger.info(f"股票 {symbol} 在时间段 {start_date} 至 {TODAY_DATE} 没有数据")
             
             except Exception as e:
                 logger.error(f"处理股票 {symbol} 的历史数据时出错: {e}")
+                logger.error(traceback.format_exc())
             
             # 每处理10个股票暂停1秒，避免API限制
             if (i + 1) % 10 == 0:
@@ -1292,6 +1322,10 @@ def download_tech_indicators_incremental(connection, max_symbols=None, batch_siz
         else:
             logger.info("技术指标1表为空或无法获取最新日期")
         
+        # 设置固定起始日期 - 确保一定会处理2024-09-24之后的所有数据
+        fixed_start_date = '20240924'
+        fixed_start_date_dt = pd.to_datetime(fixed_start_date)
+        
         # 获取股票列表
         stock_list_df = get_stock_list()
         symbols = stock_list_df['代码'].tolist()
@@ -1299,99 +1333,107 @@ def download_tech_indicators_incremental(connection, max_symbols=None, batch_siz
         if max_symbols and len(symbols) > max_symbols:
             symbols = symbols[:max_symbols]
         
-        # 未处理的股票
+        # 确定未处理的股票
         unprocessed_symbols_tech1 = [symbol for symbol in symbols if symbol not in processed_stocks_tech1]
         
-        # 处理日期和股票判断
-        if latest_trade_date_tech1:
-            latest_date_dt = pd.to_datetime(latest_trade_date_tech1)
-            start_date = (latest_date_dt + timedelta(days=1)).strftime('%Y%m%d')
-            
-            # 如果起始日期晚于或等于今天，且所有股票都已处理
-            if pd.to_datetime(start_date) >= pd.to_datetime(TODAY_DATE) and not unprocessed_symbols_tech1:
-                logger.info("技术指标1已是最新数据，所有股票都已处理")
-                tech1_need_process = False
-            else:
-                # 如果日期是最新的但有未处理的股票
-                if pd.to_datetime(start_date) >= pd.to_datetime(TODAY_DATE):
-                    logger.info(f"技术指标1日期已是最新，但有 {len(unprocessed_symbols_tech1)} 只股票尚未处理")
-                    start_date = latest_trade_date_tech1.replace('-', '')
-                else:
-                    logger.info(f"技术指标1增量数据起始日期: {start_date}, 结束日期: {TODAY_DATE}")
-                tech1_need_process = True
-        else:
-            # 如果表为空，使用默认起始日期
-            start_date = FIXED_START_DATE
-            logger.info(f"技术指标1表为空，使用默认起始日期: {start_date}")
-            unprocessed_symbols_tech1 = symbols
-            tech1_need_process = True
+        logger.info(f"技术指标1 - 总股票数: {len(symbols)}, 已处理: {len(processed_stocks_tech1)}, 未处理: {len(unprocessed_symbols_tech1)}")
         
-        # 处理技术指标1
-        if tech1_need_process:
-            total_tech1 = len(unprocessed_symbols_tech1)
-            processed_count_tech1 = 0
-            total_data_count_tech1 = 0
-            
-            for i, symbol in enumerate(unprocessed_symbols_tech1):
-                try:
-                    logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} 的技术指标1增量")
+        # 处理每只股票
+        total_tech1 = len(symbols)
+        processed_count_tech1 = 0
+        total_data_count_tech1 = 0
+        
+        for i, symbol in enumerate(symbols):
+            try:
+                # 确定此股票的起始日期
+                if latest_trade_date_tech1 and symbol in processed_stocks_tech1:
+                    # 已处理过的股票，从最新日期后一天开始增量获取
+                    latest_date_dt = pd.to_datetime(latest_trade_date_tech1)
+                    next_day = latest_date_dt + timedelta(days=1)
+                    start_date = next_day.strftime('%Y%m%d')
+                    logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} - 技术指标1已在数据库中，从 {start_date} 获取增量数据")
+                else:
+                    # 未处理过的股票，从固定起始日期开始获取
+                    start_date = fixed_start_date
+                    logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} - 技术指标1新股票，从 {start_date} 获取历史数据")
+                
+                # 如果起始日期已经超过今天，跳过这只股票
+                if pd.to_datetime(start_date) > pd.to_datetime(TODAY_DATE):
+                    logger.info(f"股票 {symbol} 的起始日期 {start_date} 超过今天 {TODAY_DATE}，跳过")
+                    continue
+                
+                # 获取历史数据增量
+                data = ak.stock_zh_a_hist(
+                    symbol=symbol, 
+                    start_date=start_date,
+                    end_date=TODAY_DATE,
+                    adjust="qfq"
+                )
+                
+                if not data.empty:
+                    logger.info(f"获取到股票 {symbol} 从 {start_date} 到 {TODAY_DATE} 的 {len(data)} 条数据")
+                    if '日期' in data.columns:
+                        date_min = data['日期'].min()
+                        date_max = data['日期'].max()
+                        logger.info(f"数据日期范围: {date_min} 至 {date_max}")
                     
-                    # 获取历史数据增量
-                    data = ak.stock_zh_a_hist(
-                        symbol=symbol, 
-                        start_date=start_date, 
-                        end_date=TODAY_DATE,
-                        adjust="qfq"
+                    # 计算技术指标
+                    close_prices = data['收盘'].values
+                    high = data['最高'].values
+                    low = data['最低'].values
+                    volume = data['成交量'].values
+                    
+                    # 计算MACD
+                    macd, signal, hist = talib.MACD(
+                        close_prices, 
+                        fastperiod=5, 
+                        slowperiod=10, 
+                        signalperiod=30
                     )
                     
-                    if not data.empty:
-                        # 计算技术指标
-                        close_prices = data['收盘'].values
-                        high = data['最高'].values
-                        low = data['最低'].values
-                        volume = data['成交量'].values
-                        
-                        # 计算MACD
-                        macd, signal, hist = talib.MACD(
-                            close_prices, 
-                            fastperiod=5, 
-                            slowperiod=10, 
-                            signalperiod=30
-                        )
-                        
-                        # 计算RSI
-                        rsi = talib.RSI(close_prices, timeperiod=14)
-                        
-                        # 计算KDJ
-                        k, d = talib.STOCH(high, low, close_prices)
-                        j = 3 * k - 2 * d
-                        
-                        # 组织信号信息
-                        macd_signal = ["金叉" if h > 0 else "死叉" for h in hist]
-                        rsi_signal = ["超买" if r > 70 else "超卖" if r < 30 else "中性" for r in rsi]
-                        kdj_signal = ["超买" if j_val > 80 else "超卖" if j_val < 20 else "中性" for j_val in j]
-                        
-                        # 构建结果DataFrame
-                        tech1_df = pd.DataFrame({
-                            "trade_date": data['日期'],
-                            "stock_code": symbol,
-                            "volume": volume,
-                            "turnover_rate": data['换手率'] if '换手率' in data.columns else None,
-                            "RSI": rsi,
-                            "MACD_DIF": macd,
-                            "MACD_DEA": signal,
-                            "MACD_HIST": hist,
-                            "KDJ_K": k,
-                            "KDJ_D": d,
-                            "KDJ_J": j,
-                            "macd_signal": macd_signal,
-                            "rsi_signal": rsi_signal,
-                            "kdj_signal": kdj_signal
-                        })
-                        
-                        # 转换日期为字符串，避免timestamp类型转换问题
-                        tech1_df['trade_date'] = pd.to_datetime(tech1_df['trade_date']).dt.strftime('%Y-%m-%d')
-                        
+                    # 计算RSI
+                    rsi = talib.RSI(close_prices, timeperiod=14)
+                    
+                    # 计算KDJ
+                    k, d = talib.STOCH(high, low, close_prices)
+                    j = 3 * k - 2 * d
+                    
+                    # 组织信号信息
+                    macd_signal = ["金叉" if h > 0 else "死叉" for h in hist]
+                    rsi_signal = ["超买" if r > 70 else "超卖" if r < 30 else "中性" for r in rsi]
+                    kdj_signal = ["超买" if j_val > 80 else "超卖" if j_val < 20 else "中性" for j_val in j]
+                    
+                    # 构建结果DataFrame
+                    tech1_df = pd.DataFrame({
+                        "trade_date": data['日期'],
+                        "stock_code": symbol,
+                        "volume": volume,
+                        "turnover_rate": data['换手率'] if '换手率' in data.columns else None,
+                        "RSI": rsi,
+                        "MACD_DIF": macd,
+                        "MACD_DEA": signal,
+                        "MACD_HIST": hist,
+                        "KDJ_K": k,
+                        "KDJ_D": d,
+                        "KDJ_J": j,
+                        "macd_signal": macd_signal,
+                        "rsi_signal": rsi_signal,
+                        "kdj_signal": kdj_signal
+                    })
+                    
+                    # 日期格式化与过滤
+                    tech1_df['trade_date'] = pd.to_datetime(tech1_df['trade_date'])
+                    
+                    # 确保只处理2024-09-24之后的数据（对于初次获取的股票）
+                    if symbol not in processed_stocks_tech1:
+                        # 过滤出2024-09-24及之后的数据
+                        tech1_df = tech1_df[tech1_df['trade_date'] >= fixed_start_date_dt]
+                    
+                    # 转换为字符串格式
+                    tech1_df['trade_date'] = tech1_df['trade_date'].dt.strftime('%Y-%m-%d')
+                    
+                    # 如果过滤后还有数据，批量插入数据库
+                    if not tech1_df.empty:
                         # 使用批处理插入
                         records = tech1_df.to_dict('records')
                         inserted = process_batch_records(connection, 'tech1', records, batch_size=batch_size)
@@ -1403,184 +1445,207 @@ def download_tech_indicators_incremental(connection, max_symbols=None, batch_siz
                         else:
                             logger.warning(f"插入股票 {symbol} 的技术指标1全部失败")
                     else:
-                        logger.info(f"股票 {symbol} 在时间段 {start_date} 至 {TODAY_DATE} 没有数据")
-                
-                except Exception as e:
-                    logger.error(f"处理股票 {symbol} 的技术指标1时出错: {e}")
-                
-                # 每处理10个股票暂停1秒，避免API限制
-                if (i + 1) % 10 == 0:
-                    time.sleep(1)
+                        logger.info(f"过滤后股票 {symbol} 没有符合条件的数据")
+                else:
+                    logger.info(f"股票 {symbol} 在时间段 {start_date} 至 {TODAY_DATE} 没有数据")
             
-            logger.info(f"技术指标1增量下载完成，成功处理 {processed_count_tech1}/{total_tech1} 只股票，总计 {total_data_count_tech1} 条记录")
+            except Exception as e:
+                logger.error(f"处理股票 {symbol} 的技术指标1时出错: {e}")
+                logger.error(traceback.format_exc())
+            
+            # 每处理10个股票暂停1秒，避免API限制
+            if (i + 1) % 10 == 0:
+                time.sleep(1)
+        
+        logger.info(f"技术指标1增量下载完成，成功处理 {processed_count_tech1}/{total_tech1} 只股票，总计 {total_data_count_tech1} 条记录")
     
     except Exception as e:
         logger.error(f"下载技术指标1增量时出错: {e}")
         traceback.print_exc()
     
-    # 技术指标2处理
-    try:
-        # 获取最新的交易日期
-        latest_date_tech2 = get_latest_date(connection, 'tech2', 'date')
+    # # 技术指标2处理 - 修改后的代码
+    # try:
+    #     # 获取最新的交易日期
+    #     latest_date_tech2 = get_latest_date(connection, 'tech2', 'date')
         
-        # 获取该日期已处理的股票代码
-        processed_stocks_tech2 = []
-        if latest_date_tech2:
-            processed_stocks_tech2 = get_processed_stocks(connection, 'tech2', 'date', 'stock_code')
-            logger.info(f"最新技术指标2交易日期: {latest_date_tech2}, 已处理 {len(processed_stocks_tech2)} 只股票")
-        else:
-            logger.info("技术指标2表为空或无法获取最新日期")
+    #     # 获取该日期已处理的股票代码
+    #     processed_stocks_tech2 = []
+    #     if latest_date_tech2:
+    #         processed_stocks_tech2 = get_processed_stocks(connection, 'tech2', 'date', 'stock_code')
+    #         logger.info(f"最新技术指标2交易日期: {latest_date_tech2}, 已处理 {len(processed_stocks_tech2)} 只股票")
+    #     else:
+    #         logger.info("技术指标2表为空或无法获取最新日期")
         
-        # 获取股票列表
-        stock_list_df = get_stock_list()
-        symbols = stock_list_df['代码'].tolist()
+    #     # 获取股票列表
+    #     stock_list_df = get_stock_list()
+    #     symbols = stock_list_df['代码'].tolist()
         
-        if max_symbols and len(symbols) > max_symbols:
-            symbols = symbols[:max_symbols]
+    #     if max_symbols and len(symbols) > max_symbols:
+    #         symbols = symbols[:max_symbols]
         
-        # 未处理的股票
-        unprocessed_symbols_tech2 = [symbol for symbol in symbols if symbol not in processed_stocks_tech2]
+    #     # 未处理的股票
+    #     unprocessed_symbols_tech2 = [symbol for symbol in symbols if symbol not in processed_stocks_tech2]
         
-        # 处理日期和股票判断
-        if latest_date_tech2:
-            latest_date_dt = pd.to_datetime(latest_date_tech2)
-            start_date = (latest_date_dt + timedelta(days=1)).strftime('%Y%m%d')
+    #     # 处理日期和股票判断
+    #     if latest_date_tech2:
+    #         latest_date_dt = pd.to_datetime(latest_date_tech2)
+    #         start_date = (latest_date_dt + timedelta(days=1)).strftime('%Y%m%d')
             
-            # 如果起始日期晚于或等于今天，且所有股票都已处理
-            if pd.to_datetime(start_date) >= pd.to_datetime(TODAY_DATE) and not unprocessed_symbols_tech2:
-                logger.info("技术指标2已是最新数据，所有股票都已处理")
-                tech2_need_process = False
-            else:
-                # 如果日期是最新的但有未处理的股票
-                if pd.to_datetime(start_date) >= pd.to_datetime(TODAY_DATE):
-                    logger.info(f"技术指标2日期已是最新，但有 {len(unprocessed_symbols_tech2)} 只股票尚未处理")
-                    start_date = latest_date_tech2.replace('-', '')
-                else:
-                    logger.info(f"技术指标2增量数据起始日期: {start_date}, 结束日期: {TODAY_DATE}")
-                tech2_need_process = True
-        else:
-            # 如果表为空，使用默认起始日期
-            start_date = FIXED_START_DATE
-            logger.info(f"技术指标2表为空，使用默认起始日期: {start_date}")
-            unprocessed_symbols_tech2 = symbols
-            tech2_need_process = True
+    #         # 如果起始日期晚于或等于今天，且所有股票都已处理
+    #         if pd.to_datetime(start_date) >= pd.to_datetime(TODAY_DATE) and not unprocessed_symbols_tech2:
+    #             logger.info("技术指标2已是最新数据，所有股票都已处理")
+    #             tech2_need_process = False
+    #         else:
+    #             # 如果日期是最新的但有未处理的股票
+    #             if pd.to_datetime(start_date) >= pd.to_datetime(TODAY_DATE):
+    #                 logger.info(f"技术指标2日期已是最新，但有 {len(unprocessed_symbols_tech2)} 只股票尚未处理")
+    #                 start_date = latest_date_tech2.replace('-', '')
+    #             else:
+    #                 logger.info(f"技术指标2增量数据起始日期: {start_date}, 结束日期: {TODAY_DATE}")
+    #             tech2_need_process = True
+    #     else:
+    #         # 如果表为空，使用默认起始日期
+    #         start_date = FIXED_START_DATE
+    #         logger.info(f"技术指标2表为空，使用默认起始日期: {start_date}")
+    #         unprocessed_symbols_tech2 = symbols
+    #         tech2_need_process = True
         
-        # 处理技术指标2
-        if tech2_need_process:
-            total_tech2 = len(unprocessed_symbols_tech2)
-            processed_count_tech2 = 0
-            total_data_count_tech2 = 0
+    #     # 处理技术指标2
+    #     if tech2_need_process:
+    #         total_tech2 = len(unprocessed_symbols_tech2)
+    #         processed_count_tech2 = 0
+    #         total_data_count_tech2 = 0
             
-            for i, symbol in enumerate(unprocessed_symbols_tech2):
-                try:
-                    logger.info(f"处理 [{i+1}/{total_tech2}] 股票 {symbol} 的技术指标2增量")
+    #         for i, symbol in enumerate(unprocessed_symbols_tech2):
+    #             try:
+    #                 logger.info(f"处理 [{i+1}/{total_tech2}] 股票 {symbol} 的技术指标2增量")
                     
-                    # 获取历史数据增量
-                    data = ak.stock_zh_a_hist(
-                        symbol=symbol, 
-                        start_date=start_date, 
-                        end_date=TODAY_DATE,
-                        adjust="qfq"
-                    )
+    #                 # 获取历史数据增量
+    #                 data = ak.stock_zh_a_hist(
+    #                     symbol=symbol, 
+    #                     start_date=start_date, 
+    #                     end_date=TODAY_DATE,
+    #                     adjust="qfq"
+    #                 )
                     
-                    if not data.empty:
-                        # 转换列名
-                        df = data.rename(columns={
-                            "日期": "date",
-                            "开盘": "open",
-                            "收盘": "close",
-                            "最高": "high",
-                            "最低": "low",
-                            "成交量": "volume"
-                        })
+    #                 if not data.empty:
+    #                     # 转换列名
+    #                     df = data.rename(columns={
+    #                         "日期": "date",
+    #                         "开盘": "open",
+    #                         "收盘": "close",
+    #                         "最高": "high",
+    #                         "最低": "low",
+    #                         "成交量": "volume"
+    #                     })
                         
-                        # 确保日期格式正确
-                        df['date'] = pd.to_datetime(df['date'])
+    #                     # 确保日期格式正确
+    #                     df['date'] = pd.to_datetime(df['date'])
                         
-                        # 添加股票代码
-                        df['stock_code'] = symbol
+    #                     # 添加股票代码
+    #                     df['stock_code'] = symbol
                         
-                        # 计算技术指标
+    #                     # 计算技术指标
                         
-                        # 移动平均线
-                        df['MA5'] = df['close'].rolling(window=5).mean()
-                        df['MA20'] = df['close'].rolling(window=20).mean()
-                        df['MA60'] = df['close'].rolling(window=60).mean()
+    #                     # 移动平均线
+    #                     df['MA5'] = df['close'].rolling(window=5).mean()
+    #                     df['MA20'] = df['close'].rolling(window=20).mean()
+    #                     df['MA60'] = df['close'].rolling(window=60).mean()
                         
-                        # RSI
-                        df['RSI'] = talib.RSI(df['close'].values, timeperiod=14)
+    #                     # RSI
+    #                     df['RSI'] = talib.RSI(df['close'].values, timeperiod=14)
                         
-                        # MACD
-                        macd, signal, hist = talib.MACD(
-                            df['close'].values,
-                            fastperiod=12,
-                            slowperiod=26,
-                            signalperiod=9
-                        )
-                        df['MACD'] = macd
-                        df['Signal_Line'] = signal
-                        df['MACD_hist'] = hist
+    #                     # MACD
+    #                     macd, signal, hist = talib.MACD(
+    #                         df['close'].values,
+    #                         fastperiod=12,
+    #                         slowperiod=26,
+    #                         signalperiod=9
+    #                     )
+    #                     df['MACD'] = macd
+    #                     df['Signal_Line'] = signal
+    #                     df['MACD_hist'] = hist
                         
-                        # 布林带
-                        middle = df['close'].rolling(window=20).mean()
-                        std = df['close'].rolling(window=20).std()
-                        df['BB_upper'] = middle + (std * 2)
-                        df['BB_middle'] = middle
-                        df['BB_lower'] = middle - (std * 2)
+    #                     # 布林带
+    #                     middle = df['close'].rolling(window=20).mean()
+    #                     std = df['close'].rolling(window=20).std()
+    #                     df['BB_upper'] = middle + (std * 2)
+    #                     df['BB_middle'] = middle
+    #                     df['BB_lower'] = middle - (std * 2)
                         
-                        # 成交量分析
-                        df['Volume_MA'] = df['volume'].rolling(window=20).mean()
-                        df['Volume_Ratio'] = df['volume'] / df['Volume_MA']
+    #                     # 成交量分析
+    #                     df['Volume_MA'] = df['volume'].rolling(window=20).mean()
+    #                     df['Volume_Ratio'] = df['volume'] / df['Volume_MA']
                         
-                        # ATR和波动率
-                        high = df['high'].values
-                        low = df['low'].values
-                        close = df['close'].shift(1).values
+    #                     # ATR和波动率
+    #                     high = df['high'].values
+    #                     low = df['low'].values
+    #                     close = df['close'].shift(1).values
                         
-                        tr1 = df['high'] - df['low']
-                        tr2 = abs(df['high'] - df['close'].shift(1))
-                        tr3 = abs(df['low'] - df['close'].shift(1))
+    #                     tr1 = df['high'] - df['low']
+    #                     tr2 = abs(df['high'] - df['close'].shift(1))
+    #                     tr3 = abs(df['low'] - df['close'].shift(1))
                         
-                        tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
-                        df['ATR'] = tr.rolling(window=14).mean()
-                        df['Volatility'] = df['ATR'] / df['close'] * 100
+    #                     tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+    #                     df['ATR'] = tr.rolling(window=14).mean()
+    #                     df['Volatility'] = df['ATR'] / df['close'] * 100
                         
-                        # ROC
-                        df['ROC'] = df['close'].pct_change(periods=10) * 100
+    #                     # ROC
+    #                     df['ROC'] = df['close'].pct_change(periods=10) * 100
                         
-                        # 信号
-                        df['MACD_signal'] = np.where(df['MACD_hist'] > 0, "金叉", "死叉")
-                        df['RSI_signal'] = np.where(df['RSI'] > 70, "超买", 
-                                              np.where(df['RSI'] < 30, "超卖", "中性"))
+    #                     # 信号
+    #                     df['MACD_signal'] = np.where(df['MACD_hist'] > 0, "金叉", "死叉")
+    #                     df['RSI_signal'] = np.where(df['RSI'] > 70, "超买", 
+    #                                           np.where(df['RSI'] < 30, "超卖", "中性"))
                         
-                        # 转换日期为字符串，避免timestamp类型转换问题
-                        df['date'] = df['date'].dt.strftime('%Y-%m-%d')
+    #                     # 转换日期为字符串，避免timestamp类型转换问题
+    #                     df['date'] = df['date'].dt.strftime('%Y-%m-%d')
                         
-                        # 批量插入数据库
-                        records = df.to_dict('records')
-                        inserted = process_batch_records(connection, 'tech2', records, batch_size=batch_size)
+    #                     # ---------------修改部分开始-----------------
+    #                     # 显式指定要插入的列，确保列名符合数据库表结构
+    #                     desired_columns = ['date', 'stock_code', 'open', 'close', 'high', 'low', 'volume', 
+    #                                       'MA5', 'MA20', 'MA60', 'RSI', 'MACD', 'Signal_Line', 'MACD_hist', 
+    #                                       'BB_upper', 'BB_middle', 'BB_lower', 'Volume_MA', 'Volume_Ratio', 
+    #                                       'ATR', 'Volatility', 'ROC', 'MACD_signal', 'RSI_signal']
                         
-                        if inserted > 0:
-                            processed_count_tech2 += 1
-                            total_data_count_tech2 += inserted
-                            logger.info(f"成功插入股票 {symbol} 的技术指标2: {inserted}/{len(df)} 条")
-                        else:
-                            logger.warning(f"插入股票 {symbol} 的技术指标2全部失败")
-                    else:
-                        logger.info(f"股票 {symbol} 在时间段 {start_date} 至 {TODAY_DATE} 没有数据")
+    #                     # 确保只保留DataFrame中存在的列
+    #                     valid_columns = [col for col in desired_columns if col in df.columns]
+                        
+    #                     # 创建一个新的DataFrame，只包含需要的列
+    #                     df_filtered = df[valid_columns].copy()
+                        
+    #                     # 记录列信息用于调试
+    #                     logger.debug(f"Tech2 filtered columns: {df_filtered.columns.tolist()}")
+                        
+    #                     # 将DataFrame转换为记录字典
+    #                     records = df_filtered.to_dict('records')
+    #                     # ---------------修改部分结束-----------------
+                        
+    #                     # 批量插入数据库
+    #                     inserted = process_batch_records(connection, 'tech2', records, batch_size=batch_size)
+                        
+    #                     if inserted > 0:
+    #                         processed_count_tech2 += 1
+    #                         total_data_count_tech2 += inserted
+    #                         logger.info(f"成功插入股票 {symbol} 的技术指标2: {inserted}/{len(df_filtered)} 条")
+    #                     else:
+    #                         logger.warning(f"插入股票 {symbol} 的技术指标2全部失败")
+    #                 else:
+    #                     logger.info(f"股票 {symbol} 在时间段 {start_date} 至 {TODAY_DATE} 没有数据")
                 
-                except Exception as e:
-                    logger.error(f"处理股票 {symbol} 的技术指标2时出错: {e}")
+    #             except Exception as e:
+    #                 logger.error(f"处理股票 {symbol} 的技术指标2时出错: {e}")
+    #                 logger.error(traceback.format_exc())
                 
-                # 每处理10个股票暂停1秒，避免API限制
-                if (i + 1) % 10 == 0:
-                    time.sleep(1)
+    #             # 每处理10个股票暂停1秒，避免API限制
+    #             if (i + 1) % 10 == 0:
+    #                 time.sleep(1)
             
-            logger.info(f"技术指标2增量下载完成，成功处理 {processed_count_tech2}/{total_tech2} 只股票，总计 {total_data_count_tech2} 条记录")
+    #         logger.info(f"技术指标2增量下载完成，成功处理 {processed_count_tech2}/{total_tech2} 只股票，总计 {total_data_count_tech2} 条记录")
     
-    except Exception as e:
-        logger.error(f"下载技术指标2增量时出错: {e}")
-        traceback.print_exc()
+    # except Exception as e:
+    #     logger.error(f"下载技术指标2增量时出错: {e}")
+    #     traceback.print_exc()
     
     logger.info("技术指标数据增量下载完成")
 
