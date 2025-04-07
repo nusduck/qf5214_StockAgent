@@ -46,7 +46,7 @@ if sys.platform == "win32":
         pass
 
 # ✅ OPENAI API Key（已替换）
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "OPENAI_API_KEY"
 OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
 OPENAI_MODEL = "gpt-3.5-turbo"  # ✅ 使用 GPT-4 模型
 
