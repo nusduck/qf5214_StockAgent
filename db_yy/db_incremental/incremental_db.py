@@ -323,16 +323,10 @@ def insert_dataframe_in_batches(connection, df, table_name, batch_size=300):
     return success_count > 0
 
 def download_company_info_incremental(connection, max_symbols=None, batch_size=300):
-    """下载公司信息增量并存储到数据库"""
-    logger.info("开始下载公司信息增量...")
+    """下载公司信息并存储到数据库，替换现有记录"""
+    logger.info("开始下载公司信息...")
     
     try:
-        # 获取已存在的股票代码
-        cursor = connection.cursor()
-        cursor.execute("SELECT DISTINCT stock_code FROM company_info")
-        existing_stocks = [row[0] for row in cursor.fetchall()]
-        cursor.close()
-        
         # 获取股票列表
         stock_list_df = get_stock_list()
         symbols = stock_list_df['代码'].tolist()
@@ -340,98 +334,99 @@ def download_company_info_incremental(connection, max_symbols=None, batch_size=3
         if max_symbols and len(symbols) > max_symbols:
             symbols = symbols[:max_symbols]
         
-        # 找出未处理的股票
-        unprocessed_symbols = [symbol for symbol in symbols if symbol not in existing_stocks]
+        logger.info(f"总共将处理 {len(symbols)} 只股票的公司信息")
         
-        if not unprocessed_symbols:
-            logger.info("所有股票公司信息已存在，检查是否需要更新...")
-            # 这里可以增加更新逻辑，例如检查最近一次更新时间
-            
-        else:
-            logger.info(f"发现 {len(unprocessed_symbols)} 只股票需要获取公司信息")
-            
-            # 获取未处理股票的信息
-            processed_count = 0
-            total = len(unprocessed_symbols)
-            
-            for i, symbol in enumerate(unprocessed_symbols):
-                try:
-                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} 的公司信息")
+        # 处理每只股票
+        processed_count = 0
+        total = len(symbols)
+        
+        for i, symbol in enumerate(symbols):
+            try:
+                logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} 的公司信息")
+                
+                # 使用akshare获取公司信息
+                stock_info = ak.stock_individual_info_em(symbol=symbol)
+                
+                if not stock_info.empty:
+                    # 转换DataFrame为字典格式
+                    info_dict = {}
+                    for _, row in stock_info.iterrows():
+                        key = row['item']
+                        value = row['value']
+                        
+                        # 映射字段名称
+                        field_mapping = {
+                            '股票代码': 'stock_code',
+                            '股票简称': 'stock_name',
+                            '总市值': 'total_market_cap_100M',
+                            '流通市值': 'float_market_cap_100M',
+                            '总股本': 'total_shares',
+                            '流通股': 'float_shares',
+                            '行业': 'industry',
+                            '上市时间': 'ipo_date'
+                        }
+                        
+                        if key in field_mapping:
+                            info_dict[field_mapping[key]] = value
                     
-                    # 使用akshare获取公司信息
-                    stock_info = ak.stock_individual_info_em(symbol=symbol)
+                    # 添加股票代码，确保存在
+                    info_dict['stock_code'] = symbol
                     
-                    if not stock_info.empty:
-                        # 转换DataFrame为字典格式
-                        info_dict = {}
-                        for _, row in stock_info.iterrows():
-                            key = row['item']
-                            value = row['value']
-                            
-                            # 映射字段名称 - 确保与db_connect.py中完全一致
-                            field_mapping = {
-                                '股票代码': 'stock_code',
-                                '股票简称': 'stock_name',
-                                '总市值': 'total_market_cap_100M',
-                                '流通市值': 'float_market_cap_100M',
-                                '总股本': 'total_shares',
-                                '流通股': 'float_shares',
-                                '行业': 'industry',
-                                '上市时间': 'ipo_date'
-                            }
-                            
-                            if key in field_mapping:
-                                info_dict[field_mapping[key]] = value
-                        
-                        # 添加股票代码，确保存在
-                        info_dict['stock_code'] = symbol
-                        
-                        # 将总市值和流通市值转换为亿元单位
-                        if 'total_market_cap_100M' in info_dict and info_dict['total_market_cap_100M'] is not None:
-                            try:
-                                value = parse_amount(info_dict['total_market_cap_100M'])
-                                if value is not None:
-                                    info_dict['total_market_cap_100M'] = value / 1e8  # 转换为亿元
-                            except:
-                                pass
-                        
-                        if 'float_market_cap_100M' in info_dict and info_dict['float_market_cap_100M'] is not None:
-                            try:
-                                value = parse_amount(info_dict['float_market_cap_100M'])
-                                if value is not None:
-                                    info_dict['float_market_cap_100M'] = value / 1e8  # 转换为亿元
-                            except:
-                                pass
-                        
-                        # 添加ETL字段
-                        info_dict['snap_date'] = datetime.now().strftime('%Y%m%d')
-                        info_dict['etl_date'] = datetime.now().strftime('%Y%m%d')
-                        info_dict['biz_date'] = int(datetime.now().strftime('%Y%m%d'))
-                        
-                        # 插入数据库
-                        if insert_single_record(connection, 'company_info', info_dict):
-                            processed_count += 1
-                            logger.info(f"成功插入股票 {symbol} 的公司信息")
-                        else:
-                            logger.warning(f"插入股票 {symbol} 的公司信息失败")
+                    # 转换市值字段
+                    if 'total_market_cap_100M' in info_dict and info_dict['total_market_cap_100M'] is not None:
+                        try:
+                            value = parse_amount(info_dict['total_market_cap_100M'])
+                            if value is not None:
+                                info_dict['total_market_cap_100M'] = value / 1e8  # 转换为亿元
+                        except:
+                            pass
                     
+                    if 'float_market_cap_100M' in info_dict and info_dict['float_market_cap_100M'] is not None:
+                        try:
+                            value = parse_amount(info_dict['float_market_cap_100M'])
+                            if value is not None:
+                                info_dict['float_market_cap_100M'] = value / 1e8  # 转换为亿元
+                        except:
+                            pass
+                    
+                    # 添加ETL字段
+                    info_dict['snap_date'] = datetime.now().strftime('%Y%m%d')
+                    info_dict['etl_date'] = datetime.now().strftime('%Y%m%d')
+                    info_dict['biz_date'] = int(datetime.now().strftime('%Y%m%d'))
+                    
+                    # 先尝试从数据库中删除该股票的现有记录
+                    try:
+                        cursor = connection.cursor()
+                        delete_query = f"DELETE FROM company_info WHERE stock_code = '{symbol}'"
+                        cursor.execute(delete_query)
+                        connection.commit()
+                        cursor.close()
+                    except Exception as e:
+                        logger.warning(f"删除股票 {symbol} 的现有记录时出错: {e}")
+                    
+                    # 插入新数据
+                    if insert_single_record(connection, 'company_info', info_dict):
+                        processed_count += 1
+                        logger.info(f"成功更新股票 {symbol} 的公司信息")
                     else:
-                        logger.warning(f"获取股票 {symbol} 的公司信息为空")
-                
-                except Exception as e:
-                    logger.error(f"处理股票 {symbol} 的公司信息时出错: {e}")
-                
-                # 每处理10个股票暂停1秒，避免API限制
-                if (i + 1) % 10 == 0:
-                    time.sleep(1)
+                        logger.warning(f"更新股票 {symbol} 的公司信息失败")
+                else:
+                    logger.warning(f"获取股票 {symbol} 的公司信息为空")
             
-            logger.info(f"公司信息增量下载完成，成功处理 {processed_count}/{total} 只股票")
+            except Exception as e:
+                logger.error(f"处理股票 {symbol} 的公司信息时出错: {e}")
+            
+            # 每处理10个股票暂停1秒，避免API限制
+            if (i + 1) % 10 == 0:
+                time.sleep(1)
+        
+        logger.info(f"公司信息下载完成，成功处理 {processed_count}/{total} 只股票")
     
     except Exception as e:
-        logger.error(f"下载公司信息增量时出错: {e}")
+        logger.error(f"下载公司信息时出错: {e}")
         traceback.print_exc()
     
-    logger.info("公司信息增量下载完成")
+    logger.info("公司信息下载完成")
 
 def download_finance_info_incremental(connection, max_symbols=None, batch_size=300):
     """下载财务信息增量并存储到数据库"""
@@ -687,9 +682,16 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
         
         if max_symbols and len(symbols) > max_symbols:
             symbols = symbols[:max_symbols]
-        
-        # 确定未处理的股票
-        unprocessed_symbols = [symbol for symbol in symbols if symbol not in processed_stocks]
+            
+        # 检查是否每只股票都已处理
+        if latest_date and not is_empty:
+            # 计算未处理的股票
+            unprocessed_symbols = [symbol for symbol in symbols if symbol not in processed_stocks]
+            if not unprocessed_symbols and pd.to_datetime(latest_date) >= pd.to_datetime(TODAY_DATE):
+                logger.info(f"所有股票在最新日期 {latest_date} 都已处理，且日期已是最新，跳过处理")
+                return
+        else:
+            unprocessed_symbols = symbols
         
         logger.info(f"总股票数: {len(symbols)}, 已处理: {len(processed_stocks)}, 未处理: {len(unprocessed_symbols)}")
         
@@ -701,15 +703,22 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
             try:
                 # 确定此股票的起始日期
                 if latest_date and symbol in processed_stocks:
-                    # 已处理过的股票，从最新日期后一天开始增量获取
+                    # 已处理过的股票，检查最新日期是否小于今天
                     latest_date_dt = pd.to_datetime(latest_date)
+                    today_dt = pd.to_datetime(TODAY_DATE)
+                    
+                    if latest_date_dt >= today_dt:
+                        logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 已在数据库中且日期是最新的，跳过")
+                        continue
+                        
+                    # 从最新日期后一天开始增量获取
                     next_day = latest_date_dt + timedelta(days=1)
                     start_date = next_day.strftime('%Y%m%d')
                     logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 已在数据库中，从 {start_date} 获取增量数据")
                 else:
                     # 未处理过的股票，从固定起始日期开始获取
                     start_date = fixed_start_date
-                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 新股票，从 {start_date} 获取历史数据")
+                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 新股票或未在最新日期处理，从 {start_date} 获取历史数据")
                 
                 # 如果起始日期已经超过今天，跳过这只股票
                 if pd.to_datetime(start_date) > pd.to_datetime(TODAY_DATE):
@@ -761,10 +770,11 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
                     # 日期格式化与过滤
                     stock_df['Date'] = pd.to_datetime(stock_df['Date'])
                     
-                    # 确保只处理2024-09-24之后的数据（对于初次获取的股票）
-                    if symbol not in processed_stocks:
-                        # 过滤出2024-09-24及之后的数据
-                        stock_df = stock_df[stock_df['Date'] >= fixed_start_date_dt]
+                    # 确保只处理2024-09-24之后的数据（无论是否处理过）
+                    old_len = len(stock_df)
+                    stock_df = stock_df[stock_df['Date'] >= fixed_start_date_dt]
+                    if old_len != len(stock_df):
+                        logger.info(f"过滤固定日期后数据条数: {len(stock_df)}/{old_len}")
                     
                     # 转换日期为字符串格式
                     stock_df['Date'] = stock_df['Date'].dt.strftime('%Y-%m-%d')
@@ -803,25 +813,15 @@ def download_individual_stock_incremental(connection, max_symbols=None, batch_si
     logger.info("个股历史数据增量下载完成")
 
 def download_stock_news_incremental(connection, max_symbols=None, batch_size=300):
-    """下载股票新闻增量并存储到数据库"""
-    logger.info("开始下载股票新闻增量...")
+    """下载股票新闻并存储到数据库，获取最近一个月的所有新闻"""
+    logger.info("开始下载股票新闻...")
     
     try:
-        # 获取最新的发布时间
-        latest_publish_time = get_latest_date(
-            connection, 'stock_news', 'publish_time', '%Y-%m-%d %H:%M:%S'
-        )
+        # 计算一个月前的日期
+        one_month_ago = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
+        one_month_ago_dt = pd.to_datetime(one_month_ago)
         
-        latest_publish_time_dt = None
-        if latest_publish_time:
-            latest_publish_time_dt = pd.to_datetime(latest_publish_time)
-            logger.info(f"最新新闻发布时间: {latest_publish_time}")
-            
-            # 由于新闻按时间排序，而不是按股票代码排序，
-            # 所以这里不需要额外获取已处理的股票代码
-        else:
-            # 如果表为空，使用固定起始日期
-            logger.info("股票新闻表为空或无法获取最新发布时间，将从固定日期开始获取")
+        logger.info(f"获取从 {one_month_ago} 起的所有股票新闻")
         
         # 获取股票列表
         stock_list_df = get_stock_list()
@@ -837,7 +837,7 @@ def download_stock_news_incremental(connection, max_symbols=None, batch_size=300
         
         for i, symbol in enumerate(symbols):
             try:
-                logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} 的新闻增量")
+                logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} 的新闻")
                 
                 # 获取股票新闻
                 news_df = ak.stock_news_em(symbol=symbol)
@@ -870,22 +870,14 @@ def download_stock_news_incremental(connection, max_symbols=None, batch_size=300
                     # 添加快照时间
                     new_df['snapshot_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                     
-                    # 过滤出新的新闻
+                    # 过滤出最近一个月的新闻
                     if 'publish_time' in new_df.columns:
                         new_df['publish_time'] = pd.to_datetime(new_df['publish_time'])
                         
-                        # 如果有最新发布时间，过滤出更新的新闻
-                        if latest_publish_time_dt:
-                            old_len = len(new_df)
-                            new_df = new_df[new_df['publish_time'] > latest_publish_time_dt]
-                            logger.info(f"过滤后新闻数: {len(new_df)}/{old_len}")
-                        else:
-                            # 如果没有最新发布时间，获取从固定日期开始的新闻
-                            try:
-                                fixed_start_date_dt = pd.to_datetime(FIXED_START_DATE, format='%Y%m%d')
-                                new_df = new_df[new_df['publish_time'] >= fixed_start_date_dt]
-                            except:
-                                pass
+                        # 应用一个月的过滤器
+                        old_len = len(new_df)
+                        new_df = new_df[new_df['publish_time'] >= one_month_ago_dt]
+                        logger.info(f"过滤后新闻数: {len(new_df)}/{old_len}")
                         
                         # 转换为字符串，避免timestamp类型转换问题
                         new_df['publish_time'] = new_df['publish_time'].dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -894,6 +886,16 @@ def download_stock_news_incremental(connection, max_symbols=None, batch_size=300
                         # 添加ETL日期
                         today_str = datetime.now().strftime('%Y-%m-%d')
                         new_df['etl_date'] = today_str
+                        
+                        # 为避免重复，先删除该股票在这段时间的新闻
+                        try:
+                            cursor = connection.cursor()
+                            delete_query = f"DELETE FROM stock_news WHERE stock_symbol = '{symbol}' AND publish_time >= '{one_month_ago}'"
+                            cursor.execute(delete_query)
+                            connection.commit()
+                            cursor.close()
+                        except Exception as e:
+                            logger.warning(f"删除股票 {symbol} 的现有新闻时出错: {e}")
                         
                         # 使用批处理插入
                         records = new_df.to_dict('records')
@@ -906,7 +908,7 @@ def download_stock_news_incremental(connection, max_symbols=None, batch_size=300
                         else:
                             logger.warning(f"插入股票 {symbol} 的新闻全部失败")
                     else:
-                        logger.info(f"股票 {symbol} 没有新的新闻数据")
+                        logger.info(f"股票 {symbol} 没有最近一个月的新闻数据")
                 else:
                     logger.info(f"获取股票 {symbol} 的新闻为空")
             
@@ -918,13 +920,13 @@ def download_stock_news_incremental(connection, max_symbols=None, batch_size=300
             if (i + 1) % 5 == 0:
                 time.sleep(1)
         
-        logger.info(f"股票新闻增量下载完成，成功处理 {processed_count}/{total} 只股票，总计 {total_news_count} 条新闻")
+        logger.info(f"股票新闻下载完成，成功处理 {processed_count}/{total} 只股票，总计 {total_news_count} 条新闻")
     
     except Exception as e:
-        logger.error(f"下载股票新闻增量时出错: {e}")
+        logger.error(f"下载股票新闻时出错: {e}")
         traceback.print_exc()
     
-    logger.info("股票新闻增量下载完成")
+    logger.info("股票新闻下载完成")
 
 def download_sector_data_incremental(connection, batch_size=300):
     """下载行业数据并存储到数据库"""
@@ -1012,19 +1014,13 @@ def download_sector_data_incremental(connection, batch_size=300):
  
 
 def download_analyst_ratings_incremental(connection, batch_size=300):
-    """下载分析师评级增量并存储到数据库"""
+    """下载分析师评级并存储到数据库，获取2024-09-24以来的所有数据"""
     logger.info("开始下载分析师评级增量...")
     
     try:
-        # 获取最新的添加日期
-        latest_add_date = get_latest_date(connection, 'analyst', 'add_date')
-        
-        if latest_add_date:
-            latest_add_date_dt = pd.to_datetime(latest_add_date)
-            logger.info(f"最新分析师评级添加日期: {latest_add_date}")
-        else:
-            latest_add_date_dt = None
-            logger.info("分析师评级表为空或无法获取最新添加日期")
+        # 设置固定起始日期 - 2024-09-24
+        fixed_start_date = '20240924'
+        fixed_start_date_dt = pd.to_datetime(fixed_start_date)
         
         # 尝试获取分析师排行
         try:
@@ -1044,16 +1040,20 @@ def download_analyst_ratings_incremental(connection, batch_size=300):
         if analyst_ids:
             for i, analyst_id in enumerate(analyst_ids):
                 try:
-                    logger.info(f"处理 [{i+1}/{total_analysts}] 分析师 {analyst_id} 的评级增量")
+                    logger.info(f"处理 [{i+1}/{total_analysts}] 分析师 {analyst_id} 的评级")
                     
                     # 获取分析师评级
                     ratings_df = ak.stock_analyst_detail_em(analyst_id=analyst_id, indicator="最新跟踪成分股")
                     
                     if not ratings_df.empty:
+                        # 检查并删除不需要的列，如'序号'
+                        if '序号' in ratings_df.columns:
+                            ratings_df = ratings_df.drop('序号', axis=1)
+                        
                         # 添加分析师ID
                         ratings_df['analyst_id'] = analyst_id
                         
-                        # 重命名列
+                        # 重命名列 - 确保只包含数据库中存在的列
                         column_mapping = {
                             '股票代码': 'stock_code',
                             '股票名称': 'stock_name',
@@ -1065,38 +1065,70 @@ def download_analyst_ratings_incremental(connection, batch_size=300):
                             '阶段涨跌幅': 'change_percent'
                         }
                         
+                        # 创建一个新的DataFrame，只包含映射的列
+                        new_df = pd.DataFrame()
                         for old_col, new_col in column_mapping.items():
                             if old_col in ratings_df.columns:
-                                ratings_df.rename(columns={old_col: new_col}, inplace=True)
+                                new_df[new_col] = ratings_df[old_col]
                         
-                        # 过滤新增的评级
-                        if 'add_date' in ratings_df.columns:
-                            ratings_df['add_date'] = pd.to_datetime(ratings_df['add_date'])
-                            if latest_add_date_dt:
-                                ratings_df = ratings_df[ratings_df['add_date'] > latest_add_date_dt]
+                        # 确保添加分析师ID
+                        new_df['analyst_id'] = analyst_id
                         
-                        if not ratings_df.empty:
+                        # 过滤满足固定日期条件的评级
+                        if 'add_date' in new_df.columns:
+                            new_df['add_date'] = pd.to_datetime(new_df['add_date'])
+                            new_df = new_df[new_df['add_date'] >= fixed_start_date_dt]
+                        
+                        if not new_df.empty:
                             # 添加分析师详细信息
                             if not analyst_rank.empty:
                                 analyst_info = analyst_rank[analyst_rank['分析师ID'] == analyst_id]
                                 if not analyst_info.empty:
-                                    ratings_df['analyst_name'] = analyst_info['分析师名称'].values[0]
-                                    ratings_df['analyst_unit'] = analyst_info['分析师单位'].values[0]
-                                    ratings_df['industry_name'] = analyst_info['行业'].values[0]
+                                    new_df['analyst_name'] = analyst_info['分析师名称'].values[0]
+                                    new_df['analyst_unit'] = analyst_info['分析师单位'].values[0]
+                                    new_df['industry_name'] = analyst_info['行业'].values[0]
                             
                             # 添加ETL字段
-                            ratings_df['snap_date'] = datetime.now().date()
-                            ratings_df['etl_date'] = datetime.now().date()
-                            ratings_df['biz_date'] = int(datetime.now().strftime('%Y%m%d'))
+                            new_df['snap_date'] = datetime.now().date()
+                            new_df['etl_date'] = datetime.now().date()
+                            new_df['biz_date'] = int(datetime.now().strftime('%Y%m%d'))
                             
-                            # 转换日期为字符串，避免timestamp类型转换问题
-                            if 'add_date' in ratings_df.columns:
-                                ratings_df['add_date'] = ratings_df['add_date'].dt.strftime('%Y-%m-%d')
-                            if 'last_rating_date' in ratings_df.columns:
-                                ratings_df['last_rating_date'] = pd.to_datetime(ratings_df['last_rating_date']).dt.strftime('%Y-%m-%d')
+                            # 转换日期为字符串
+                            if 'add_date' in new_df.columns:
+                                new_df['add_date'] = new_df['add_date'].dt.strftime('%Y-%m-%d')
+                            if 'last_rating_date' in new_df.columns:
+                                new_df['last_rating_date'] = pd.to_datetime(new_df['last_rating_date']).dt.strftime('%Y-%m-%d')
+                            
+                            # 为防止重复，先删除这些股票的现有评级
+                            stock_codes = new_df['stock_code'].unique().tolist()
+                            for stock_code in stock_codes:
+                                try:
+                                    cursor = connection.cursor()
+                                    delete_query = f"DELETE FROM analyst WHERE stock_code = '{stock_code}' AND analyst_id = '{analyst_id}' AND add_date >= '{fixed_start_date_dt.strftime('%Y-%m-%d')}'"
+                                    cursor.execute(delete_query)
+                                    connection.commit()
+                                    cursor.close()
+                                except Exception as e:
+                                    logger.warning(f"删除分析师 {analyst_id} 对股票 {stock_code} 的现有评级时出错: {e}")
+                            
+                            # 检查列是否与数据库表匹配
+                            try:
+                                cursor = connection.cursor()
+                                cursor.execute("DESCRIBE analyst")
+                                table_columns = [column[0] for column in cursor.fetchall()]
+                                cursor.close()
+                                
+                                # 只保留表中存在的列
+                                valid_columns = [col for col in new_df.columns if col in table_columns]
+                                new_df = new_df[valid_columns]
+                                
+                                # 记录日志
+                                logger.debug(f"最终使用的列: {valid_columns}")
+                            except Exception as e:
+                                logger.warning(f"获取表列名时出错: {e}")
                             
                             # 使用批处理插入数据库
-                            records = ratings_df.to_dict('records')
+                            records = new_df.to_dict('records')
                             inserted = process_batch_records(connection, 'analyst', records, batch_size=batch_size)
                             
                             if inserted > 0:
@@ -1106,18 +1138,19 @@ def download_analyst_ratings_incremental(connection, batch_size=300):
                             else:
                                 logger.warning(f"插入分析师 {analyst_id} 的评级全部失败")
                         else:
-                            logger.info(f"分析师 {analyst_id} 没有新的评级数据")
+                            logger.info(f"分析师 {analyst_id} 没有2024-09-24以来的评级数据")
                     else:
                         logger.info(f"分析师 {analyst_id} 没有评级数据")
                 
                 except Exception as e:
                     logger.error(f"处理分析师 {analyst_id} 的评级时出错: {e}")
+                    logger.error(traceback.format_exc())
                 
                 # 每处理5个分析师暂停1秒，避免API限制
                 if (i + 1) % 5 == 0:
                     time.sleep(1)
             
-            logger.info(f"分析师评级增量下载完成，成功处理 {processed_analysts}/{total_analysts} 个分析师，总计 {total_ratings} 条评级")
+            logger.info(f"分析师评级下载完成，成功处理 {processed_analysts}/{total_analysts} 个分析师，总计 {total_ratings} 条评级")
         
         # 如果分析师ID获取失败，尝试备选方法
         else:
@@ -1128,7 +1161,7 @@ def download_analyst_ratings_incremental(connection, batch_size=300):
                 latest_ratings = ak.stock_rank_forecast_cninfo(symbol="预测评级")
                 
                 if not latest_ratings.empty:
-                    # 重命名列
+                    # 检查并删除不需要的列
                     column_mapping = {
                         '股票代码': 'stock_code',
                         '股票简称': 'stock_name',
@@ -1140,49 +1173,79 @@ def download_analyst_ratings_incremental(connection, batch_size=300):
                         '最新评级日期': 'last_rating_date'
                     }
                     
+                    # 创建一个新的DataFrame，只包含映射的列
+                    new_df = pd.DataFrame()
                     for old_col, new_col in column_mapping.items():
                         if old_col in latest_ratings.columns:
-                            latest_ratings.rename(columns={old_col: new_col}, inplace=True)
+                            new_df[new_col] = latest_ratings[old_col]
                     
                     # 过滤新的评级
-                    if 'last_rating_date' in latest_ratings.columns:
-                        latest_ratings['last_rating_date'] = pd.to_datetime(latest_ratings['last_rating_date'])
-                        if latest_add_date_dt:
-                            latest_ratings = latest_ratings[latest_ratings['last_rating_date'] > latest_add_date_dt]
-                        latest_ratings['add_date'] = latest_ratings['last_rating_date']
+                    if 'last_rating_date' in new_df.columns:
+                        new_df['last_rating_date'] = pd.to_datetime(new_df['last_rating_date'])
+                        new_df = new_df[new_df['last_rating_date'] >= fixed_start_date_dt]
+                        new_df['add_date'] = new_df['last_rating_date']
                     
-                    if not latest_ratings.empty:
+                    if not new_df.empty:
                         # 添加其他必要字段
-                        latest_ratings['snap_date'] = datetime.now().date()
-                        latest_ratings['etl_date'] = datetime.now().date()
-                        latest_ratings['biz_date'] = int(datetime.now().strftime('%Y%m%d'))
-                        latest_ratings['industry_name'] = None  # 这个字段可能需要另外获取
+                        new_df['snap_date'] = datetime.now().date()
+                        new_df['etl_date'] = datetime.now().date()
+                        new_df['biz_date'] = int(datetime.now().strftime('%Y%m%d'))
+                        new_df['industry_name'] = None  # 这个字段可能需要另外获取
                         
-                        # 转换日期为字符串，避免timestamp类型转换问题
-                        if 'last_rating_date' in latest_ratings.columns:
-                            latest_ratings['last_rating_date'] = latest_ratings['last_rating_date'].dt.strftime('%Y-%m-%d')
-                        if 'add_date' in latest_ratings.columns:
-                            latest_ratings['add_date'] = latest_ratings['add_date'].dt.strftime('%Y-%m-%d')
+                        # 转换日期为字符串
+                        if 'last_rating_date' in new_df.columns:
+                            new_df['last_rating_date'] = new_df['last_rating_date'].dt.strftime('%Y-%m-%d')
+                        if 'add_date' in new_df.columns:
+                            new_df['add_date'] = new_df['add_date'].dt.strftime('%Y-%m-%d')
                         
-                        # 批量插入数据库，使用传入的batch_size
-                        if insert_dataframe_in_batches(connection, latest_ratings, 'analyst', batch_size=batch_size):
-                            logger.info(f"备选方法成功插入评级数据: {len(latest_ratings)} 条")
-                            total_ratings += len(latest_ratings)
+                        # 检查列是否与数据库表匹配
+                        try:
+                            cursor = connection.cursor()
+                            cursor.execute("DESCRIBE analyst")
+                            table_columns = [column[0] for column in cursor.fetchall()]
+                            cursor.close()
+                            
+                            # 只保留表中存在的列
+                            valid_columns = [col for col in new_df.columns if col in table_columns]
+                            new_df = new_df[valid_columns]
+                            
+                            logger.debug(f"备选方法最终使用的列: {valid_columns}")
+                        except Exception as e:
+                            logger.warning(f"获取表列名时出错: {e}")
+                        
+                        # 删除从固定日期以来的所有评级，避免重复
+                        try:
+                            cursor = connection.cursor()
+                            delete_query = f"DELETE FROM analyst WHERE add_date >= '{fixed_start_date_dt.strftime('%Y-%m-%d')}'"
+                            cursor.execute(delete_query)
+                            connection.commit()
+                            cursor.close()
+                            logger.info(f"成功删除2024-09-24以来的所有分析师评级")
+                        except Exception as e:
+                            logger.warning(f"删除现有评级时出错: {e}")
+                        
+                        # 批量插入数据库
+                        if insert_dataframe_in_batches(connection, new_df, 'analyst', batch_size=batch_size):
+                            logger.info(f"备选方法成功插入评级数据: {len(new_df)} 条")
+                            total_ratings += len(new_df)
                         else:
                             logger.warning(f"备选方法插入评级数据全部或部分失败")
                     else:
-                        logger.info("没有新的分析师评级数据（备选方法）")
+                        logger.info("没有2024-09-24以来的分析师评级数据（备选方法）")
                 else:
                     logger.info("备选方法未找到评级数据")
             
             except Exception as e:
                 logger.error(f"使用备选方法获取分析师评级时出错: {e}")
+                logger.error(traceback.format_exc())
     
     except Exception as e:
-        logger.error(f"下载分析师评级增量时出错: {e}")
+        logger.error(f"下载分析师评级时出错: {e}")
         traceback.print_exc()
     
-    logger.info("分析师评级增量下载完成")
+    logger.info("分析师评级下载完成")
+    return total_ratings  # 返回成功插入的评级数量，方便调用者了解执行结果
+
 
 def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_size=300):
     """下载股票指标数据增量并存储到数据库"""
@@ -1200,6 +1263,10 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
         else:
             logger.info("股票交易指标表为空或无法获取最新日期")
         
+        # 设置固定起始日期 - 确保一定会处理2024-09-24之后的所有数据
+        fixed_start_date = '20240924'
+        fixed_start_date_dt = pd.to_datetime(fixed_start_date)
+        
         # 获取股票列表
         stock_list_df = get_stock_list()
         symbols = stock_list_df['代码'].tolist()
@@ -1207,97 +1274,107 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
         if max_symbols and len(symbols) > max_symbols:
             symbols = symbols[:max_symbols]
         
-        # 确定未处理的股票
-        unprocessed_symbols = [symbol for symbol in symbols if symbol not in processed_stocks]
+        # 处理每只股票
+        total = len(symbols)
+        processed_count = 0
+        total_data_count = 0
         
-        if not unprocessed_symbols and latest_trade_date:
-            logger.info("当前交易日期所有股票的指标数据已获取完毕")
-        else:
-            if latest_trade_date:
-                logger.info(f"发现 {len(unprocessed_symbols)} 只股票需要获取指标数据")
-            else:
-                logger.info(f"表为空，需要获取 {len(symbols)} 只股票的指标数据")
-                unprocessed_symbols = symbols
-            
-            # 处理未处理的股票
-            total = len(unprocessed_symbols)
-            processed_count = 0
-            total_data_count = 0
-            
-            for i, symbol in enumerate(unprocessed_symbols):
-                try:
-                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} 的交易指标增量")
+        for i, symbol in enumerate(symbols):
+            try:
+                # 确定此股票的起始日期
+                if latest_trade_date and symbol in processed_stocks:
+                    # 已处理过的股票，从最新日期后一天开始增量获取
+                    latest_date_dt = pd.to_datetime(latest_trade_date)
+                    next_day = latest_date_dt + timedelta(days=1)
+                    start_date = next_day.strftime('%Y%m%d')
+                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 已在数据库中，从 {start_date} 获取增量数据")
+                else:
+                    # 未处理过的股票，从固定起始日期开始获取
+                    start_date = fixed_start_date
+                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 新股票，从 {start_date} 获取指标数据")
+                
+                # 如果起始日期已经超过今天，跳过这只股票
+                if pd.to_datetime(start_date) > pd.to_datetime(TODAY_DATE):
+                    logger.info(f"股票 {symbol} 的起始日期 {start_date} 超过今天 {TODAY_DATE}，跳过")
+                    continue
+                
+                # 获取股票指标数据
+                indicator_df = ak.stock_a_indicator_lg(symbol=symbol)
+                
+                if not indicator_df.empty:
+                    # 添加股票代码和名称
+                    indicator_df['stock_code'] = symbol
+                    try:
+                        stock_name = stock_list_df.loc[stock_list_df['代码'] == symbol, '名称'].values[0]
+                        indicator_df['stock_name'] = stock_name
+                    except:
+                        indicator_df['stock_name'] = ''
                     
-                    # 获取股票指标数据
-                    indicator_df = ak.stock_a_indicator_lg(symbol=symbol)
+                    # 日期格式化与过滤
+                    indicator_df['trade_date'] = pd.to_datetime(indicator_df['trade_date'])
+                    
+                    # 日期过滤，根据不同情况应用不同的过滤条件
+                    if symbol in processed_stocks:
+                        # 对已处理股票，只获取最新日期之后的数据
+                        latest_date_dt = pd.to_datetime(latest_trade_date)
+                        indicator_df = indicator_df[indicator_df['trade_date'] > latest_date_dt]
+                    else:
+                        # 对未处理股票，确保只处理2024-09-24之后的数据
+                        indicator_df = indicator_df[indicator_df['trade_date'] >= fixed_start_date_dt]
                     
                     if not indicator_df.empty:
-                        # 添加股票代码和名称
-                        indicator_df['stock_code'] = symbol
-                        try:
-                            stock_name = stock_list_df.loc[stock_list_df['代码'] == symbol, '名称'].values[0]
-                            indicator_df['stock_name'] = stock_name
-                        except:
-                            indicator_df['stock_name'] = ''
+                        # 将总市值转换为亿元单位
+                        if 'total_mv' in indicator_df.columns:
+                            indicator_df['total_mv_100M'] = indicator_df['total_mv'] / 1e8
+                            indicator_df.drop('total_mv', axis=1, inplace=True)
                         
-                        # 日期过滤
-                        indicator_df['trade_date'] = pd.to_datetime(indicator_df['trade_date'])
-                        if latest_trade_date:
-                            latest_trade_date_dt = pd.to_datetime(latest_trade_date)
-                            indicator_df = indicator_df[indicator_df['trade_date'] > latest_trade_date_dt]
+                        # 计算一些额外指标
+                        if 'pe' in indicator_df.columns and indicator_df['pe'].notna().any():
+                            indicator_df['earnings_yield'] = indicator_df['pe'].apply(
+                                lambda x: round(100 / x, 2) if x and x > 0 else None
+                            )
                         
-                        if not indicator_df.empty:
-                            # 将总市值转换为亿元单位
-                            if 'total_mv' in indicator_df.columns:
-                                indicator_df['total_mv_100M'] = indicator_df['total_mv'] / 1e8
-                                indicator_df.drop('total_mv', axis=1, inplace=True)
-                            
-                            # 计算一些额外指标
-                            if 'pe' in indicator_df.columns and indicator_df['pe'].notna().any():
-                                indicator_df['earnings_yield'] = indicator_df['pe'].apply(
-                                    lambda x: round(100 / x, 2) if x and x > 0 else None
-                                )
-                            
-                            if 'pb' in indicator_df.columns and indicator_df['pb'].notna().any():
-                                indicator_df['pb_inverse'] = indicator_df['pb'].apply(
-                                    lambda x: round(1 / x, 2) if x and x > 0 else None
-                                )
-                            
-                            # 格雷厄姆指数 = 市盈率 × 市净率
-                            if 'pe' in indicator_df.columns and 'pb' in indicator_df.columns:
-                                indicator_df['graham_index'] = indicator_df.apply(
-                                    lambda row: round(row['pe'] * row['pb'], 2) 
-                                    if row['pe'] and row['pb'] and row['pe'] > 0 and row['pb'] > 0 
-                                    else None,
-                                    axis=1
-                                )
-                            
-                            # 添加ETL日期
-                            indicator_df['etl_date'] = datetime.now().date()
-                            
-                            # 转换日期为字符串，避免timestamp类型转换问题
-                            indicator_df['trade_date'] = indicator_df['trade_date'].dt.strftime('%Y-%m-%d')
-                            
-                            # 使用批处理插入数据库，使用传入的batch_size
-                            if insert_dataframe_in_batches(connection, indicator_df, 'stock_a_indicator', batch_size=batch_size):
-                                processed_count += 1
-                                total_data_count += len(indicator_df)
-                                logger.info(f"成功插入股票 {symbol} 的交易指标: {len(indicator_df)} 条")
-                            else:
-                                logger.warning(f"插入股票 {symbol} 的交易指标全部或部分失败")
+                        if 'pb' in indicator_df.columns and indicator_df['pb'].notna().any():
+                            indicator_df['pb_inverse'] = indicator_df['pb'].apply(
+                                lambda x: round(1 / x, 2) if x and x > 0 else None
+                            )
+                        
+                        # 格雷厄姆指数 = 市盈率 × 市净率
+                        if 'pe' in indicator_df.columns and 'pb' in indicator_df.columns:
+                            indicator_df['graham_index'] = indicator_df.apply(
+                                lambda row: round(row['pe'] * row['pb'], 2) 
+                                if row['pe'] and row['pb'] and row['pe'] > 0 and row['pb'] > 0 
+                                else None,
+                                axis=1
+                            )
+                        
+                        # 添加ETL日期
+                        indicator_df['etl_date'] = datetime.now().date()
+                        
+                        # 转换日期为字符串，避免timestamp类型转换问题
+                        indicator_df['trade_date'] = indicator_df['trade_date'].dt.strftime('%Y-%m-%d')
+                        
+                        # 使用批处理插入数据库，使用传入的batch_size
+                        if insert_dataframe_in_batches(connection, indicator_df, 'stock_a_indicator', batch_size=batch_size):
+                            processed_count += 1
+                            total_data_count += len(indicator_df)
+                            logger.info(f"成功插入股票 {symbol} 的交易指标: {len(indicator_df)} 条")
                         else:
-                            logger.info(f"股票 {symbol} 没有新的交易指标数据")
+                            logger.warning(f"插入股票 {symbol} 的交易指标全部或部分失败")
                     else:
-                        logger.info(f"获取股票 {symbol} 的交易指标为空")
-                
-                except Exception as e:
-                    logger.error(f"处理股票 {symbol} 的交易指标时出错: {e}")
-                
-                # 每处理10个股票暂停1秒，避免API限制
-                if (i + 1) % 10 == 0:
-                    time.sleep(1)
+                        logger.info(f"过滤后股票 {symbol} 没有符合条件的数据")
+                else:
+                    logger.info(f"获取股票 {symbol} 的交易指标为空")
             
-            logger.info(f"股票交易指标数据增量下载完成，成功处理 {processed_count}/{total} 只股票，总计 {total_data_count} 条数据")
+            except Exception as e:
+                logger.error(f"处理股票 {symbol} 的交易指标时出错: {e}")
+                logger.error(traceback.format_exc())
+            
+            # 每处理10个股票暂停1秒，避免API限制
+            if (i + 1) % 10 == 0:
+                time.sleep(1)
+        
+        logger.info(f"股票交易指标数据增量下载完成，成功处理 {processed_count}/{total} 只股票，总计 {total_data_count} 条数据")
     
     except Exception as e:
         logger.error(f"下载股票交易指标数据增量时出错: {e}")
@@ -1309,7 +1386,7 @@ def download_tech_indicators_incremental(connection, max_symbols=None, batch_siz
     """下载技术指标数据增量并存储到数据库"""
     logger.info("开始下载技术指标数据增量...")
     
-    # 技术指标1处理
+        # 技术指标1处理
     try:
         # 获取最新的交易日期
         latest_trade_date_tech1 = get_latest_date(connection, 'tech1', 'trade_date')
@@ -1333,9 +1410,8 @@ def download_tech_indicators_incremental(connection, max_symbols=None, batch_siz
         if max_symbols and len(symbols) > max_symbols:
             symbols = symbols[:max_symbols]
         
-        # 确定未处理的股票
+        # 计算未处理的股票数量
         unprocessed_symbols_tech1 = [symbol for symbol in symbols if symbol not in processed_stocks_tech1]
-        
         logger.info(f"技术指标1 - 总股票数: {len(symbols)}, 已处理: {len(processed_stocks_tech1)}, 未处理: {len(unprocessed_symbols_tech1)}")
         
         # 处理每只股票
@@ -1347,15 +1423,22 @@ def download_tech_indicators_incremental(connection, max_symbols=None, batch_siz
             try:
                 # 确定此股票的起始日期
                 if latest_trade_date_tech1 and symbol in processed_stocks_tech1:
-                    # 已处理过的股票，从最新日期后一天开始增量获取
+                    # 已处理过的股票，检查最新日期是否小于今天
                     latest_date_dt = pd.to_datetime(latest_trade_date_tech1)
+                    today_dt = pd.to_datetime(TODAY_DATE)
+                    
+                    if latest_date_dt >= today_dt:
+                        logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} - 已在数据库中且日期是最新的，跳过")
+                        continue
+                        
+                    # 从最新日期后一天开始增量获取
                     next_day = latest_date_dt + timedelta(days=1)
                     start_date = next_day.strftime('%Y%m%d')
-                    logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} - 技术指标1已在数据库中，从 {start_date} 获取增量数据")
+                    logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} - 已在数据库中，从 {start_date} 获取增量数据")
                 else:
                     # 未处理过的股票，从固定起始日期开始获取
                     start_date = fixed_start_date
-                    logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} - 技术指标1新股票，从 {start_date} 获取历史数据")
+                    logger.info(f"处理 [{i+1}/{total_tech1}] 股票 {symbol} - 新股票或未在最新日期处理，从 {start_date} 获取历史数据")
                 
                 # 如果起始日期已经超过今天，跳过这只股票
                 if pd.to_datetime(start_date) > pd.to_datetime(TODAY_DATE):
@@ -1424,10 +1507,12 @@ def download_tech_indicators_incremental(connection, max_symbols=None, batch_siz
                     # 日期格式化与过滤
                     tech1_df['trade_date'] = pd.to_datetime(tech1_df['trade_date'])
                     
-                    # 确保只处理2024-09-24之后的数据（对于初次获取的股票）
-                    if symbol not in processed_stocks_tech1:
-                        # 过滤出2024-09-24及之后的数据
-                        tech1_df = tech1_df[tech1_df['trade_date'] >= fixed_start_date_dt]
+                    # 这里我们只应用一种过滤条件：确保所有数据都在固定日期之后
+                    # 因为我们已经在请求时指定了正确的起始日期，所以这只是一个额外的安全检查
+                    old_len = len(tech1_df)
+                    tech1_df = tech1_df[tech1_df['trade_date'] >= fixed_start_date_dt]
+                    if old_len != len(tech1_df):
+                        logger.info(f"过滤固定日期后数据条数: {len(tech1_df)}/{old_len}")
                     
                     # 转换为字符串格式
                     tech1_df['trade_date'] = tech1_df['trade_date'].dt.strftime('%Y-%m-%d')
