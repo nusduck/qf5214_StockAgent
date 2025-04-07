@@ -4,31 +4,39 @@ from datetime import datetime
 from core.state import StockAnalysisState
 from tools.stock_news_tools import get_stock_news
 from tools.stock_news_tools_db import get_stock_news_from_db_tool
+from tools.stock_news_tools_db import get_stock_news_from_db_tool
 from tools.sector_tools import get_stock_sector_data
 from tools.sector_tools_db import get_sector_info_from_db_tool
+from tools.sector_tools_db import get_sector_info_from_db_tool
 from tools.individual_stock_tools import get_stock_trade_data
+from tools.individual_stock_tools_db import get_stock_info_from_db_tool
 from tools.individual_stock_tools_db import get_stock_info_from_db_tool
 from tools.finance_info_tools import analyze_stock_financial
 from tools.stock_a_indicator_tools import analyze_stock_indicators
 from tools.finance_info_tools_db import get_finance_data_from_db_tool
-from tools.stock_a_indicator_tools_db import get_stock_indicator_from_db_tool
 from tools.analyst_tools import get_analyst_data_tool
 from tools.analyst_tools_db import get_analyst_data_from_db_tool
+from tools.analyst_tools_db import get_analyst_data_from_db_tool
 from tools.tech2_tools import get_stock_data_with_indicators
+from tools.tech2_tools_db import get_tech2_from_db_tool
 from tools.tech2_tools_db import get_tech2_from_db_tool
 from helpers.logger import setup_logger
 from helpers.utility import save_state_to_database
 
 async def get_news_async(stock_code: str):
     return await get_stock_news_from_db_tool.ainvoke({"stock_code": stock_code})
+    return await get_stock_news_from_db_tool.ainvoke({"stock_code": stock_code})
 
 async def get_sector_async(industry: str, start_date: str, end_date: str):
+    return await get_sector_info_from_db_tool.ainvoke({"sector": industry, "start_date": start_date, "end_date": end_date})
     return await get_sector_info_from_db_tool.ainvoke({"sector": industry, "start_date": start_date, "end_date": end_date})
 
 async def get_trade_async(stock_code: str, start_date: str, end_date: str):
     return await get_stock_info_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
+    return await get_stock_info_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
 
 async def get_financial_async(stock_code: str, start_date: str, end_date: str):
+    return await get_finance_data_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
     return await get_finance_data_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
 
 async def get_indicators_async(stock_code: str, start_date: str, end_date: str):
@@ -36,13 +44,17 @@ async def get_indicators_async(stock_code: str, start_date: str, end_date: str):
 
 async def get_analyst_async(stock_code: str, start_date: str):
     return await get_analyst_data_from_db_tool.ainvoke({"stock_code": stock_code, "add_date": start_date})
+    return await get_analyst_data_from_db_tool.ainvoke({"stock_code": stock_code, "add_date": start_date})
 
 async def get_technical_async(stock_code: str, start_date: str, end_date: str):
+    return await get_tech2_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
     return await get_tech2_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
 
 async def data_acquire_node_async(state: StockAnalysisState) -> StockAnalysisState:
     logger = setup_logger("node.log")
     logger.info("data_acquire_node开始异步获取数据")
+    start_date = "2024-01-01"
+    end_date = datetime.now().strftime("%Y-%m-%d")
     start_date = "2024-01-01"
     end_date = datetime.now().strftime("%Y-%m-%d")
     stock_code = state.basic_info.stock_code
