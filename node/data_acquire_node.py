@@ -11,6 +11,7 @@ from tools.individual_stock_tools_db import get_stock_info_from_db_tool
 from tools.finance_info_tools import analyze_stock_financial
 from tools.stock_a_indicator_tools import analyze_stock_indicators
 from tools.finance_info_tools_db import get_finance_data_from_db_tool
+from tools.stock_a_indicator_tools_db import get_stock_indicator_from_db_tool
 from tools.analyst_tools import get_analyst_data_tool
 from tools.analyst_tools_db import get_analyst_data_from_db_tool
 from tools.tech2_tools import get_stock_data_with_indicators
@@ -31,7 +32,7 @@ async def get_financial_async(stock_code: str, start_date: str, end_date: str):
     return await get_finance_data_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
 
 async def get_indicators_async(stock_code: str, start_date: str, end_date: str):
-    return await analyze_stock_indicators.ainvoke({"symbol": stock_code, "start_date": start_date, "end_date": end_date})
+    return await get_stock_indicator_from_db_tool.ainvoke({"stock_code": stock_code, "start_date": start_date, "end_date": end_date})
 
 async def get_analyst_async(stock_code: str, start_date: str):
     return await get_analyst_data_from_db_tool.ainvoke({"stock_code": stock_code, "add_date": start_date})
