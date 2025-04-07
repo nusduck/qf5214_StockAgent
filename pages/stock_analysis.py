@@ -272,15 +272,15 @@ def main():
         cols = st.columns(3)
         with cols[0]:
             st.markdown("###### 📈 技术面分析")
-            st.image("https://via.placeholder.com/300x200.png?text=技术分析示例", use_container_width=True)
+            # st.image("https://via.placeholder.com/300x200.png?text=技术分析示例", use_container_width=True)
         
         with cols[1]:
             st.markdown("###### 💰 基本面分析")
-            st.image("https://via.placeholder.com/300x200.png?text=基本面分析示例", use_container_width=True)
+            # st.image("https://via.placeholder.com/300x200.png?text=基本面分析示例", use_container_width=True)
             
         with cols[2]:
             st.markdown("###### 📰 新闻情感分析")
-            st.image("https://via.placeholder.com/300x200.png?text=新闻分析示例", use_container_width=True)
+            # st.image("https://via.placeholder.com/300x200.png?text=新闻分析示例", use_container_width=True)
 
 if __name__ == "__main__":
     main()

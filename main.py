@@ -336,7 +336,7 @@ st.title("📊 智能股票分析系统")
 # 添加Logo和导航栏样式的容器
 col_logo, col_nav = st.columns([1, 4])
 with col_logo:
-    st.image("https://via.placeholder.com/100x100.png?text=AI+Stock", width=100)
+    st.image("sources/icon/image_fx_-2.jpg", width=100)
 
 # 项目简介 - 使用卡片样式
 with st.container():

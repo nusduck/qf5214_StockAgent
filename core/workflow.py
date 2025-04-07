@@ -109,4 +109,4 @@ def run_stock_analysis(company_name: str) -> Dict[str, Any]:
     
     # Create and run workflow
     workflow = create_stock_analysis_workflow()
-    return workflow.invoke(state,config={"recursion_limit": 50})
+    return workflow.invoke(state,config={"recursion_limit": 100})
