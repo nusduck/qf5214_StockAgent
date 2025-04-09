@@ -12,13 +12,20 @@ interface ResearchDataModuleProps {
     data: any;
     loading: boolean;
     loaded: boolean;
-    error: string | undefined;
+    error: string | undefined | null;
   };
   onRetry: (moduleType: string) => void;
 }
 
 const ResearchDataModule: React.FC<ResearchDataModuleProps> = ({ moduleData, onRetry }) => {
   const { data, loading, loaded, error } = moduleData;
+
+  // 添加调试日志
+  React.useEffect(() => {
+    if (data) {
+      console.log("ResearchDataModule: 收到数据", data);
+    }
+  }, [data]);
 
   // 加载中状态
   if (loading) {

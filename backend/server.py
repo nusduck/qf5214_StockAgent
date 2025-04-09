@@ -50,7 +50,23 @@ app.add_middleware(
 
 # 创建静态文件目录用于提供图片访问
 os.makedirs("database/data", exist_ok=True)
+os.makedirs("database/cache", exist_ok=True)  # 添加缓存目录
 app.mount("/static", StaticFiles(directory="database"), name="static")
+
+# 在应用启动时检查并创建必要的目录结构
+def ensure_directories_exist():
+    """确保所有必要的目录结构存在"""
+    dirs = [
+        "database/data",
+        "database/cache",
+        "database/task_store"
+    ]
+    for dir_path in dirs:
+        os.makedirs(dir_path, exist_ok=True)
+        logger.info(f"确保目录存在: {dir_path}")
+
+# 应用启动时执行
+ensure_directories_exist()
 
 class WorkflowRequest(BaseModel):
     stock_code: str
@@ -64,48 +80,17 @@ class HotspotRequest(BaseModel):
 
 class StockAnalysisRequest(BaseModel):
     company_name: str
+    stock_code: Optional[str] = None  # 可选股票代码
     analysis_type: str = "综合分析"  # 可选值: "技术面分析", "基本面分析", "综合分析"
     force_refresh: bool = False  # 是否强制刷新，忽略缓存
 
+# 修改task_store的定义，使用更持久的存储方案
 # 用于存储任务状态和结果的内存存储
 # 实际应用中可替换为Redis等分布式存储
 task_store = {}
+TASK_STORE_FILE = "database/task_store.json"
 
-# 缓存辅助函数
-def generate_cache_key(stock_code: str, analysis_type: str = "综合分析") -> str:
-    """根据股票代码和分析类型生成缓存键"""
-    today = datetime.now().strftime("%Y%m%d")
-    return f"stock_analysis:{stock_code}:{analysis_type}:{today}"
-
-def get_cached_result(stock_code: str, analysis_type: str = "综合分析") -> Optional[Dict]:
-    """从缓存获取分析结果"""
-    if not cache.available:
-        return None
-    
-    try:
-        cache_key = generate_cache_key(stock_code, analysis_type)
-        cached_data = cache.get(cache_key)
-        
-        if cached_data:
-            return cached_data
-        return None
-    except Exception as e:
-        logger.error(f"从缓存获取数据失败: {str(e)}")
-        return None
-
-def save_to_cache(stock_code: str, result_data: Dict, analysis_type: str = "综合分析", expire_time: int = REDIS_CACHE_TTL) -> bool:
-    """保存分析结果到缓存"""
-    if not cache.available:
-        return False
-    
-    try:
-        cache_key = generate_cache_key(stock_code, analysis_type)
-        # 直接使用cache.set，内部已经处理JSON序列化
-        return cache.set(cache_key, result_data, expire_time)
-    except Exception as e:
-        logger.error(f"保存数据到缓存失败: {str(e)}")
-        return False
-
+# 首先定义TaskStatus类，然后再定义load_task_store函数
 class TaskStatus:
     """任务状态跟踪类"""
     def __init__(self, company_name: str):
@@ -151,6 +136,120 @@ class TaskStatus:
             "updated_at": self.updated_at.isoformat(),
             "error": self.error
         }
+
+# 加载已有的任务数据
+def load_task_store():
+    """从本地文件加载任务存储"""
+    global task_store
+    try:
+        if os.path.exists(TASK_STORE_FILE):
+            with open(TASK_STORE_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+                # 转换回TaskStatus对象
+                for task_id, task_data in data.items():
+                    status = TaskStatus(task_data['company_name'])
+                    status.__dict__.update(task_data)
+                    task_store[task_id] = status
+            logger.info(f"从 {TASK_STORE_FILE} 加载了 {len(task_store)} 个任务")
+    except Exception as e:
+        logger.error(f"加载任务存储失败: {str(e)}")
+
+# 保存任务数据到本地文件
+def save_task_store():
+    """保存任务存储到本地文件"""
+    try:
+        # 确保目录存在
+        os.makedirs(os.path.dirname(TASK_STORE_FILE), exist_ok=True)
+        
+        # 将TaskStatus对象转换为可序列化的字典
+        serializable_data = {}
+        for task_id, task in task_store.items():
+            task_dict = task.to_dict()
+            # 添加结果数据
+            if hasattr(task, 'result') and task.result:
+                task_dict['result'] = task.result
+            serializable_data[task_id] = task_dict
+            
+        with open(TASK_STORE_FILE, 'w', encoding='utf-8') as f:
+            json.dump(serializable_data, f, ensure_ascii=False, indent=2)
+        logger.info(f"保存了 {len(task_store)} 个任务到 {TASK_STORE_FILE}")
+    except Exception as e:
+        logger.error(f"保存任务存储失败: {str(e)}")
+
+# 在应用启动时加载任务存储
+load_task_store()
+
+# 缓存辅助函数
+def generate_cache_key(stock_code: str, analysis_type: str = "综合分析") -> str:
+    """根据股票代码和分析类型生成缓存键"""
+    today = datetime.now().strftime("%Y%m%d")
+    return f"stock_analysis:{stock_code}:{analysis_type}:{today}"
+
+def generate_task_id(company_name: str, stock_code: str = None) -> str:
+    """生成与公司名称和股票代码关联的任务ID
+    
+    如果存在相同公司的已完成任务，则返回该任务ID
+    否则创建新的任务ID
+    """
+    # 查找已有的已完成任务
+    for task_id, task in task_store.items():
+        if (task.company_name == company_name or 
+            (stock_code and task.stock_code == stock_code)) and task.status == "completed":
+            logger.info(f"找到已有的任务: {task_id} 对应公司: {company_name}")
+            return task_id
+            
+    # 没有找到已有任务，创建新ID
+    if stock_code:
+        # 使用股票代码作为基础生成一个确定性但唯一的ID
+        task_id = f"task_{stock_code}_{int(time.time())}"
+    else:
+        # 否则使用UUID
+        task_id = str(uuid.uuid4())
+        
+    logger.info(f"创建新任务ID: {task_id}")
+    return task_id
+
+def get_cached_result(stock_code: str, analysis_type: str = "综合分析") -> Optional[Dict]:
+    """从缓存获取分析结果"""
+    # 首先尝试从Redis缓存获取
+    if cache.available:
+        try:
+            cache_key = generate_cache_key(stock_code, analysis_type)
+            cached_data = cache.get(cache_key)
+            
+            if cached_data:
+                logger.info(f"从Redis缓存获取到股票{stock_code}的数据")
+                return cached_data
+        except Exception as e:
+            logger.error(f"从Redis缓存获取数据失败: {str(e)}")
+    
+    # 如果Redis没有数据，尝试从本地文件加载
+    try:
+        cache_dir = os.path.join("database", "cache")
+        cache_file = os.path.join(cache_dir, f"{stock_code}_{analysis_type.replace(' ', '_')}.json")
+        if os.path.exists(cache_file):
+            with open(cache_file, 'r', encoding='utf-8') as f:
+                local_cached_data = json.load(f)
+                logger.info(f"从本地文件缓存获取到股票{stock_code}的数据")
+                return local_cached_data
+    except Exception as e:
+        logger.error(f"从本地文件缓存获取数据失败: {str(e)}")
+    
+    # 两种缓存都没有找到
+    return None
+
+def save_to_cache(stock_code: str, result_data: Dict, analysis_type: str = "综合分析", expire_time: int = REDIS_CACHE_TTL) -> bool:
+    """保存分析结果到缓存"""
+    if not cache.available:
+        return False
+    
+    try:
+        cache_key = generate_cache_key(stock_code, analysis_type)
+        # 直接使用cache.set，内部已经处理JSON序列化
+        return cache.set(cache_key, result_data, expire_time)
+    except Exception as e:
+        logger.error(f"保存数据到缓存失败: {str(e)}")
+        return False
 
 def process_stock_analysis(task_id: str, company_name: str, analysis_type: str = "综合分析", force_refresh: bool = False):
     """
@@ -228,12 +327,25 @@ def process_stock_analysis(task_id: str, company_name: str, analysis_type: str =
                     },
                     stage="完成(缓存)"
                 )
+                
+                # 保存任务状态到本地文件
+                save_task_store()
+                
                 return
-        
+                
+        # 执行分析前确保创建存储目录
+        if stock_code:
+            base_dir = f"database/data/{stock_code}"
+            vis_dir = f"{base_dir}/visualizations"
+            os.makedirs(base_dir, exist_ok=True)
+            os.makedirs(vis_dir, exist_ok=True)
+            os.makedirs(f"{vis_dir}/trade_data", exist_ok=True)
+            os.makedirs(f"{vis_dir}/technical_data", exist_ok=True)
+            
         # 如果没有缓存或强制刷新，执行分析
         task.update(progress=18, message="正在获取基础数据...", stage="数据收集")
         
-        # 执行分析 - 使用更高的递归限制
+        # 执行分析 - 使用更低的递归限制
         # 创建一个进度更新函数，用于在分析过程中更新进度
         def progress_callback(stage, progress_value, message):
             # 将stage和progress调整到适当的范围
@@ -246,7 +358,7 @@ def process_stock_analysis(task_id: str, company_name: str, analysis_type: str =
         task.update(progress=20, message="开始深度分析...", stage="数据分析")
         
         # 执行分析
-        results = run_stock_analysis(company_name, recursion_limit=200, progress_callback=progress_callback)
+        results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
         
         # 数据收集阶段完成
         task.update(progress=65, message="基础数据收集完成，开始分析...", stage="数据分析")
@@ -310,6 +422,7 @@ def process_stock_analysis(task_id: str, company_name: str, analysis_type: str =
             },
             # 可视化模块 - 处理图表路径，确保正确格式
             "visualization_paths": [f"/static/{path.replace('database/', '')}" for path in results["visualization_paths"]],
+            "graph_description": results.get("graph_description", []),
             "data_file_paths": {k: f"/static/{v.replace('database/', '')}" for k, v in results["data_file_paths"].items()},
             
             # 报告模块 - 综合分析报告
@@ -361,6 +474,17 @@ def process_stock_analysis(task_id: str, company_name: str, analysis_type: str =
             cache_key = generate_cache_key(real_stock_code, analysis_type)
             save_success = cache.set(cache_key, converted_response, REDIS_CACHE_TTL)
             logger.info(f"缓存保存{'成功' if save_success else '失败'} - 股票: {real_stock_code}")
+            
+            # 同时保存结果到本地文件
+            try:
+                cache_dir = os.path.join("database", "cache")
+                os.makedirs(cache_dir, exist_ok=True)
+                cache_file = os.path.join(cache_dir, f"{real_stock_code}_{analysis_type.replace(' ', '_')}.json")
+                with open(cache_file, 'w', encoding='utf-8') as f:
+                    json.dump(converted_response, f, ensure_ascii=False, indent=2)
+                logger.info(f"本地缓存保存成功: {cache_file}")
+            except Exception as e:
+                logger.error(f"保存本地缓存失败: {str(e)}")
         
         # 更新任务完成状态
         task.update(
@@ -377,6 +501,10 @@ def process_stock_analysis(task_id: str, company_name: str, analysis_type: str =
             },
             stage="完成"
         )
+        
+        # 保存任务状态到本地文件
+        save_task_store()
+        
         logger.info(f"任务 {task_id} 成功完成")
         
     except Exception as e:
@@ -389,6 +517,9 @@ def process_stock_analysis(task_id: str, company_name: str, analysis_type: str =
             error=str(e),
             stage="错误"
         )
+        
+        # 即使失败也保存任务状态
+        save_task_store()
 
 @app.post("/api/v1/stock-analysis/task")
 async def create_analysis_task(request: StockAnalysisRequest):
@@ -396,11 +527,68 @@ async def create_analysis_task(request: StockAnalysisRequest):
     创建股票分析任务并立即返回任务ID
     """
     try:
-        # 创建唯一的任务ID
-        task_id = str(uuid.uuid4())
+        # 如果提供了股票代码，先尝试从缓存获取结果
+        if request.stock_code and not request.force_refresh:
+            cached_result = get_cached_result(request.stock_code, request.analysis_type)
+            if cached_result:
+                logger.info(f"找到股票 {request.stock_code} 的缓存结果")
+                
+                # 使用已有的任务ID或创建新ID
+                task_id = generate_task_id(request.company_name, request.stock_code)
+                
+                # 如果是新任务，初始化并填充结果
+                if task_id not in task_store:
+                    task = TaskStatus(request.company_name)
+                    task.stock_code = request.stock_code
+                    task.status = "completed"
+                    task.progress = 100
+                    task.message = "从缓存加载数据完成"
+                    task.stage = "完成(缓存)"
+                    
+                    # 定义所有支持的模块
+                    modules_info = [
+                        {"type": "basic_info", "endpoint": f"/api/v1/stock-analysis/result/{task_id}/basic_info"},
+                        {"type": "market_data", "endpoint": f"/api/v1/stock-analysis/result/{task_id}/market_data"},
+                        {"type": "financial_data", "endpoint": f"/api/v1/stock-analysis/result/{task_id}/financial_data"},
+                        {"type": "research_data", "endpoint": f"/api/v1/stock-analysis/result/{task_id}/research_data"},
+                        {"type": "visualizations", "endpoint": f"/api/v1/stock-analysis/result/{task_id}/visualizations"},
+                        {"type": "report", "endpoint": f"/api/v1/stock-analysis/result/{task_id}/report"}
+                    ]
+                    
+                    task.result = {
+                        "success": True,
+                        "task_id": task_id,
+                        "status": "completed",
+                        "cached": True,
+                        "modules": modules_info,
+                        "data": cached_result
+                    }
+                    
+                    task_store[task_id] = task
+                    save_task_store()
+                
+                return {
+                    "success": True, 
+                    "task_id": task_id, 
+                    "message": "任务已创建，从缓存获取结果"
+                }
         
-        # 初始化任务状态
+        # 创建任务ID，可能复用已有任务
+        task_id = generate_task_id(request.company_name, request.stock_code)
+        
+        # 如果是已完成的任务且不需要强制刷新，直接返回
+        if task_id in task_store and task_store[task_id].status == "completed" and not request.force_refresh:
+            logger.info(f"复用已完成的任务 {task_id}")
+            return {
+                "success": True, 
+                "task_id": task_id, 
+                "message": "任务已创建，使用已有结果"
+            }
+        
+        # 否则初始化新任务或重置旧任务
         task = TaskStatus(request.company_name)
+        if request.stock_code:
+            task.stock_code = request.stock_code
         task_store[task_id] = task
         
         logger.info(f"创建任务 {task_id} - 公司: {request.company_name}")
@@ -535,8 +723,11 @@ async def get_module_data(task_id: str, module_type: str):
             # 研究数据模块 - 分析师报告、新闻
             return data.get("research_data", {})
         elif module_type == "visualizations":
-            # 可视化模块 - 各种图表的URL
-            return data.get("visualization_paths", [])
+            # 可视化模块 - 各种图表的URL和描述信息
+            return {
+                "visualization_paths": data.get("visualization_paths", []),
+                "graph_description": data.get("graph_description", [])
+            }
         elif module_type == "report":
             # 综合报告模块 - 包含所有报告文本和图表
             return data.get("report_state", {})
@@ -560,7 +751,7 @@ async def analyze_stock(request: StockAnalysisRequest, background_tasks: Backgro
     
     try:
         # 创建任务ID
-        task_id = str(uuid.uuid4())
+        task_id = generate_task_id(request.company_name, request.stock_code)
         
         # 初始化任务状态
         task = TaskStatus(request.company_name)

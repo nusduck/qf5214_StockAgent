@@ -7,6 +7,7 @@ import requests
 import httpx
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 
 #你可用akshare快速获得全市场股票列表和行业列表
 import akshare as ak
@@ -45,11 +46,15 @@ if sys.platform == "win32":
     except:
         pass
 
-# ✅ OPENAI API Key（已替换）
-os.environ["OPENAI_API_KEY"] = "OPENAI_API_KEY"
-OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
-OPENAI_MODEL = "gpt-3.5-turbo"  # ✅ 使用 GPT-4 模型
+# ✅ OPENAI API Key 配置
+load_dotenv()
 
+# 从环境变量获取API Key
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise ValueError("未找到 OPENAI_API_KEY 环境变量，请在 .env 文件中配置")
+
+OPENAI_MODEL = "gpt-3.5-turbo"  # ✅ 使用 GPT-3.5-turbo 模型
 
 # ✅ 财联社新闻抓取
 def fetch_cls_news():
@@ -167,7 +172,7 @@ def call_openai_with_tools(prompt: str):
     ---
 
     1. **Financial Market Overview** (approx. 200 words)
-    - Briefly summarize the latest trading day’s performance of global and Chinese markets, including sentiment shifts and key policy developments.
+    - Briefly summarize the latest trading day's performance of global and Chinese markets, including sentiment shifts and key policy developments.
     - Highlight the fundamental driving forces behind recent market fluctuations.
 
     ---

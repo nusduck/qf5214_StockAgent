@@ -1,6 +1,6 @@
 'use client';
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,6 +20,13 @@ interface BasicInfoModuleProps {
 
 const BasicInfoModule: React.FC<BasicInfoModuleProps> = ({ moduleData, onRetry }) => {
   const { data, loading, loaded, error } = moduleData;
+
+  // 添加调试日志
+  useEffect(() => {
+    if (data) {
+      console.log("BasicInfoModule: 收到数据", data);
+    }
+  }, [data]);
 
   // 渲染加载中状态
   if (loading) {
@@ -56,7 +63,7 @@ const BasicInfoModule: React.FC<BasicInfoModuleProps> = ({ moduleData, onRetry }
   }
 
   // 渲染未加载状态
-  if (!loaded) {
+  if (!loaded || !data) {
     return (
       <div className="p-8 text-center">
         <Button 

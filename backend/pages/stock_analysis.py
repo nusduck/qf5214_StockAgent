@@ -11,7 +11,7 @@ def analyze_stock(company_name: str):
         company_name (str): Name of the company to analyze
     """
     # Run the analysis workflow
-    final_state = run_stock_analysis(company_name, recursion_limit=100)
+    final_state = run_stock_analysis(company_name)
     
     # Access different parts of the state using dictionary access
     results = {

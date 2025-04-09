@@ -1,0 +1,9 @@
+.DS_store
+.env
+.venv/
+task_assign.md
+__pycache__/
+test.py
+*.log
+config.py
+test.ipynb

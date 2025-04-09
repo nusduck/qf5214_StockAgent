@@ -164,4 +164,13 @@ def run_stock_analysis(company_name: str, recursion_limit: int = 50, progress_ca
         # 添加观察者
         # workflow.add_observer(node_observer)  # 如果LangGraph支持观察者模式，取消注释此行
     
-    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+    # 创建配置字典
+    config_dict = {}
+    if recursion_limit > 0:
+        config_dict["recursion_limit"] = recursion_limit
+        
+    # 只有在有配置时才传递配置
+    if config_dict:
+        return workflow.invoke(state, config=config_dict)
+    else:
+        return workflow.invoke(state)

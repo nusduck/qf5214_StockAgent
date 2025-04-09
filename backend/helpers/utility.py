@@ -5,6 +5,7 @@ from typing import Any
 import numpy as np
 import math
 from langchain_core.messages import  ToolMessage
+import pandas as pd
 
 def extract_specific_tool_message(messages, tool_name=None, tool_call_id=None):
     """
@@ -38,45 +39,22 @@ def save_state_to_database(state) -> Dict[str, str]:
     
     file_paths = {}
     
-    # Save basic info
-    # if state.basic_info.company_info is not None:
-    #     path = f"{base_dir}/company_info.csv"
-    #     state.basic_info.company_info.to_csv(path)
-    #     file_paths['company_info'] = path
-        
     # Save market data
     if state.market_data.trade_data is not None:
-        path = f"{base_dir}/trade_data.csv"
-        state.market_data.trade_data.to_csv(path)
-        file_paths['trade_data'] = path
-        
-    # if state.market_data.sector_data is not None:
-    #     path = f"{base_dir}/sector_data.csv"
-    #     state.market_data.sector_data.to_csv(path)
-    #     file_paths['sector_data'] = path
+        if isinstance(state.market_data.trade_data, pd.DataFrame):
+            path = f"{base_dir}/trade_data.csv"
+            state.market_data.trade_data.to_csv(path)
+            file_paths['trade_data'] = path
+        else:
+            logger.warning(f"trade_data is not a DataFrame: {type(state.market_data.trade_data)}")
         
     if state.market_data.technical_data is not None:
-        path = f"{base_dir}/technical_data.csv"
-        state.market_data.technical_data.to_csv(path)
-        file_paths['technical_data'] = path
-        
-    # Save financial data
-    # if state.financial_data.financial_data is not None:
-    #     path = f"{base_dir}/financial_data.csv"
-    #     state.financial_data.financial_data.to_csv(path)
-    #     file_paths['financial_data'] = path
-        
-    # Save research data
-    # if state.research_data.analyst_data is not None:
-    #     path = f"{base_dir}/analyst_data.csv"
-    #     state.research_data.analyst_data.to_csv(path)
-    #     file_paths['analyst_data'] = path
-        
-    # if state.research_data.news_data is not None:
-    #     path = f"{base_dir}/news_data.json"
-    #     with open(path, 'w') as f:
-    #         json.dump(state.research_data.news_data, f)
-    #     file_paths['news_data'] = path
+        if isinstance(state.market_data.technical_data, pd.DataFrame):
+            path = f"{base_dir}/technical_data.csv"
+            state.market_data.technical_data.to_csv(path)
+            file_paths['technical_data'] = path
+        else:
+            logger.warning(f"technical_data is not a DataFrame: {type(state.market_data.technical_data)}")
     
     return file_paths
 

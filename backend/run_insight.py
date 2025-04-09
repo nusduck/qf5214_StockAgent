@@ -1,8 +1,16 @@
 # run_insight.py
-
+import os
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from news_analysis import router as news_analysis_router
+
+# 加载环境变量
+load_dotenv()
+
+# 获取配置
+INSIGHT_API_PORT = int(os.getenv("INSIGHT_API_PORT", 8001))
+API_HOST = os.getenv("API_HOST", "0.0.0.0")
 
 # ✅ 创建 FastAPI 应用实例
 app = FastAPI(
@@ -14,7 +22,7 @@ app = FastAPI(
 # ✅ 添加跨域支持（允许前端 http://localhost:3000 调用接口）
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],  # 修改为允许所有源
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -35,5 +43,10 @@ def ping():
 # ✅ 本地调试运行入口
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("run_insight:app", host="0.0.0.0", port=8000, reload=True, log_level="debug")
+    print(f"启动财经热点分析服务 - 端口: {INSIGHT_API_PORT}")
+    uvicorn.run("run_insight:app", 
+                host=API_HOST, 
+                port=INSIGHT_API_PORT, 
+                reload=True, 
+                log_level="debug")
 

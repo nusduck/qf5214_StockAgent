@@ -600,3 +600,787 @@ During task with name 'data_acquisition' and id '5db2b81e-17fd-c1e5-bcc3-28f5037
 2025-04-05 20:45:45,086 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
 2025-04-05 20:45:45,086 - helpers.logger - INFO - Start agent coder
 2025-04-05 20:45:45,086 - helpers.logger - INFO - Start agent coder
+2025-04-07 16:27:36,710 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:27:50,576 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:27:52,223 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:27:52,224 - helpers.logger - ERROR - Error in async data acquisition: 'ModuleNotFoundError' object has no attribute 'to_csv'
+2025-04-07 16:27:52,231 - helpers.logger - ERROR - 任务 5717195f-18a2-4f2e-94f3-8a7c508c28b2 处理失败: 'ModuleNotFoundError' object has no attribute 'to_csv'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 249, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200, progress_callback=progress_callback)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 167, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/data_acquire_node.py", line 98, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/data_acquire_node.py", line 82, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/helpers/utility.py", line 50, in save_state_to_database
+    state.market_data.trade_data.to_csv(path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ModuleNotFoundError' object has no attribute 'to_csv'
+During task with name 'data_acquisition' and id '79430b9f-c62a-57fc-0d27-a7836e821034'
+
+2025-04-07 16:32:06,182 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:32:19,552 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:32:20,961 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'mysql'
+2025-04-07 16:32:20,962 - helpers.logger - ERROR - 获取行业数据失败: No module named 'mysql'
+2025-04-07 16:32:20,962 - helpers.logger - ERROR - 获取交易数据失败: No module named 'mysql'
+2025-04-07 16:32:20,962 - helpers.logger - ERROR - 获取财务数据失败: No module named 'mysql'
+2025-04-07 16:32:20,962 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 16:32:20,962 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'mysql'
+2025-04-07 16:32:20,962 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'mysql'
+2025-04-07 16:32:20,962 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:32:20,965 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 16:32:20,965 - helpers.logger - INFO - 任务 8a6745cd-f898-4464-9e05-c34a820fa335 成功完成
+2025-04-07 16:33:37,515 - helpers.logger - INFO - 创建任务 296130a7-023d-4ebb-81db-43346268f96b - 公司: 宁德时代
+2025-04-07 16:33:37,516 - helpers.logger - INFO - 开始处理任务 296130a7-023d-4ebb-81db-43346268f96b - 公司: 宁德时代
+2025-04-07 16:33:37,517 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:33:37,544 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:33:48,470 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:33:49,912 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'mysql'
+2025-04-07 16:33:49,912 - helpers.logger - ERROR - 获取行业数据失败: No module named 'mysql'
+2025-04-07 16:33:49,912 - helpers.logger - ERROR - 获取交易数据失败: No module named 'mysql'
+2025-04-07 16:33:49,912 - helpers.logger - ERROR - 获取财务数据失败: No module named 'mysql'
+2025-04-07 16:33:49,912 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 16:33:49,912 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'mysql'
+2025-04-07 16:33:49,912 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'mysql'
+2025-04-07 16:33:49,912 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:33:49,916 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 16:33:49,916 - helpers.logger - INFO - 任务 296130a7-023d-4ebb-81db-43346268f96b 成功完成
+2025-04-07 16:34:26,704 - helpers.logger - INFO - 创建任务 1158d9cb-c020-4f43-bf05-7cd956a556a2 - 公司: 贵州茅台
+2025-04-07 16:34:26,705 - helpers.logger - INFO - 开始处理任务 1158d9cb-c020-4f43-bf05-7cd956a556a2 - 公司: 贵州茅台
+2025-04-07 16:34:26,705 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:34:26,724 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:34:40,323 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:34:41,935 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'mysql'
+2025-04-07 16:34:41,935 - helpers.logger - ERROR - 获取行业数据失败: No module named 'mysql'
+2025-04-07 16:34:41,935 - helpers.logger - ERROR - 获取交易数据失败: No module named 'mysql'
+2025-04-07 16:34:41,935 - helpers.logger - ERROR - 获取财务数据失败: No module named 'mysql'
+2025-04-07 16:34:41,935 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 16:34:41,935 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'mysql'
+2025-04-07 16:34:41,935 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'mysql'
+2025-04-07 16:34:41,935 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:34:41,938 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 16:34:41,938 - helpers.logger - INFO - 任务 1158d9cb-c020-4f43-bf05-7cd956a556a2 成功完成
+2025-04-07 16:41:34,211 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:41:44,239 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:41:46,034 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'mysql'
+2025-04-07 16:41:46,034 - helpers.logger - ERROR - 获取行业数据失败: No module named 'mysql'
+2025-04-07 16:41:46,034 - helpers.logger - ERROR - 获取交易数据失败: No module named 'mysql'
+2025-04-07 16:41:46,034 - helpers.logger - ERROR - 获取财务数据失败: No module named 'mysql'
+2025-04-07 16:41:46,034 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 16:41:46,034 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'mysql'
+2025-04-07 16:41:46,034 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'mysql'
+2025-04-07 16:41:46,035 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:41:46,037 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 16:41:46,037 - helpers.logger - INFO - 任务 d837a76b-6c06-4f2f-8b15-cbb75277fc69 成功完成
+2025-04-07 16:41:46,121 - helpers.logger - INFO - 创建任务 952c0297-6daa-4a35-83a7-33303617063e - 公司: 平安银行
+2025-04-07 16:41:46,121 - helpers.logger - INFO - 开始处理任务 952c0297-6daa-4a35-83a7-33303617063e - 公司: 平安银行
+2025-04-07 16:41:46,122 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:41:46,134 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:41:57,056 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:41:58,783 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'mysql'
+2025-04-07 16:41:58,783 - helpers.logger - ERROR - 获取行业数据失败: No module named 'mysql'
+2025-04-07 16:41:58,783 - helpers.logger - ERROR - 获取交易数据失败: No module named 'mysql'
+2025-04-07 16:41:58,783 - helpers.logger - ERROR - 获取财务数据失败: No module named 'mysql'
+2025-04-07 16:41:58,783 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 16:41:58,783 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'mysql'
+2025-04-07 16:41:58,784 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'mysql'
+2025-04-07 16:41:58,784 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:41:58,786 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 16:41:58,786 - helpers.logger - INFO - 任务 952c0297-6daa-4a35-83a7-33303617063e 成功完成
+2025-04-07 16:43:18,739 - helpers.logger - INFO - 创建任务 62ad112d-5146-45cc-a3bf-af103c2608f3 - 公司: 平安银行
+2025-04-07 16:43:18,741 - helpers.logger - INFO - 开始处理任务 62ad112d-5146-45cc-a3bf-af103c2608f3 - 公司: 平安银行
+2025-04-07 16:43:18,741 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:43:18,765 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:43:28,361 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:43:30,244 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'mysql'
+2025-04-07 16:43:30,244 - helpers.logger - ERROR - 获取行业数据失败: No module named 'mysql'
+2025-04-07 16:43:30,244 - helpers.logger - ERROR - 获取交易数据失败: No module named 'mysql'
+2025-04-07 16:43:30,244 - helpers.logger - ERROR - 获取财务数据失败: No module named 'mysql'
+2025-04-07 16:43:30,244 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 16:43:30,244 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'mysql'
+2025-04-07 16:43:30,245 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'mysql'
+2025-04-07 16:43:30,245 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:43:30,247 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 16:43:30,248 - helpers.logger - INFO - 任务 62ad112d-5146-45cc-a3bf-af103c2608f3 成功完成
+2025-04-07 16:59:42,958 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 16:59:52,363 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 16:59:53,901 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'mysql'
+2025-04-07 16:59:53,901 - helpers.logger - ERROR - 获取行业数据失败: No module named 'mysql'
+2025-04-07 16:59:53,901 - helpers.logger - ERROR - 获取交易数据失败: No module named 'mysql'
+2025-04-07 16:59:53,901 - helpers.logger - ERROR - 获取财务数据失败: No module named 'mysql'
+2025-04-07 16:59:53,901 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 16:59:53,901 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'mysql'
+2025-04-07 16:59:53,901 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'mysql'
+2025-04-07 16:59:53,901 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 16:59:53,903 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 16:59:53,903 - helpers.logger - INFO - 任务 235757d4-79bc-435d-ac06-1088d7f7239e 成功完成
+2025-04-07 17:02:19,920 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 17:02:27,702 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 17:02:30,600 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:02:30,600 - helpers.logger - ERROR - 获取行业数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:02:30,600 - helpers.logger - ERROR - 获取交易数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:02:30,600 - helpers.logger - ERROR - 获取财务数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:02:30,600 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 17:02:30,600 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:02:30,600 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:02:30,600 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 17:02:30,602 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 17:02:30,602 - helpers.logger - INFO - 任务 a95a2b12-3473-46fe-9693-a70f17f50cd7 成功完成
+2025-04-07 17:12:23,608 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 17:12:37,436 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 17:12:39,432 - helpers.logger - ERROR - 获取新闻数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:12:39,432 - helpers.logger - ERROR - 获取行业数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:12:39,432 - helpers.logger - ERROR - 获取交易数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:12:39,432 - helpers.logger - ERROR - 获取财务数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:12:39,433 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 17:12:39,433 - helpers.logger - ERROR - 获取分析师数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:12:39,433 - helpers.logger - ERROR - 获取技术面数据失败: No module named 'database.data_pipe.config'
+2025-04-07 17:12:39,433 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 17:12:39,435 - helpers.logger - WARNING - 财务数据对象类型不正确: <class 'core.state.FinancialData'>
+2025-04-07 17:12:39,436 - helpers.logger - INFO - 任务 a996edf7-6fff-4a89-b453-7fd69d9e0df0 成功完成
+2025-04-07 17:17:14,108 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 17:18:36,357 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 17:19:51,374 - helpers.logger - ERROR - 获取指标数据失败: time data "2024-01-01" doesn't match format "%Y%m%d", at position 0. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+2025-04-07 17:19:51,375 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 17:19:51,379 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-07 17:19:51,379 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-07 17:19:51,394 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 17:19:51,396 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 17:19:51,394 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 17:19:51,396 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 17:19:51,397 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:19:51,397 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:19:51,397 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:19:51,397 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:20:33,180 - helpers.logger - ERROR - 任务 7f0b89cc-9dbb-4c47-b93c-f072edb48bb4 处理失败: [Errno 2] No such file or directory: 'database/data/000001/visualizations/trade_data'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 249, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200, progress_callback=progress_callback)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 167, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/graph_node_new.py", line 110, in process_visualization_node
+    file_list = [os.path.join(vis_dir, file) for file in os.listdir(vis_dir)]
+                                                         ~~~~~~~~~~^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'database/data/000001/visualizations/trade_data'
+During task with name 'visualization' and id 'e27ac45b-a6ff-b2fe-87d0-924ebd302986'
+
+2025-04-07 17:20:33,180 - helpers.logger - ERROR - 任务 7f0b89cc-9dbb-4c47-b93c-f072edb48bb4 处理失败: [Errno 2] No such file or directory: 'database/data/000001/visualizations/trade_data'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 249, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200, progress_callback=progress_callback)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 167, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/graph_node_new.py", line 110, in process_visualization_node
+    file_list = [os.path.join(vis_dir, file) for file in os.listdir(vis_dir)]
+                                                         ~~~~~~~~~~^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'database/data/000001/visualizations/trade_data'
+During task with name 'visualization' and id 'e27ac45b-a6ff-b2fe-87d0-924ebd302986'
+
+2025-04-07 17:27:11,081 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 17:28:34,844 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 17:29:49,756 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 17:29:49,760 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-07 17:29:49,760 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-07 17:29:49,787 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 17:29:49,789 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 17:29:49,787 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 17:29:49,789 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 17:29:49,789 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:29:49,789 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:29:49,791 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:29:49,791 - helpers.logger - INFO - Start agent coder
+2025-04-07 17:30:36,026 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 17:30:36,026 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 17:31:16,594 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-07 20:22:00,982 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 20:23:14,992 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 20:23:24,910 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 20:24:38,331 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-07 20:24:38,335 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 20:24:39,923 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 20:24:39,930 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-07 20:24:39,930 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-07 20:24:39,958 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 20:24:39,960 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 20:24:39,958 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 20:24:39,960 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 20:24:39,961 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:24:39,961 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:24:39,961 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:24:39,961 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:25:33,510 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 20:25:33,510 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 20:25:33,510 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 20:25:33,510 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 20:25:33,510 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 20:25:33,510 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 20:25:53,377 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 20:25:53,377 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 20:25:53,380 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 20:25:53,380 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 20:25:53,380 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:25:53,380 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:25:53,380 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:25:53,380 - helpers.logger - INFO - Start agent coder
+2025-04-07 20:26:17,083 - helpers.logger - INFO - 情感分析完成
+2025-04-07 20:26:17,083 - helpers.logger - INFO - 情感分析完成
+2025-04-07 20:27:22,665 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 20:27:22,665 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 20:27:22,688 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-07 20:28:43,297 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 20:28:43,297 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 20:28:43,297 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 20:28:43,297 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 20:28:43,297 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 20:28:43,297 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 20:29:25,777 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-07 21:39:39,371 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 21:39:49,341 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 21:39:53,491 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 21:39:53,497 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-07 21:39:53,497 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-07 21:39:53,549 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 21:39:53,549 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 21:39:53,552 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 21:39:53,552 - helpers.logger - INFO - Start agent coder
+2025-04-07 21:39:53,552 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 21:39:53,552 - helpers.logger - INFO - Start agent coder
+2025-04-07 21:39:53,553 - helpers.logger - INFO - Start agent coder
+2025-04-07 21:39:53,553 - helpers.logger - INFO - Start agent coder
+2025-04-07 21:48:55,478 - helpers.logger - ERROR - 任务 1eeec729-3847-458c-8ec0-8839f1e3cf9b 处理失败: Recursion limit of 200 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 249, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200, progress_callback=progress_callback)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 167, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/graph_node_new.py", line 110, in process_visualization_node
+    result = agent.invoke({"messages": messages})
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2344, in stream
+    raise GraphRecursionError(msg)
+langgraph.errors.GraphRecursionError: Recursion limit of 200 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT
+During task with name 'visualization' and id '80defd32-c91b-ee19-a134-660444c4de3b'
+
+2025-04-07 21:48:55,478 - helpers.logger - ERROR - 任务 1eeec729-3847-458c-8ec0-8839f1e3cf9b 处理失败: Recursion limit of 200 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 249, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=200, progress_callback=progress_callback)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 167, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/graph_node_new.py", line 110, in process_visualization_node
+    result = agent.invoke({"messages": messages})
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2344, in stream
+    raise GraphRecursionError(msg)
+langgraph.errors.GraphRecursionError: Recursion limit of 200 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT
+During task with name 'visualization' and id '80defd32-c91b-ee19-a134-660444c4de3b'
+
+2025-04-07 22:05:00,326 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 22:05:11,052 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 22:05:13,530 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 22:05:13,534 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 22:05:13,534 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 22:05:13,572 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:05:13,572 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:05:13,575 - helpers.logger - INFO - Start agent coder with recursion_limit: 100
+2025-04-07 22:05:13,575 - helpers.logger - INFO - Start agent coder with recursion_limit: 100
+2025-04-07 22:05:13,579 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:05:13,579 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:05:13,579 - helpers.logger - INFO - Start agent coder with recursion_limit: 100
+2025-04-07 22:05:13,579 - helpers.logger - INFO - Start agent coder with recursion_limit: 100
+2025-04-07 22:05:13,582 - helpers.logger - ERROR - 任务 15957ceb-3f5e-43cc-a55d-825b3b2b95f3 处理失败: create_codeact() got an unexpected keyword argument 'config'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 249, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 167, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/graph_node_new.py", line 110, in process_visualization_node
+    agent = agent_coder(state, recursion_limit=100)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/agents/graph_agent_new.py", line 17, in agent_coder
+    codeact = create_codeact(model=llm, tools=[], eval_fn=eval, config={"recursion_limit": recursion_limit})
+TypeError: create_codeact() got an unexpected keyword argument 'config'
+During task with name 'visualization' and id '7d8887b2-d742-ef06-69ce-ffd1d3345f06'
+
+2025-04-07 22:05:13,582 - helpers.logger - ERROR - 任务 15957ceb-3f5e-43cc-a55d-825b3b2b95f3 处理失败: create_codeact() got an unexpected keyword argument 'config'
+Traceback (most recent call last):
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/server.py", line 249, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/core/workflow.py", line 167, in run_stock_analysis
+    return workflow.invoke(state, config={"recursion_limit": recursion_limit})
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2676, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/melody/lib/python3.13/site-packages/langgraph/pregel/__init__.py", line 2324, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        loop.tasks.values(),
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        get_waiter=get_waiter,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/node/graph_node_new.py", line 110, in process_visualization_node
+    agent = agent_coder(state, recursion_limit=100)
+  File "/Users/tangyunpeng/Desktop/QF5214/backend/agents/graph_agent_new.py", line 17, in agent_coder
+    codeact = create_codeact(model=llm, tools=[], eval_fn=eval, config={"recursion_limit": recursion_limit})
+TypeError: create_codeact() got an unexpected keyword argument 'config'
+During task with name 'visualization' and id '7d8887b2-d742-ef06-69ce-ffd1d3345f06'
+
+2025-04-07 22:09:12,097 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 22:09:22,506 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 22:09:27,865 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 22:09:27,869 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 22:09:27,869 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 22:09:27,906 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:09:27,906 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:09:27,918 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:09:27,920 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:10:09,713 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:10:09,713 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:10:09,713 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 22:10:09,713 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:10:09,713 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 22:10:44,022 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-07 22:17:05,082 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 22:17:16,420 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 22:17:19,948 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 22:17:19,952 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 22:17:19,952 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 22:17:19,989 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:17:19,989 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:17:19,990 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:17:19,990 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:17:19,998 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:17:19,998 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:17:20,000 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:17:20,000 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:17:56,341 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:17:56,341 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:17:56,342 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 22:17:56,341 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:17:56,342 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 22:17:56,342 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 22:18:29,633 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-07 22:26:59,244 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 22:27:07,875 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 22:27:11,406 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 22:27:11,409 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 22:27:11,409 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 22:27:11,440 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:27:11,440 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:27:11,445 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:27:11,445 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:27:11,446 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:27:11,446 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:27:11,452 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:27:11,452 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:27:38,599 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 22:27:38,599 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:27:38,600 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 22:28:08,296 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-07 22:32:52,456 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-07 22:33:00,648 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-07 22:33:03,146 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 22:33:03,150 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 22:33:03,150 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 22:33:03,188 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:33:03,188 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-07 22:33:03,191 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:33:03,191 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:33:03,195 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:33:03,195 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-07 22:33:03,195 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:33:03,195 - helpers.logger - INFO - Start agent coder
+2025-04-07 22:33:31,035 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-07 22:33:31,036 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 22:33:31,036 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 22:33:31,036 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-07 22:34:01,577 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-08 11:22:02,367 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 11:23:25,230 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 11:24:40,245 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 11:24:40,249 - helpers.logger - INFO - 保存trade_data数据到: database/data/600519/trade_data.csv
+2025-04-08 11:24:40,249 - helpers.logger - INFO - 保存technical_data数据到: database/data/600519/technical_data.csv
+2025-04-08 11:24:40,263 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 11:24:40,266 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 11:24:40,263 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 11:24:40,266 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 11:24:40,266 - helpers.logger - INFO - Start agent coder
+2025-04-08 11:24:40,266 - helpers.logger - INFO - Start agent coder
+2025-04-08 11:24:40,266 - helpers.logger - INFO - Start agent coder
+2025-04-08 11:24:40,266 - helpers.logger - INFO - Start agent coder
+2025-04-08 12:08:24,342 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 12:09:47,110 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 12:11:02,136 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 12:11:02,141 - helpers.logger - INFO - 保存trade_data数据到: database/data/600519/trade_data.csv
+2025-04-08 12:11:02,141 - helpers.logger - INFO - 保存technical_data数据到: database/data/600519/technical_data.csv
+2025-04-08 12:11:02,153 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 12:11:02,154 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 12:11:02,153 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 12:11:02,154 - helpers.logger - INFO - Start agent coder
+2025-04-08 12:11:02,154 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 12:11:02,154 - helpers.logger - INFO - Start agent coder
+2025-04-08 12:11:02,155 - helpers.logger - INFO - Start agent coder
+2025-04-08 12:11:02,155 - helpers.logger - INFO - Start agent coder
+2025-04-08 12:11:37,799 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-08 12:11:37,799 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-08 12:12:56,134 - helpers.logger - INFO - 找到 6 个可视化文件
+2025-04-08 12:12:56,134 - helpers.logger - INFO - 找到 6 个可视化文件
+2025-04-08 12:12:56,149 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 12:12:56,149 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 12:12:56,149 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 12:12:56,149 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 12:13:28,538 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-08 12:17:55,038 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 12:30:32,279 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 12:32:01,334 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 12:33:16,350 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 13:58:26,841 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 13:59:50,855 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 14:01:05,876 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 14:01:05,880 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-08 14:01:05,881 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-08 14:01:05,899 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 14:01:05,899 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 14:01:05,899 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:01:05,899 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:01:05,904 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 14:01:05,904 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 14:01:05,904 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:01:05,904 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:01:30,269 - helpers.logger - INFO - 找到 12 个可视化文件
+2025-04-08 14:01:30,269 - helpers.logger - INFO - 找到 12 个可视化文件
+2025-04-08 14:02:03,903 - helpers.logger - INFO - 找到 11 个可视化文件
+2025-04-08 14:02:03,903 - helpers.logger - INFO - 找到 11 个可视化文件
+2025-04-08 14:02:03,920 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 14:02:03,921 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 14:02:03,920 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 14:02:03,920 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 14:02:03,921 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 14:02:03,921 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 14:09:00,412 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 14:09:21,836 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 14:09:24,750 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 14:09:24,758 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-08 14:09:24,758 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-08 14:09:24,818 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 14:09:24,818 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 14:09:24,818 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:09:24,818 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:09:24,831 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 14:09:24,831 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 14:09:24,831 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:09:24,831 - helpers.logger - INFO - Start agent coder
+2025-04-08 14:09:47,679 - helpers.logger - INFO - 找到 9 个可视化文件
+2025-04-08 14:09:47,679 - helpers.logger - INFO - 找到 9 个可视化文件
+2025-04-08 14:09:50,622 - helpers.logger - INFO - 找到 7 个可视化文件
+2025-04-08 14:09:50,622 - helpers.logger - INFO - 找到 7 个可视化文件
+2025-04-08 14:09:50,745 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 14:09:50,746 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 14:09:50,746 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 14:09:50,746 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 14:10:15,506 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-08 15:03:54,807 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 15:04:08,320 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 15:04:10,888 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 15:04:10,894 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-08 15:04:10,895 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-08 15:04:10,949 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 15:04:10,950 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 15:04:10,949 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 15:04:10,950 - helpers.logger - INFO - Start agent coder
+2025-04-08 15:04:10,950 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 15:04:10,950 - helpers.logger - INFO - Start agent coder
+2025-04-08 15:04:10,950 - helpers.logger - INFO - Start agent coder
+2025-04-08 15:04:10,950 - helpers.logger - INFO - Start agent coder
+2025-04-08 15:04:39,502 - helpers.logger - INFO - 找到 12 个可视化文件
+2025-04-08 15:04:39,502 - helpers.logger - INFO - 找到 12 个可视化文件
+2025-04-08 15:04:47,982 - helpers.logger - INFO - 找到 13 个可视化文件
+2025-04-08 15:04:47,982 - helpers.logger - INFO - 找到 13 个可视化文件
+2025-04-08 15:04:48,077 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 15:04:48,077 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 15:04:48,077 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 15:04:48,077 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 15:04:48,077 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 15:04:48,077 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 15:06:28,286 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-08 19:20:47,849 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 19:21:00,586 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 19:21:02,827 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 19:21:02,835 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-08 19:21:02,835 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-08 19:21:02,899 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 19:21:02,900 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 19:21:02,899 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 19:21:02,900 - helpers.logger - INFO - Start agent coder
+2025-04-08 19:21:02,900 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 19:21:02,900 - helpers.logger - INFO - Start agent coder
+2025-04-08 19:21:02,900 - helpers.logger - INFO - Start agent coder
+2025-04-08 19:21:02,900 - helpers.logger - INFO - Start agent coder
+2025-04-08 19:21:54,582 - helpers.logger - INFO - 找到 13 个可视化文件
+2025-04-08 19:21:54,582 - helpers.logger - INFO - 找到 13 个可视化文件
+2025-04-08 19:22:10,712 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-08 19:22:10,712 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-08 19:22:10,829 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 19:22:10,829 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 19:22:10,829 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 19:22:10,829 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 19:22:10,829 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 19:22:10,829 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 19:23:18,320 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-08 20:56:02,905 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 20:58:22,719 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-08 20:58:38,068 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-08 20:58:40,362 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-08 20:58:40,370 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-08 20:58:40,370 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-08 20:58:40,427 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 20:58:40,427 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-08 20:58:40,428 - helpers.logger - INFO - Start agent coder
+2025-04-08 20:58:40,428 - helpers.logger - INFO - Start agent coder
+2025-04-08 20:58:40,447 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 20:58:40,447 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-08 20:58:40,447 - helpers.logger - INFO - Start agent coder
+2025-04-08 20:58:40,447 - helpers.logger - INFO - Start agent coder
+2025-04-08 20:58:58,958 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-08 20:58:58,958 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-08 20:59:03,417 - helpers.logger - INFO - 找到 15 个可视化文件
+2025-04-08 20:59:03,417 - helpers.logger - INFO - 找到 15 个可视化文件
+2025-04-08 20:59:03,510 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 20:59:03,510 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 20:59:03,510 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 20:59:03,510 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-08 20:59:03,510 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-08 20:59:03,510 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-08 21:00:16,610 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-09 18:45:49,088 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-09 18:47:13,795 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-09 18:48:28,815 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-09 18:48:28,821 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-09 18:48:28,821 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-09 18:48:28,841 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-09 18:48:28,843 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-09 18:48:28,841 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-09 18:48:28,843 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-09 18:48:28,843 - helpers.logger - INFO - Start agent coder
+2025-04-09 18:48:28,843 - helpers.logger - INFO - Start agent coder
+2025-04-09 18:48:28,843 - helpers.logger - INFO - Start agent coder
+2025-04-09 18:48:28,843 - helpers.logger - INFO - Start agent coder
+2025-04-09 18:49:04,202 - helpers.logger - INFO - 找到 15 个可视化文件
+2025-04-09 18:49:04,202 - helpers.logger - INFO - 找到 15 个可视化文件
+2025-04-09 18:51:17,347 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-09 18:51:17,347 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-09 18:51:17,366 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-09 18:51:17,366 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-09 18:51:17,366 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-09 18:51:17,367 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-09 18:51:17,366 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-09 18:51:17,366 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-09 18:51:17,367 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-09 18:52:09,324 - helpers.logger - INFO - adversarial_node 开始执行

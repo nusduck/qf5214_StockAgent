@@ -22,12 +22,23 @@ def process_visualization_node(state: StockAnalysisState) -> StockAnalysisState:
     file_type = state["file_type"]
     file_path = state["file_path"]
     stock_code = state["stock_code"]
-    # data info
-    df = data_loader.load_data(file_path)[0]
-    data_description = data_loader.generate_data_description(df)
-    data_info = data_loader.get_data_info(df)
-    # task
-    task = """
+    
+    # 初始化返回变量，确保即使出错也能返回有效结果
+    vis_dir = f"database/data/{stock_code}/visualizations/{file_type}"
+    description = "无法生成可视化描述"
+    file_list = []
+    
+    try:
+        # 确保目录存在
+        os.makedirs(vis_dir, exist_ok=True)
+        
+        # data info
+        df = data_loader.load_data(file_path)[0]
+        data_description = data_loader.generate_data_description(df)
+        data_info = data_loader.get_data_info(df)
+        
+        # task
+        task = """
     Step 1: Data Loading and Cleaning
 • Import the stock market data (e.g., CSV) using libraries like pandas (Python) or dplyr in R.
 • Convert the 'Date' column to datetime format and set it as the index for time series analysis.
@@ -60,8 +71,8 @@ Step 6: Interpretation of Results
 • Look for MACD crossovers (MACD crossing above signal line for bullish signals and vice versa for bearish signals) as validation of potential trend reversals.
 • Summarize findings, noting any coincidences where technical indicator signals align with significant price or volume changes.
     """
-    logger.info(f"graph_node开始生成可视化{file_type}图表")
-    prompt = """
+        logger.info(f"graph_node开始生成可视化{file_type}图表")
+        prompt = """
     You are a helpful assistant that can help with coding tasks for data analysis.
     Here is the data path:
     {data_path};
@@ -90,25 +101,40 @@ Step 6: Interpretation of Results
         font size: normal
         使用英语
     """.format(
-        data_path=file_path, 
-        data_description=data_description, 
-        task=task,
-        stock_code=stock_code,
-        file_type=file_type,
-        data_info=data_info
+            data_path=file_path, 
+            data_description=data_description, 
+            task=task,
+            stock_code=stock_code,
+            file_type=file_type,
+            data_info=data_info
         )
-    messages = [{
-        "role": "user",
-        "content": prompt
-    }]
-    vis_dir = f"database/data/{stock_code}/visualizations/{file_type}"
-    agent = agent_coder(state)
-    result = agent.invoke({"messages": messages})
-    description = result["messages"][-1].content
-    # 获取生成图片的地址更新state.visualization_paths
-    
-    file_list = [os.path.join(vis_dir, file) for file in os.listdir(vis_dir)]
-    # for file in os.listdir(vis_dir):
-    #     state.data_visualization.add_visualization(os.path.join(vis_dir, file))
-
+        messages = [{
+            "role": "user",
+            "content": prompt
+        }]
+        
+        # 创建agent
+        agent = agent_coder(state)
+        
+        try:
+            # 在invoke时传递递归限制配置，并捕获可能的异常
+            result = agent.invoke({"messages": messages}, config={"recursion_limit": 100})
+            description = result["messages"][-1].content
+        except Exception as e:
+            logger.error(f"可视化代理执行失败: {str(e)}")
+            description = f"可视化生成过程中出现错误: {str(e)}"
+            
+        # 即使代理执行失败，仍然尝试获取已生成的图片
+        if os.path.exists(vis_dir) and os.listdir(vis_dir):
+            file_list = [os.path.join(vis_dir, file) for file in os.listdir(vis_dir)]
+            logger.info(f"找到 {len(file_list)} 个可视化文件")
+        else:
+            logger.warning(f"未找到可视化文件，目录: {vis_dir}")
+            
+    except Exception as e:
+        logger.error(f"可视化节点执行失败: {str(e)}")
+        # 确保即使在错误情况下也能创建目录
+        os.makedirs(vis_dir, exist_ok=True)
+        
+    # 返回已找到的图片和描述，即使处理过程中出现错误
     return {"visualization_paths": file_list, "graph_description": [description]}

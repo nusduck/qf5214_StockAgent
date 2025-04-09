@@ -38,7 +38,7 @@ export default function NewsReportPage() {
   useEffect(() => {
     // API 请求，假设后端接口返回的数据结构符合要求
     setLoading(true);
-    fetch('http://localhost:8000/api/insight/news-analysis')
+    fetch('http://localhost:8001/api/insight/news-analysis')
       .then(res => {
         if (!res.ok) {
           throw new Error(`API响应错误: ${res.status} ${res.statusText}`);

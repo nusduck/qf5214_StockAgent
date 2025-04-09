@@ -105,3 +105,190 @@ TypeError: run_stock_analysis() got an unexpected keyword argument 'recursion_li
 2025-04-05 20:19:48,369 - helpers.logger - INFO - 创建任务 16faa77e-2aa4-4850-887e-890df6d907e9 - 公司: 宁德时代
 2025-04-05 20:19:48,370 - helpers.logger - INFO - 开始处理任务 16faa77e-2aa4-4850-887e-890df6d907e9 - 公司: 宁德时代
 2025-04-05 20:19:48,373 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:26:17,900 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 16:27:36,635 - helpers.logger - INFO - 创建任务 5717195f-18a2-4f2e-94f3-8a7c508c28b2 - 公司: 新赛股份
+2025-04-07 16:27:36,636 - helpers.logger - INFO - 开始处理任务 5717195f-18a2-4f2e-94f3-8a7c508c28b2 - 公司: 新赛股份
+2025-04-07 16:27:36,641 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:32:01,076 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 16:32:06,106 - helpers.logger - INFO - 创建任务 8a6745cd-f898-4464-9e05-c34a820fa335 - 公司: 新赛股份
+2025-04-07 16:32:06,107 - helpers.logger - INFO - 开始处理任务 8a6745cd-f898-4464-9e05-c34a820fa335 - 公司: 新赛股份
+2025-04-07 16:32:06,110 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:41:31,683 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 16:41:34,143 - helpers.logger - INFO - 创建任务 d837a76b-6c06-4f2f-8b15-cbb75277fc69 - 公司: 平安银行
+2025-04-07 16:41:34,143 - helpers.logger - INFO - 开始处理任务 d837a76b-6c06-4f2f-8b15-cbb75277fc69 - 公司: 平安银行
+2025-04-07 16:41:34,148 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 16:58:56,016 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 16:59:42,848 - helpers.logger - INFO - 创建任务 235757d4-79bc-435d-ac06-1088d7f7239e - 公司: 平安银行
+2025-04-07 16:59:42,850 - helpers.logger - INFO - 开始处理任务 235757d4-79bc-435d-ac06-1088d7f7239e - 公司: 平安银行
+2025-04-07 16:59:42,854 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 17:02:16,013 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 17:02:19,855 - helpers.logger - INFO - 创建任务 a95a2b12-3473-46fe-9693-a70f17f50cd7 - 公司: 平安银行
+2025-04-07 17:02:19,855 - helpers.logger - INFO - 开始处理任务 a95a2b12-3473-46fe-9693-a70f17f50cd7 - 公司: 平安银行
+2025-04-07 17:02:19,858 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 17:11:26,545 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 17:12:23,540 - helpers.logger - INFO - 创建任务 a996edf7-6fff-4a89-b453-7fd69d9e0df0 - 公司: 平安银行
+2025-04-07 17:12:23,541 - helpers.logger - INFO - 开始处理任务 a996edf7-6fff-4a89-b453-7fd69d9e0df0 - 公司: 平安银行
+2025-04-07 17:12:23,543 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 17:17:01,413 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 17:17:14,034 - helpers.logger - INFO - 创建任务 7f0b89cc-9dbb-4c47-b93c-f072edb48bb4 - 公司: 平安银行
+2025-04-07 17:17:14,035 - helpers.logger - INFO - 开始处理任务 7f0b89cc-9dbb-4c47-b93c-f072edb48bb4 - 公司: 平安银行
+2025-04-07 17:17:14,038 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 17:27:02,935 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 17:27:11,008 - helpers.logger - INFO - 创建任务 d966a9a4-006f-497b-91ce-fee8370d281f - 公司: 平安银行
+2025-04-07 17:27:11,010 - helpers.logger - INFO - 开始处理任务 d966a9a4-006f-497b-91ce-fee8370d281f - 公司: 平安银行
+2025-04-07 17:27:11,013 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 20:09:02,718 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-07 20:21:23,786 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-07 20:22:00,835 - helpers.logger - INFO - 创建任务 8b433b86-88c7-4c07-80cf-8d54907cabe5 - 公司: 平安银行
+2025-04-07 20:22:00,836 - helpers.logger - INFO - 开始处理任务 8b433b86-88c7-4c07-80cf-8d54907cabe5 - 公司: 平安银行
+2025-04-07 20:22:00,841 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 21:34:28,133 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-07 21:39:39,131 - helpers.logger - INFO - 创建任务 1eeec729-3847-458c-8ec0-8839f1e3cf9b - 公司: 平安银行
+2025-04-07 21:39:39,132 - helpers.logger - INFO - 开始处理任务 1eeec729-3847-458c-8ec0-8839f1e3cf9b - 公司: 平安银行
+2025-04-07 21:39:39,136 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 22:04:37,767 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-07 22:05:00,112 - helpers.logger - INFO - 创建任务 15957ceb-3f5e-43cc-a55d-825b3b2b95f3 - 公司: 宁德时代
+2025-04-07 22:05:00,113 - helpers.logger - INFO - 开始处理任务 15957ceb-3f5e-43cc-a55d-825b3b2b95f3 - 公司: 宁德时代
+2025-04-07 22:05:00,115 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 22:09:06,530 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-07 22:09:11,867 - helpers.logger - INFO - 创建任务 88860b2d-295d-4e4f-869e-1e3a22bcdab5 - 公司: 宁德时代
+2025-04-07 22:09:11,867 - helpers.logger - INFO - 开始处理任务 88860b2d-295d-4e4f-869e-1e3a22bcdab5 - 公司: 宁德时代
+2025-04-07 22:09:11,870 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 22:32:15,395 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-07 22:32:15,397 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-07 22:32:15,397 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-07 22:32:15,397 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-07 22:32:52,223 - helpers.logger - INFO - 创建新任务ID: 201abe4d-36a7-42d9-a1f2-d166c9614818
+2025-04-07 22:32:52,223 - helpers.logger - INFO - 创建任务 201abe4d-36a7-42d9-a1f2-d166c9614818 - 公司: 宁德时代
+2025-04-07 22:32:52,224 - helpers.logger - INFO - 开始处理任务 201abe4d-36a7-42d9-a1f2-d166c9614818 - 公司: 宁德时代
+2025-04-07 22:32:52,227 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 11:20:43,889 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-08 11:20:43,890 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 11:20:43,890 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 11:20:43,890 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 11:20:43,892 - helpers.logger - ERROR - 加载任务存储失败: Expecting value: line 72 column 25 (char 2200)
+2025-04-08 11:21:22,276 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 11:21:22,277 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 11:21:22,277 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 11:21:22,277 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 11:21:22,279 - helpers.logger - ERROR - 加载任务存储失败: Expecting value: line 72 column 25 (char 2200)
+2025-04-08 11:22:02,265 - helpers.logger - INFO - 创建新任务ID: fe6cf094-85e4-42b7-8c2a-96dd447aeb03
+2025-04-08 11:22:02,266 - helpers.logger - INFO - 创建任务 fe6cf094-85e4-42b7-8c2a-96dd447aeb03 - 公司: 贵州茅台
+2025-04-08 11:22:02,266 - helpers.logger - INFO - 开始处理任务 fe6cf094-85e4-42b7-8c2a-96dd447aeb03 - 公司: 贵州茅台
+2025-04-08 11:22:02,269 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 12:02:33,652 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 12:02:33,654 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 12:02:33,654 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 12:02:33,654 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 12:02:33,657 - helpers.logger - ERROR - 加载任务存储失败: Expecting value: line 72 column 25 (char 2200)
+2025-04-08 12:08:07,071 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 12:08:07,073 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 12:08:07,073 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 12:08:07,073 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 12:08:07,075 - helpers.logger - ERROR - 加载任务存储失败: Expecting value: line 72 column 25 (char 2200)
+2025-04-08 12:08:24,229 - helpers.logger - INFO - 创建新任务ID: 3ce9702a-0e3d-4894-bb9d-e2515f872153
+2025-04-08 12:08:24,230 - helpers.logger - INFO - 创建任务 3ce9702a-0e3d-4894-bb9d-e2515f872153 - 公司: 贵州茅台
+2025-04-08 12:08:24,230 - helpers.logger - INFO - 开始处理任务 3ce9702a-0e3d-4894-bb9d-e2515f872153 - 公司: 贵州茅台
+2025-04-08 12:08:24,233 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 12:20:50,473 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 12:20:50,475 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 12:20:50,475 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 12:20:50,475 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 12:20:50,478 - helpers.logger - ERROR - 加载任务存储失败: name 'TaskStatus' is not defined
+2025-04-08 12:30:28,877 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 12:30:28,879 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 12:30:28,879 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 12:30:28,879 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 12:30:28,882 - helpers.logger - ERROR - 加载任务存储失败: name 'TaskStatus' is not defined
+2025-04-08 12:30:32,182 - helpers.logger - INFO - 创建新任务ID: 1f5532aa-8180-4959-972a-2072fda50c20
+2025-04-08 12:30:32,183 - helpers.logger - INFO - 创建任务 1f5532aa-8180-4959-972a-2072fda50c20 - 公司: 宁德时代
+2025-04-08 12:30:32,183 - helpers.logger - INFO - 开始处理任务 1f5532aa-8180-4959-972a-2072fda50c20 - 公司: 宁德时代
+2025-04-08 12:30:32,185 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 13:54:12,901 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-08 13:54:12,905 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 13:54:12,905 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 13:54:12,906 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 13:54:12,913 - helpers.logger - ERROR - 加载任务存储失败: name 'TaskStatus' is not defined
+2025-04-08 13:55:15,511 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 13:55:15,512 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 13:55:15,512 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 13:55:15,512 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 13:55:15,515 - helpers.logger - ERROR - 加载任务存储失败: name 'TaskStatus' is not defined
+2025-04-08 13:58:02,262 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 13:58:02,263 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 13:58:02,263 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 13:58:02,263 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 13:58:02,266 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 13:58:26,724 - helpers.logger - INFO - 创建新任务ID: f0195e38-709a-417d-be8a-1a27c1f51a6a
+2025-04-08 13:58:26,725 - helpers.logger - INFO - 创建任务 f0195e38-709a-417d-be8a-1a27c1f51a6a - 公司: 宁德时代
+2025-04-08 13:58:26,725 - helpers.logger - INFO - 开始处理任务 f0195e38-709a-417d-be8a-1a27c1f51a6a - 公司: 宁德时代
+2025-04-08 13:58:26,728 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 14:07:58,950 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-08 14:07:58,953 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 14:07:58,954 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 14:07:58,954 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 14:07:58,963 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 14:08:50,634 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 14:08:50,635 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 14:08:50,635 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 14:08:50,635 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 14:08:50,638 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 14:09:00,087 - helpers.logger - INFO - 创建新任务ID: 45039729-700f-439a-a5d5-36a425f0dad1
+2025-04-08 14:09:00,088 - helpers.logger - INFO - 创建任务 45039729-700f-439a-a5d5-36a425f0dad1 - 公司: 平安银行
+2025-04-08 14:09:00,088 - helpers.logger - INFO - 开始处理任务 45039729-700f-439a-a5d5-36a425f0dad1 - 公司: 平安银行
+2025-04-08 14:09:00,090 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 15:03:35,691 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 15:03:35,695 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 15:03:35,695 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 15:03:35,695 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 15:03:35,702 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 15:03:50,365 - helpers.logger - INFO - 创建新任务ID: 8f3c28da-e418-49a5-b772-735bf6f06022
+2025-04-08 15:03:50,365 - helpers.logger - INFO - 创建任务 8f3c28da-e418-49a5-b772-735bf6f06022 - 公司: 宁德时代
+2025-04-08 15:03:50,365 - helpers.logger - INFO - 开始处理任务 8f3c28da-e418-49a5-b772-735bf6f06022 - 公司: 宁德时代
+2025-04-08 15:03:50,368 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 19:19:02,386 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 19:19:02,388 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 19:19:02,388 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 19:19:02,388 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 19:19:02,392 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 19:19:58,877 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-08 19:19:58,880 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 19:19:58,880 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 19:19:58,880 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 19:19:58,887 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 19:20:36,111 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 19:20:36,113 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 19:20:36,113 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 19:20:36,114 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 19:20:36,117 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 19:20:47,508 - helpers.logger - INFO - 创建新任务ID: 013832bf-a1b6-4bd8-9490-d3dc263f21a4
+2025-04-08 19:20:47,508 - helpers.logger - INFO - 创建任务 013832bf-a1b6-4bd8-9490-d3dc263f21a4 - 公司: 宁德时代
+2025-04-08 19:20:47,509 - helpers.logger - INFO - 开始处理任务 013832bf-a1b6-4bd8-9490-d3dc263f21a4 - 公司: 宁德时代
+2025-04-08 19:20:47,511 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 20:55:30,232 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-08 20:55:30,233 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 20:55:30,233 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 20:55:30,233 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 20:55:30,235 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 20:56:02,832 - helpers.logger - INFO - 创建新任务ID: 051b74a5-7dd4-4fb6-b4f7-7adccd565bb3
+2025-04-08 20:56:02,833 - helpers.logger - INFO - 创建任务 051b74a5-7dd4-4fb6-b4f7-7adccd565bb3 - 公司: 宁德时代
+2025-04-08 20:56:02,833 - helpers.logger - INFO - 开始处理任务 051b74a5-7dd4-4fb6-b4f7-7adccd565bb3 - 公司: 宁德时代
+2025-04-08 20:56:02,836 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 20:58:15,218 - helpers.logger - INFO - 成功连接到Redis服务器
+2025-04-08 20:58:15,222 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-08 20:58:15,222 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-08 20:58:15,222 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-08 20:58:15,230 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-08 20:58:22,417 - helpers.logger - INFO - 创建新任务ID: 4eef23e1-a811-4c51-8879-5b796dff3d9a
+2025-04-08 20:58:22,417 - helpers.logger - INFO - 创建任务 4eef23e1-a811-4c51-8879-5b796dff3d9a - 公司: 宁德时代
+2025-04-08 20:58:22,418 - helpers.logger - INFO - 开始处理任务 4eef23e1-a811-4c51-8879-5b796dff3d9a - 公司: 宁德时代
+2025-04-08 20:58:22,420 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-09 18:45:23,232 - helpers.logger - WARNING - Redis缓存不可用，将不会使用缓存功能
+2025-04-09 18:45:23,233 - helpers.logger - INFO - 确保目录存在: database/data
+2025-04-09 18:45:23,233 - helpers.logger - INFO - 确保目录存在: database/cache
+2025-04-09 18:45:23,233 - helpers.logger - INFO - 确保目录存在: database/task_store
+2025-04-09 18:45:23,236 - helpers.logger - INFO - 从 database/task_store.json 加载了 1 个任务
+2025-04-09 18:45:49,027 - helpers.logger - INFO - 创建新任务ID: c56af779-7530-4bac-8f7d-37e814337538
+2025-04-09 18:45:49,027 - helpers.logger - INFO - 创建任务 c56af779-7530-4bac-8f7d-37e814337538 - 公司: 宁德时代
+2025-04-09 18:45:49,028 - helpers.logger - INFO - 开始处理任务 c56af779-7530-4bac-8f7d-37e814337538 - 公司: 宁德时代
+2025-04-09 18:45:49,030 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)

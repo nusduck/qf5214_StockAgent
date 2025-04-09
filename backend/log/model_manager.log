@@ -594,3 +594,395 @@ AttributeError: 'ReportState' object has no attribute 'to_dict'
 2025-04-05 20:45:17,403 - helpers.logger - INFO - 开始处理任务 d24ac856-3a55-4617-901e-c73467bf51aa - 公司: 宁德时代
 2025-04-05 20:45:17,404 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
 2025-04-05 20:45:17,583 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:26:17,858 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:27:36,794 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:32:01,041 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:32:06,260 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:33:37,625 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:34:26,801 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:41:31,645 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:41:34,289 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:41:46,210 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:43:18,845 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:58:55,979 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 16:59:43,036 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:02:15,979 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:02:19,998 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:11:26,501 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:12:23,688 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:17:01,378 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:17:14,188 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:27:02,902 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:27:11,158 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,122 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,122 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,122 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 17:30:36,124 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 17:30:36,124 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 17:30:36,123 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:30:36,124 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 17:30:36,166 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 17:30:36,166 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 17:30:36,166 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 17:31:06,767 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 17:31:06,767 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 17:31:06,767 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 17:31:10,956 - helpers.logger - INFO - 技术分析完成
+2025-04-07 17:31:10,956 - helpers.logger - INFO - 技术分析完成
+2025-04-07 17:31:10,956 - helpers.logger - INFO - 技术分析完成
+2025-04-07 17:31:16,577 - helpers.logger - INFO - 情感分析完成
+2025-04-07 17:31:16,577 - helpers.logger - INFO - 情感分析完成
+2025-04-07 17:31:16,577 - helpers.logger - INFO - 情感分析完成
+2025-04-07 17:31:16,675 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 17:31:16,676 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-07 17:31:31,748 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-07 17:31:31,766 - helpers.logger - INFO - 任务 d966a9a4-006f-497b-91ce-fee8370d281f 成功完成
+2025-04-07 20:09:02,681 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:21:23,380 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:22:01,062 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:23:15,075 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,593 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,593 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,593 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,593 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,593 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,593 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 20:25:33,595 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 20:25:33,594 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 20:25:33,595 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 20:25:33,595 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 20:25:46,893 - helpers.logger - INFO - 技术分析完成
+2025-04-07 20:25:46,893 - helpers.logger - INFO - 技术分析完成
+2025-04-07 20:25:46,893 - helpers.logger - INFO - 技术分析完成
+2025-04-07 20:25:53,348 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 20:25:53,348 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 20:25:53,348 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-07 20:25:53,351 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 20:25:53,351 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 20:25:53,351 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-07 20:25:53,351 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 20:25:53,351 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 20:25:53,351 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-07 20:27:22,769 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:27:22,770 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-07 20:27:45,806 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-07 20:27:45,878 - helpers.logger - INFO - 缓存保存成功 - 股票: 000001
+2025-04-07 20:27:45,878 - helpers.logger - INFO - 任务 8b433b86-88c7-4c07-80cf-8d54907cabe5 成功完成
+2025-04-07 20:28:43,383 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:28:43,383 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:28:43,383 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:28:43,384 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 20:28:43,384 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 20:28:43,384 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 20:29:09,657 - helpers.logger - INFO - 技术分析完成
+2025-04-07 20:29:12,178 - helpers.logger - INFO - 情感分析完成
+2025-04-07 20:29:25,757 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 20:29:25,857 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 20:29:25,857 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-07 20:29:40,477 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-07 20:29:40,537 - helpers.logger - INFO - 缓存保存成功 - 股票: 300750
+2025-04-07 20:29:40,537 - helpers.logger - INFO - 任务 21cc47a5-f297-4c3e-8e34-7e3619c3daa2 成功完成
+2025-04-07 21:34:27,749 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 21:39:39,420 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:04:37,411 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:05:00,383 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:09:06,154 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:09:12,147 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:10:09,763 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:10:09,763 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:10:09,763 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:10:09,763 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 22:10:09,768 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 22:10:09,776 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 22:10:27,684 - helpers.logger - INFO - 情感分析完成
+2025-04-07 22:10:37,559 - helpers.logger - INFO - 技术分析完成
+2025-04-07 22:10:43,983 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 22:10:44,073 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:10:44,073 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-07 22:11:24,986 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-07 22:11:25,121 - helpers.logger - INFO - 缓存保存失败 - 股票: 300750
+2025-04-07 22:11:25,121 - helpers.logger - INFO - 任务 88860b2d-295d-4e4f-869e-1e3a22bcdab5 成功完成
+2025-04-07 22:17:04,863 - helpers.logger - INFO - 创建任务 0bcb00a7-b70a-4bcb-963c-62cba454949a - 公司: 宁德时代
+2025-04-07 22:17:04,864 - helpers.logger - INFO - 开始处理任务 0bcb00a7-b70a-4bcb-963c-62cba454949a - 公司: 宁德时代
+2025-04-07 22:17:04,865 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 22:17:05,148 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 22:17:56,392 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 22:17:56,403 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 22:17:56,403 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 22:18:15,387 - helpers.logger - INFO - 技术分析完成
+2025-04-07 22:18:15,387 - helpers.logger - INFO - 技术分析完成
+2025-04-07 22:18:15,743 - helpers.logger - INFO - 情感分析完成
+2025-04-07 22:18:15,743 - helpers.logger - INFO - 情感分析完成
+2025-04-07 22:18:29,595 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 22:18:29,595 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 22:18:29,683 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:18:29,683 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-07 22:18:45,086 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-07 22:18:45,459 - helpers.logger - INFO - 缓存保存失败 - 股票: 300750
+2025-04-07 22:18:45,460 - helpers.logger - INFO - 任务 0bcb00a7-b70a-4bcb-963c-62cba454949a 成功完成
+2025-04-07 22:26:59,033 - helpers.logger - INFO - 创建任务 e35c6e2c-a330-4ca0-8a5a-1c0798440597 - 公司: 宁德时代
+2025-04-07 22:26:59,035 - helpers.logger - INFO - 开始处理任务 e35c6e2c-a330-4ca0-8a5a-1c0798440597 - 公司: 宁德时代
+2025-04-07 22:26:59,035 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-07 22:26:59,304 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:27:38,600 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-07 22:27:38,650 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:27:38,651 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:27:38,651 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:27:38,651 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 22:27:38,655 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 22:27:38,661 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 22:27:55,786 - helpers.logger - INFO - 情感分析完成
+2025-04-07 22:28:03,620 - helpers.logger - INFO - 技术分析完成
+2025-04-07 22:28:08,258 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 22:28:08,346 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:28:08,346 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-07 22:28:21,027 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-07 22:28:21,209 - helpers.logger - INFO - 缓存保存失败 - 股票: 300750
+2025-04-07 22:28:21,209 - helpers.logger - INFO - 任务 e35c6e2c-a330-4ca0-8a5a-1c0798440597 成功完成
+2025-04-07 22:32:14,984 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:32:52,504 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:33:31,084 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:33:31,084 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:33:31,085 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 22:33:31,085 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-07 22:33:31,086 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:33:31,086 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:33:31,086 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:33:31,086 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:33:31,120 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 22:33:31,120 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-07 22:33:31,121 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 22:33:31,121 - helpers.logger - INFO - Created technical analysis agent
+2025-04-07 22:33:53,433 - helpers.logger - INFO - 情感分析完成
+2025-04-07 22:33:53,433 - helpers.logger - INFO - 情感分析完成
+2025-04-07 22:33:55,643 - helpers.logger - INFO - 技术分析完成
+2025-04-07 22:33:55,643 - helpers.logger - INFO - 技术分析完成
+2025-04-07 22:34:01,536 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 22:34:01,536 - helpers.logger - INFO - 基本面分析完成
+2025-04-07 22:34:01,626 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-07 22:34:01,627 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-07 22:35:49,886 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-07 22:35:50,048 - helpers.logger - INFO - 缓存保存失败 - 股票: 300750
+2025-04-07 22:35:50,049 - helpers.logger - ERROR - 保存本地缓存失败: Object of type Decimal is not JSON serializable
+2025-04-07 22:35:50,050 - helpers.logger - ERROR - 保存任务存储失败: Object of type Decimal is not JSON serializable
+2025-04-07 22:35:50,050 - helpers.logger - INFO - 任务 201abe4d-36a7-42d9-a1f2-d166c9614818 成功完成
+2025-04-07 23:14:06,385 - helpers.logger - INFO - 找到已有的任务: 201abe4d-36a7-42d9-a1f2-d166c9614818 对应公司: 宁德时代
+2025-04-07 23:14:06,387 - helpers.logger - INFO - 复用已完成的任务 201abe4d-36a7-42d9-a1f2-d166c9614818
+2025-04-08 11:20:43,863 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 11:21:22,190 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 11:22:02,417 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:02:33,538 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:08:06,973 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:08:24,392 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 12:12:56,213 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 12:12:56,214 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 12:12:56,214 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 12:13:06,411 - helpers.logger - INFO - 情感分析完成
+2025-04-08 12:13:06,411 - helpers.logger - INFO - 情感分析完成
+2025-04-08 12:13:15,064 - helpers.logger - INFO - 技术分析完成
+2025-04-08 12:13:15,064 - helpers.logger - INFO - 技术分析完成
+2025-04-08 12:13:28,529 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 12:13:28,529 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 12:13:28,602 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:13:28,602 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-08 12:13:40,878 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-08 12:13:41,078 - helpers.logger - INFO - 缓存保存成功 - 股票: 600519
+2025-04-08 12:13:41,081 - helpers.logger - INFO - 本地缓存保存成功: database/cache/600519_综合分析.json
+2025-04-08 12:13:41,083 - helpers.logger - INFO - 保存了 1 个任务到 database/task_store.json
+2025-04-08 12:13:41,084 - helpers.logger - INFO - 任务 3ce9702a-0e3d-4894-bb9d-e2515f872153 成功完成
+2025-04-08 12:17:54,978 - helpers.logger - INFO - 创建新任务ID: 3a61c474-daa5-4370-be6f-a9a2ca69c116
+2025-04-08 12:17:54,980 - helpers.logger - INFO - 创建任务 3a61c474-daa5-4370-be6f-a9a2ca69c116 - 公司: 平安银行
+2025-04-08 12:17:54,980 - helpers.logger - INFO - 开始处理任务 3a61c474-daa5-4370-be6f-a9a2ca69c116 - 公司: 平安银行
+2025-04-08 12:17:54,981 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/Users/tangyunpeng/Desktop/QF5214/backend/tools/stock_info_tools.py)
+2025-04-08 12:17:55,102 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:20:50,339 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:30:28,755 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 12:30:32,330 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 13:54:07,873 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 13:55:15,395 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 13:58:02,122 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 13:58:26,891 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 14:02:03,986 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 14:02:03,985 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 14:02:03,986 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 14:02:03,986 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 14:02:23,470 - helpers.logger - INFO - 技术分析完成
+2025-04-08 14:02:23,470 - helpers.logger - INFO - 技术分析完成
+2025-04-08 14:02:23,470 - helpers.logger - INFO - 技术分析完成
+2025-04-08 14:07:53,921 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:08:50,183 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:00,463 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:50,802 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:50,802 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 14:09:50,814 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 14:09:50,803 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 14:09:50,814 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 14:10:04,330 - helpers.logger - INFO - 情感分析完成
+2025-04-08 14:10:04,330 - helpers.logger - INFO - 情感分析完成
+2025-04-08 14:10:12,834 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 14:10:12,834 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 14:10:15,456 - helpers.logger - INFO - 技术分析完成
+2025-04-08 14:10:15,456 - helpers.logger - INFO - 技术分析完成
+2025-04-08 14:10:15,556 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 14:10:15,556 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-08 14:10:27,159 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-08 14:10:27,333 - helpers.logger - INFO - 缓存保存失败 - 股票: 000001
+2025-04-08 14:10:27,336 - helpers.logger - ERROR - 保存本地缓存失败: Object of type Decimal is not JSON serializable
+2025-04-08 14:10:27,336 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-08 14:10:27,336 - helpers.logger - INFO - 任务 45039729-700f-439a-a5d5-36a425f0dad1 成功完成
+2025-04-08 15:03:35,046 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:03:54,891 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,158 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,159 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,158 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,158 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,159 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,159 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,177 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 15:04:48,159 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,159 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,177 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 15:04:48,159 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:04:48,178 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 15:04:48,178 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 15:04:48,178 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 15:04:48,177 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 15:04:48,178 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 15:04:48,178 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 15:04:48,178 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 15:05:03,949 - helpers.logger - INFO - 情感分析完成
+2025-04-08 15:05:03,949 - helpers.logger - INFO - 情感分析完成
+2025-04-08 15:05:03,949 - helpers.logger - INFO - 情感分析完成
+2025-04-08 15:05:17,053 - helpers.logger - INFO - 技术分析完成
+2025-04-08 15:05:17,053 - helpers.logger - INFO - 技术分析完成
+2025-04-08 15:05:17,053 - helpers.logger - INFO - 技术分析完成
+2025-04-08 15:06:28,257 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 15:06:28,257 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 15:06:28,257 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 15:06:28,361 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 15:06:28,361 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-08 15:06:46,386 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-08 15:06:46,575 - helpers.logger - INFO - 缓存保存失败 - 股票: 300750
+2025-04-08 15:06:46,577 - helpers.logger - ERROR - 保存本地缓存失败: Object of type Decimal is not JSON serializable
+2025-04-08 15:06:46,577 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-08 15:06:46,577 - helpers.logger - INFO - 任务 8f3c28da-e418-49a5-b772-735bf6f06022 成功完成
+2025-04-08 19:19:02,208 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:19:53,839 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:20:35,635 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:20:47,929 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:22:10,911 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:22:10,911 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:22:10,911 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:22:10,929 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 19:22:10,929 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 19:22:10,929 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 19:22:24,776 - helpers.logger - INFO - 情感分析完成
+2025-04-08 19:22:37,839 - helpers.logger - INFO - 技术分析完成
+2025-04-08 19:23:18,277 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 19:23:18,398 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 19:23:18,398 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-08 19:23:32,052 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-08 19:23:32,230 - helpers.logger - INFO - 缓存保存失败 - 股票: 300750
+2025-04-08 19:23:32,233 - helpers.logger - ERROR - 保存本地缓存失败: Object of type Decimal is not JSON serializable
+2025-04-08 19:23:32,233 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-08 19:23:32,233 - helpers.logger - INFO - 任务 013832bf-a1b6-4bd8-9490-d3dc263f21a4 成功完成
+2025-04-08 20:55:30,197 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 20:56:02,995 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 20:58:14,707 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 20:58:22,796 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 20:59:03,589 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 20:59:03,589 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 20:59:03,589 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 20:59:03,590 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-08 20:59:03,590 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-08 20:59:03,618 - helpers.logger - INFO - Created technical analysis agent
+2025-04-08 20:59:17,855 - helpers.logger - INFO - 情感分析完成
+2025-04-08 20:59:34,174 - helpers.logger - INFO - 技术分析完成
+2025-04-08 21:00:16,575 - helpers.logger - INFO - 基本面分析完成
+2025-04-08 21:00:16,686 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-08 21:00:16,686 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-08 21:00:52,019 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-08 21:00:52,236 - helpers.logger - INFO - 缓存保存失败 - 股票: 300750
+2025-04-08 21:00:52,239 - helpers.logger - ERROR - 保存本地缓存失败: Object of type Decimal is not JSON serializable
+2025-04-08 21:00:52,239 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-08 21:00:52,240 - helpers.logger - INFO - 任务 4eef23e1-a811-4c51-8879-5b796dff3d9a 成功完成
+2025-04-09 18:45:23,193 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:45:49,170 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:51:17,449 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:51:17,449 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Created sentiment analysis agent
+2025-04-09 18:51:17,451 - helpers.logger - INFO - Created technical analysis agent
+2025-04-09 18:51:17,450 - helpers.logger - INFO - Created fundamental analysis agent
+2025-04-09 18:51:17,451 - helpers.logger - INFO - Created technical analysis agent
+2025-04-09 18:51:44,971 - helpers.logger - INFO - 技术分析完成
+2025-04-09 18:51:44,971 - helpers.logger - INFO - 技术分析完成
+2025-04-09 18:51:56,248 - helpers.logger - INFO - 情感分析完成
+2025-04-09 18:51:56,248 - helpers.logger - INFO - 情感分析完成
+2025-04-09 18:52:09,314 - helpers.logger - INFO - 基本面分析完成
+2025-04-09 18:52:09,314 - helpers.logger - INFO - 基本面分析完成
+2025-04-09 18:52:09,428 - helpers.logger - INFO - Language models initialized successfully.
+2025-04-09 18:52:09,428 - helpers.logger - INFO - ✅ 对抗性分析 Agent 已创建
+2025-04-09 18:52:19,204 - helpers.logger - INFO - 对抗性分析完成，写入报告
+2025-04-09 18:52:19,212 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-09 18:52:19,212 - helpers.logger - INFO - 任务 c56af779-7530-4bac-8f7d-37e814337538 成功完成

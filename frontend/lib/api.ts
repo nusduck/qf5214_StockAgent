@@ -119,14 +119,24 @@ export const api = {
     // 获取任务进度
     async getProgress(taskId: string) {
       try {
-        return await makeRequest(`${API_BASE_URL}/api/v1/stock-analysis/progress/${taskId}`, {
+        console.log(`API调用: 获取任务 ${taskId} 的进度`);
+        const response = await fetch(`${API_BASE_URL}/api/v1/stock-analysis/progress/${taskId}`, {
+          method: 'GET',
           headers: {
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Cache-Control': 'no-cache',
             'Pragma': 'no-cache',
+            'x-timestamp': Date.now().toString() // 添加时间戳确保不使用缓存
           }
         });
+        
+        if (!response.ok) {
+          throw new Error(`获取进度失败: HTTP ${response.status}`);
+        }
+        
+        const progressData = await response.json();
+        return progressData;
       } catch (error: any) {
-        console.error('API错误:', error);
+        console.error(`获取任务进度失败:`, error);
         throw error;
       }
     },
@@ -134,6 +144,7 @@ export const api = {
     // 获取分析结果
     async getResult(taskId: string) {
       try {
+        console.log(`API调用: 获取任务 ${taskId} 的结果`);
         const response = await fetch(`${API_BASE_URL}/api/v1/stock-analysis/result/${taskId}`, {
           headers: {
             'Cache-Control': 'no-cache',
@@ -141,17 +152,32 @@ export const api = {
         });
         
         if (response.status === 202) {
+          console.log(`任务 ${taskId} 仍在处理中`);
           return { status: 'processing' };
         }
         
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.detail || '获取结果失败');
+        if (response.status === 404) {
+          console.error(`任务 ${taskId} 不存在`);
+          throw new Error('任务ID不存在或已过期');
         }
         
-        return response.json();
+        if (!response.ok) {
+          let errorMessage = `获取结果失败 (HTTP ${response.status})`;
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.detail || errorMessage;
+          } catch (e) {
+            // 如果无法解析JSON，使用默认错误消息
+          }
+          console.error(`获取任务结果失败: ${errorMessage}`);
+          throw new Error(errorMessage);
+        }
+        
+        const resultData = await response.json();
+        console.log(`成功获取任务 ${taskId} 的结果`);
+        return resultData;
       } catch (error: any) {
-        console.error('API错误:', error);
+        console.error(`API错误(getResult):`, error);
         throw error;
       }
     },

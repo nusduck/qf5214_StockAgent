@@ -14,5 +14,5 @@ def agent_coder(state: StockAnalysisState):
     logger.info("Start agent coder")
 
     
-    codeact = create_codeact(model=llm,tools=[],eval_fn=eval)
+    codeact = create_codeact(model=llm, tools=[], eval_fn=eval)
     return codeact.compile()

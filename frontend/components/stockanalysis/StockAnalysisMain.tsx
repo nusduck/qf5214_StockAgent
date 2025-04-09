@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -19,12 +19,16 @@ import ResearchDataModule from "./ResearchDataModule";
 import VisualizationsModule from "./VisualizationsModule";
 import ReportModule from "./ReportModule";
 
+// API基础URL
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+
 interface StockAnalysisMainProps {
   companyName: string;
   analysisType?: string;
   autoStart?: boolean;
 }
 
+// 任务状态跟踪接口
 interface TaskProgress {
   status: string;
   progress: number;
@@ -37,13 +41,14 @@ interface TaskProgress {
   error?: string;
 }
 
+// 模块数据接口
 interface TaskModule {
   type: string;
   endpoint: string;
-  loaded?: boolean;
   loading?: boolean;
-  error?: string;
+  loaded?: boolean;
   data?: any;
+  error?: string; // 使用undefined而非null
 }
 
 const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
@@ -66,12 +71,157 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
   // 用于防止重复请求的引用
   const requestInProgress = useRef(false);
 
+  // 预先定义函数以避免循环依赖
+  // 获取分析结果摘要
+  const fetchResultSummary = useCallback(async () => {
+    if (!taskId) return;
+
+    try {
+      console.log(`正在获取任务结果: ${taskId}`);
+      const resultData = await api.stockAnalysis.getResult(taskId);
+      
+      if (resultData.status === 'processing') {
+        console.log('任务仍在处理中，继续等待');
+        // 如果还在处理中，需要继续轮询进度
+        setIsLoading(true);
+        return;
+      }
+      
+      // 检查是否来自缓存
+      setIsFromCache(resultData.cached || false);
+      
+      console.log(`获取到分析结果, 来自缓存: ${resultData.cached || false}`);
+      
+      // 保存结果摘要
+      setResultSummary(resultData);
+      
+      // 设置可用的模块
+      if (resultData.modules && Array.isArray(resultData.modules)) {
+        setModules(resultData.modules);
+      }
+      
+      setIsLoading(false);
+    } catch (err: any) {
+      console.error('获取分析结果失败:', err);
+      
+      // 判断是否是404错误（任务不存在）
+      if (err.message && (err.message.includes('404') || err.message.includes('Not Found'))) {
+        console.error(`任务 ${taskId} 不存在，清除本地存储`);
+        
+        // 清除本地存储并准备重新开始
+        if (companyName) {
+          localStorage.removeItem(`taskId_${companyName}`);
+          sessionStorage.removeItem(`analysis_${companyName}`);
+        }
+        
+        setError('任务不存在或已过期，请刷新页面重新开始分析');
+        setIsLoading(false);
+        setTaskId(null);
+        return;
+      }
+      
+      // 其他错误
+      setError(err.message || '获取分析结果失败');
+      setIsLoading(false);
+    }
+  }, [taskId, companyName]);
+
+  // 开始分析
+  const startAnalysis = useCallback(async (forceRefresh: boolean = false) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      setResultSummary(null);
+      setModules([]);
+      setIsFromCache(false);
+
+      // 初始化进度状态，确保进度条立即显示
+      setProgress({
+        company_name: companyName,
+        status: 'processing',
+        progress: 2,
+        message: '正在初始化分析任务...',
+        stage: '准备中',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
+
+      // 如果是强制刷新，清除本地存储
+      if (forceRefresh && companyName) {
+        console.log(`强制刷新分析，清除本地存储: ${companyName}`);
+        localStorage.removeItem(`taskId_${companyName}`);
+        sessionStorage.removeItem(`analysis_${companyName}`);
+        // 也清除现有任务ID
+        setTaskId(null);
+      }
+
+      console.log(`创建分析任务: ${companyName}, 类型: ${analysisType}, 强制刷新: ${forceRefresh}`);
+      
+      // 开始分析前更新进度状态，确保用户看到初始进度
+      setProgress(prev => ({
+        ...prev!,
+        progress: 5,
+        message: '正在与后端建立连接...',
+        updated_at: new Date().toISOString()
+      }));
+
+      const response = await api.stockAnalysis.createTask(companyName, analysisType, forceRefresh);
+      
+      if (response.success && response.task_id) {
+        console.log(`获取到任务ID: ${response.task_id}`);
+        setTaskId(response.task_id);
+        
+        // 再次更新进度状态，确保进度条继续更新
+        setProgress(prev => ({
+          ...prev!,
+          progress: 8,
+          message: '分析任务已创建，正在开始处理...',
+          updated_at: new Date().toISOString()
+        }));
+      } else {
+        throw new Error(response.message || '创建分析任务失败');
+      }
+    } catch (err: any) {
+      console.error('创建分析任务失败:', err);
+      setError(err.message || '创建分析任务失败');
+      setIsLoading(false);
+      
+      // 在发生错误时更新进度状态
+      setProgress(prev => prev ? {
+        ...prev,
+        status: 'failed',
+        message: `分析失败: ${err.message || '创建任务失败'}`,
+        stage: '错误',
+        updated_at: new Date().toISOString()
+      } : null);
+    }
+  }, [companyName, analysisType]);
+
   // 自动启动分析
   useEffect(() => {
-    // 增加一个本地标记，确保只执行一次
+    // 尝试从本地存储加载上一次的任务ID
+    const localTaskId = localStorage.getItem(`taskId_${companyName}`);
+    
+    // 如果有本地任务ID，先尝试加载它
+    if (localTaskId && !taskId && !isLoading) {
+      console.log(`从本地存储恢复任务ID: ${localTaskId} (${companyName})`);
+      setTaskId(localTaskId);
+      setIsLoading(true);
+      
+      // 使用setTimeout让状态更新后再执行下一步
+      setTimeout(() => {
+        console.log("尝试获取任务结果");
+        fetchResultSummary();
+      }, 100);
+      
+      return;
+    }
+    
+    // 否则检查是否需要启动新分析
     const hasStarted = sessionStorage.getItem(`analysis_${companyName}`);
     
     if (autoStart && companyName && !taskId && !isLoading && !requestInProgress.current && !hasStarted) {
+      console.log(`启动新的分析: ${companyName}`);
       // 设置已启动标记
       sessionStorage.setItem(`analysis_${companyName}`, 'true');
       startAnalysis();
@@ -79,18 +229,32 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
     
     // 组件卸载时清理
     return () => {
-      if (taskId) {
-        // 不需要特定计时器，因为我们在这里只是确保组件卸载时不会继续处理
-        // clearTimeout(); - 这行有错误
-      }
+      // 保留清理逻辑，但不需要特定操作
     };
-  }, [autoStart, companyName]); // 移除taskId和isLoading依赖，防止循环触发
+  }, [autoStart, companyName, isLoading, taskId, fetchResultSummary, startAnalysis]);
+
+  // 保存任务ID到本地存储
+  useEffect(() => {
+    if (taskId && companyName) {
+      // 防止保存无效的任务ID
+      if (taskId.length < 5) {
+        console.error(`任务ID无效: ${taskId}`);
+        return;
+      }
+      
+      const prevTaskId = localStorage.getItem(`taskId_${companyName}`);
+      if (prevTaskId !== taskId) {
+        localStorage.setItem(`taskId_${companyName}`, taskId);
+        console.log(`保存任务ID到本地存储: ${taskId} (${companyName})`);
+      }
+    }
+  }, [taskId, companyName]);
 
   // 轮询任务进度
   useEffect(() => {
     if (!taskId) return;
     
-    // 初始化渐进式加载状态
+    // 初始化进度加载状态
     setProgress(prev => ({
       ...(prev || {
         company_name: companyName,
@@ -103,101 +267,108 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
       stage: '准备中'
     } as TaskProgress));
     
-    // 轮询间隔（毫秒）- 缩短时间
-    const pollInterval = 1000; // 从2000改为1000
-    // 超时时间（毫秒）- 如果后端超过一定时间没有返回新进度则模拟进度
-    const staleTimeout = 2000; // 从5000改为2000
-    // 上次更新的时间戳
-    let lastUpdateTime = Date.now();
-    // 上次进度
-    let lastProgress = 5;
+    // 轮询间隔（毫秒）- 降低到1秒以更频繁地获取进度更新
+    const pollInterval = 1000;
     // 轮询定时器
     let pollTimer: NodeJS.Timeout;
-    // 模拟进度定时器
-    let simulateTimer: NodeJS.Timeout;
     
-    // 模拟进度更新 - 调整更平滑
-    const simulateProgress = () => {
-      const now = Date.now();
-      // 如果超过staleTimeout时间没有更新，模拟进度增加
-      if (now - lastUpdateTime > staleTimeout) {
-        setProgress(prev => {
-          if (!prev) return null;
-          // 仅当状态为processing时才模拟进度
-          if (prev.status !== 'processing') return prev;
-          
-          // 计算新的模拟进度，确保不超过95%
-          // 分阶段调整增量，刚开始增长快，后期增长慢
-          let increment = 0;
-          if (prev.progress < 20) {
-            increment = Math.random() * 2 + 1; // 1-3
-          } else if (prev.progress < 40) {
-            increment = Math.random() * 1.5 + 0.5; // 0.5-2
-          } else if (prev.progress < 60) {
-            increment = Math.random() * 1 + 0.5; // 0.5-1.5
-          } else if (prev.progress < 80) {
-            increment = Math.random() * 0.7 + 0.3; // 0.3-1
-          } else {
-            increment = Math.random() * 0.5 + 0.1; // 0.1-0.6
-          }
-          
-          const newProgress = Math.min(95, prev.progress + increment);
-          
-          // 根据进度区间设置阶段信息
-          let stage = prev.stage;
-          let message = prev.message;
-          
-          if (newProgress > 80 && prev.progress <= 80) {
-            stage = '最终处理';
-            message = '正在整理分析结果...';
-          } else if (newProgress > 60 && prev.progress <= 60) {
-            stage = '深度分析';
-            message = '正在进行深度分析和评估...';
-          } else if (newProgress > 40 && prev.progress <= 40) {
-            stage = '数据处理';
-            message = '正在处理获取的数据...';
-          } else if (newProgress > 20 && prev.progress <= 20) {
-            stage = '数据收集';
-            message = '正在收集市场和财务数据...';
-          }
-          
-          return {
-            ...prev,
-            progress: newProgress,
-            message,
-            stage,
-            updated_at: new Date().toISOString()
-          };
-        });
-      }
-    };
+    // 用于跟踪上次进度值
+    let lastProgressValue = 0;
+    let lastStage = '';
     
     // 轮询获取实际进度
     const pollProgress = async () => {
       try {
+        console.log(`轮询任务进度: ${taskId}`);
+        
+        if (!taskId) {
+          console.error("任务ID不存在，无法获取进度");
+          clearTimeout(pollTimer);
+          return;
+        }
+        
         if (requestInProgress.current) return; // 如果已经有请求在进行中，则跳过
         
         requestInProgress.current = true;
-        const progressData = await api.stockAnalysis.getProgress(taskId);
+        
+        // 使用最新保存在状态中的任务ID
+        console.log(`当前轮询的任务ID: ${taskId}`);
+        
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/api/v1/stock-analysis/progress/${taskId}`, {
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'x-timestamp': Date.now().toString()
+          }
+        });
+        
+        // 首先检查状态码
+        if (response.status === 404) {
+          console.error(`任务 ${taskId} 不存在`);
+          requestInProgress.current = false;
+          
+          // 清除本地存储中的任务ID和分析标记
+          if (companyName) {
+            const storedTaskId = localStorage.getItem(`taskId_${companyName}`);
+            // 只有当存储的任务ID与当前任务ID相同时才清除
+            if (storedTaskId === taskId) {
+              console.log(`清除无效的任务ID ${taskId} (${companyName})`);
+              localStorage.removeItem(`taskId_${companyName}`);
+              sessionStorage.removeItem(`analysis_${companyName}`);
+            }
+          }
+          
+          // 停止轮询
+          clearTimeout(pollTimer);
+          
+          // 设置错误状态
+          setTaskId(null);
+          setError('任务不存在，请刷新页面重新开始分析');
+          setIsLoading(false);
+          return;
+        }
+        
+        if (!response.ok) {
+          throw new Error(`轮询错误: ${response.status}`);
+        }
+        
+        const progressData = await response.json();
         requestInProgress.current = false;
         
-        // 更新最后一次服务器响应时间
-        lastUpdateTime = Date.now();
-        lastProgress = progressData.progress;
+        const currentProgress = progressData.progress || 0;
+        const currentStage = progressData.stage || '';
         
+        // 检查进度是否有变化
+        const hasProgressChanged = Math.abs(currentProgress - lastProgressValue) > 1;
+        const hasStageChanged = currentStage !== lastStage;
+        
+        if (hasProgressChanged || hasStageChanged) {
+          // 记录进度变化的具体内容
+          console.log(`进度更新: 
+            阶段: ${lastStage} -> ${currentStage}
+            进度: ${lastProgressValue}% -> ${currentProgress}%
+            消息: ${progressData.message}`
+          );
+          
+          // 更新上次值
+          lastProgressValue = currentProgress;
+          lastStage = currentStage;
+        }
+        
+        console.log(`服务器返回进度: ${progressData.progress}%, 状态: ${progressData.status}, 阶段: ${progressData.stage}`);
+        
+        // 直接设置从服务器获取的进度
         setProgress(progressData);
 
         // 如果任务完成或失败，则停止轮询
         if (progressData.status === 'completed') {
           clearTimeout(pollTimer);
-          clearTimeout(simulateTimer);
           // 确保完成时显示100%
           setProgress(prev => prev ? { ...prev, progress: 100 } : null);
           fetchResultSummary();
           return;
         } else if (progressData.status === 'failed') {
           clearTimeout(pollTimer);
-          clearTimeout(simulateTimer);
           setError(progressData.error || '分析任务失败');
           setIsLoading(false);
           return;
@@ -206,77 +377,57 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
         // 继续轮询
         pollTimer = setTimeout(pollProgress, pollInterval);
       } catch (err: any) {
+        console.error('轮询错误:', err);
         requestInProgress.current = false;
-        clearTimeout(pollTimer);
-        clearTimeout(simulateTimer);
-        setError(err.message || '获取任务进度失败');
-        setIsLoading(false);
+        
+        // 继续轮询，出错时延长间隔
+        pollTimer = setTimeout(pollProgress, pollInterval * 2);
       }
     };
     
-    // 启动轮询和模拟进度更新
-    pollTimer = setTimeout(pollProgress, 500); // 立即开始轮询
-    simulateTimer = setInterval(simulateProgress, 500); // 从1000改为500，更频繁地模拟进度更新
+    // 启动轮询
+    console.log(`开始轮询任务 ${taskId} 的进度`);
+    pollTimer = setTimeout(pollProgress, 100);
     
     return () => {
+      console.log(`停止轮询任务 ${taskId} 的进度`);
       clearTimeout(pollTimer);
-      clearInterval(simulateTimer);
+      requestInProgress.current = false;
     };
-  }, [taskId, companyName]);
+  }, [taskId, companyName, fetchResultSummary]);
 
-  // 开始分析
-  const startAnalysis = async (forceRefresh: boolean = false) => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      setResultSummary(null);
-      setProgress(null);
-      setModules([]);
-      setIsFromCache(false);
-
-      const response = await api.stockAnalysis.createTask(companyName, analysisType, forceRefresh);
-      
-      if (response.success && response.task_id) {
-        setTaskId(response.task_id);
-      } else {
-        throw new Error(response.message || '创建分析任务失败');
-      }
-    } catch (err: any) {
-      setError(err.message || '创建分析任务失败');
-      setIsLoading(false);
+  // 尝试加载各个模块的数据
+  useEffect(() => {
+    if (!taskId || !resultSummary) return;
+    
+    // 初始化模块列表 - 使用后端提供的模块配置
+    if (resultSummary.modules && Array.isArray(resultSummary.modules) && resultSummary.modules.length > 0) {
+      setModules(resultSummary.modules.map((m: any) => ({
+        ...m,
+        loading: false,
+        loaded: false,
+        data: null,
+        error: undefined // 使用undefined而非null
+      })));
+    } else {
+      // 如果后端没有提供模块配置，使用默认配置
+      setModules([
+        { type: 'basic_info', endpoint: `/api/v1/stock-analysis/result/${taskId}/basic_info`, loading: false, loaded: false, data: null, error: undefined },
+        { type: 'market_data', endpoint: `/api/v1/stock-analysis/result/${taskId}/market_data`, loading: false, loaded: false, data: null, error: undefined },
+        { type: 'financial_data', endpoint: `/api/v1/stock-analysis/result/${taskId}/financial_data`, loading: false, loaded: false, data: null, error: undefined },
+        { type: 'research_data', endpoint: `/api/v1/stock-analysis/result/${taskId}/research_data`, loading: false, loaded: false, data: null, error: undefined },
+        { type: 'visualizations', endpoint: `/api/v1/stock-analysis/result/${taskId}/visualizations`, loading: false, loaded: false, data: null, error: undefined },
+        { type: 'report', endpoint: `/api/v1/stock-analysis/result/${taskId}/report`, loading: false, loaded: false, data: null, error: undefined },
+      ]);
     }
-  };
+    
+    // 预加载基本信息模块
+    setTimeout(() => {
+      if (modules.length === 0) return;
+      loadModuleData('basic_info');
+    }, 100);
+  }, [taskId, resultSummary]);
 
-  // 获取分析结果摘要
-  const fetchResultSummary = async () => {
-    if (!taskId) return;
-
-    try {
-      const resultData = await api.stockAnalysis.getResult(taskId);
-      
-      if (resultData.status === 'processing') {
-        // 仍在处理中，继续等待
-        return;
-      }
-      
-      // 检查是否来自缓存
-      setIsFromCache(resultData.cached || false);
-      
-      // 保存结果摘要
-      setResultSummary(resultData);
-      
-      // 设置可用的模块
-      if (resultData.modules && Array.isArray(resultData.modules)) {
-        setModules(resultData.modules);
-      }
-      
-      setIsLoading(false);
-    } catch (err: any) {
-      setError(err.message || '获取分析结果失败');
-      setIsLoading(false);
-    }
-  };
-  
   // 加载模块数据
   const loadModuleData = async (moduleType: string) => {
     if (!taskId) return;
@@ -337,7 +488,7 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
           loading: false,
           loaded: true,
           data: moduleData,
-          error: undefined
+          error: undefined  // 使用undefined而非null
         };
         return updated;
       });
@@ -349,7 +500,8 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
         updated[moduleIndex] = { 
           ...updated[moduleIndex], 
           loading: false,
-          error: err.message || `获取${moduleType}数据失败`
+          // 转换error为string | undefined类型
+          error: err.message ? String(err.message) : undefined
         };
         return updated;
       });
@@ -423,7 +575,7 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
         <div className="flex justify-between items-center mb-2">
           <div className="flex items-center">
             <div className={`h-3 w-3 rounded-full ${stageColor} mr-2`}></div>
-            <div className="text-sm font-medium">{progress.stage} ({progress.progress}%)</div>
+            <div className="text-sm font-medium">{progress.stage} ({Math.floor(progress.progress)}%)</div>
           </div>
           <div className="text-sm text-muted-foreground">{progress.status}</div>
         </div>
@@ -453,7 +605,7 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
       data: module?.data,
       loading: module?.loading || false,
       loaded: module?.loaded || false,
-      error: module?.error
+      error: module?.error || null
     };
   };
 
@@ -650,61 +802,74 @@ const StockAnalysisMain: React.FC<StockAnalysisMainProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>股票分析: {companyName}</CardTitle>
-          <CardDescription>分析类型: {analysisType}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {/* 控制按钮 */}
-          {!isLoading && !resultSummary && (
-            <div className="space-x-2">
-              <Button onClick={() => startAnalysis(false)} disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    分析中...
-                  </>
-                ) : (
-                  "开始分析"
-                )}
-              </Button>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => startAnalysis(true)} 
-                      disabled={isLoading}
-                    >
-                      <RotateCw className="mr-2 h-4 w-4" />
-                      强制刷新分析
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>忽略缓存，重新执行分析</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+    <div className="space-y-8">
+      {/* 头部信息 */}
+      <Card className="bg-card border-none">
+        <CardHeader className="pb-2">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <CardTitle className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 inline-block">
+                股票分析: {companyName}
+              </CardTitle>
+              <CardDescription>分析类型: {analysisType}</CardDescription>
             </div>
-          )}
+            {!isLoading && resultSummary && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => startAnalysis(true)}
+                className="whitespace-nowrap"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                刷新分析
+              </Button>
+            )}
+          </div>
+        </CardHeader>
+        
+        {/* 进度指示器 */}
+        {isLoading && (
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 mb-1">
+                <div className={progress?.progress ? "text-primary" : ""}>
+                  {progress?.stage || "准备中"} 
+                  ({progress?.progress ? Math.floor(progress.progress) : 0}%)
+                </div>
+                {progress?.status === 'completed' ? (
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                ) : progress?.status === 'failed' ? (
+                  <AlertCircle className="h-4 w-4 text-red-500" />
+                ) : (
+                  <span className="text-muted-foreground text-xs">processing</span>
+                )}
+              </div>
+              <Progress value={progress?.progress || 0} />
+              <p className="text-sm text-muted-foreground">
+                {progress?.message || "正在处理获取的数据..."}
+              </p>
+              
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <div>开始时间: {new Date(progress?.created_at || Date.now()).toLocaleTimeString()}</div>
+                <div>更新时间: {new Date(progress?.updated_at || Date.now()).toLocaleTimeString()}</div>
+              </div>
+            </div>
+          </CardContent>
+        )}
 
-          {/* 错误信息 */}
-          {error && (
+        {/* 错误信息 */}
+        {error && (
+          <CardContent>
             <Alert variant="destructive" className="mt-4">
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>错误</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
-          )}
+          </CardContent>
+        )}
 
-          {/* 进度条 */}
-          {isLoading && renderProgress()}
-
-          {/* 分析结果 */}
-          {resultSummary && renderResult()}
-        </CardContent>
+        {/* 分析结果 */}
+        {resultSummary && renderResult()}
       </Card>
     </div>
   );

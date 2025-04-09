@@ -1,0 +1,30 @@
+{
+  "basic_info": {
+    "stock_code": "000001",
+    "stock_name": "平安银行",
+    "industry": "银行业",
+    "company_info": null
+  },
+  "market_data": {
+    "trade_data": {
+      "columns": [
+        "index",
+        "Date",
+        "Stock_Code",
+        "Open",
+        "Close",
+        "High",
+        "Low",
+        "Volume",
+        "Amount_100M",
+        "Amplitude",
+        "Price_Change_percent",
+        "Price_Change",
+        "Turnover_Rate"
+      ],
+      "data": [
+        {
+          "index": 0,
+          "Date": "2025-04-07",
+          "Stock_Code": "000001",
+          "Open": 
