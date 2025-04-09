@@ -75,8 +75,8 @@ def main():
     tasks = [
         # (download_company_info_incremental, "公司信息增量"),
         # (download_finance_info_incremental, "财务信息增量"),
-        (download_individual_stock_incremental, "个股历史数据增量"),
-        # (download_stock_news_incremental, "股票新闻增量"),
+        # (download_individual_stock_incremental, "个股历史数据增量"),
+        (download_stock_news_incremental, "股票新闻增量"),
         # # (download_sector_data_incremental, "行业数据增量"),
         # (download_analyst_ratings_incremental, "分析师评级增量"),
         # (download_tech_indicators_incremental, "技术指标增量"),
