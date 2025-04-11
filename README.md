@@ -155,7 +155,8 @@ You can run the application using either the Next.js frontend (full features) or
 
 *   **Streamlit Version Demo:**
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DxNXjJ4Nt1o" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![YouTube Video Thumbnail](https://img.youtube.com/vi/DxNXjJ4Nt1o/0.jpg)](https://youtu.be/DxNXjJ4Nt1o)
+
 
 *   **Full Version (Next.js) Demo:**
 
