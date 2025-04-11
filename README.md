@@ -121,7 +121,7 @@ Ensure your virtual environment is activated (`source .venv/bin/activate`) befor
 
 You can run the application using either the Next.js frontend (full features) or the Streamlit frontend (demo/focused features).
 
-### Option 1: Running the Full Application (Next.js Frontend)
+### Option 1: Running the Full Application (Next.js Frontend)(`QuantAI-Project branch`)
 
 1.  **Start the Backend API Server:**
     ```bash
@@ -143,7 +143,7 @@ You can run the application using either the Next.js frontend (full features) or
 
 4.  Open your web browser and navigate to `http://localhost:3000` (or the URL provided in the console).
 
-### Option 2: Running the Streamlit Demo
+### Option 2: Running the Streamlit Demo(`main branch`)
 
 1.  **Run the Streamlit Application:**
     ```bash
