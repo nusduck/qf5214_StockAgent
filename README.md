@@ -155,12 +155,12 @@ You can run the application using either the Next.js frontend (full features) or
 
 *   **Streamlit Version Demo:**
 
-[![YouTube Video Thumbnail](https://img.youtube.com/vi/DxNXjJ4Nt1o/0.jpg)](https://youtu.be/DxNXjJ4Nt1o)
+   [![YouTube Video Thumbnail](https://img.youtube.com/vi/DxNXjJ4Nt1o/0.jpg)](https://youtu.be/DxNXjJ4Nt1o)
 
 
 *   **Full Version (Next.js) Demo:**
 
-[Link]
+   [![thumbnail](https://img.youtube.com/vi/GAG4Tea7Kc0/0.jpg)](https://youtu.be/GAG4Tea7Kc0)
 
 ## Report
 [Report: AI Agents for Financial Trading: LLM-Driven Stock Prediction & Investment Recommendation System](https://docs.google.com/document/d/1SPGfqFTUD2jFCc8QoBfdTBYSThn-5_5UxUJnGSAmSrE/edit?usp=sharing)
