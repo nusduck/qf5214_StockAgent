@@ -161,3 +161,6 @@ You can run the application using either the Next.js frontend (full features) or
 *   **Full Version (Next.js) Demo:**
 
 [Link]
+
+## Report
+[Report: AI Agents for Financial Trading: LLM-Driven Stock Prediction & Investment Recommendation System](https://docs.google.com/document/d/1SPGfqFTUD2jFCc8QoBfdTBYSThn-5_5UxUJnGSAmSrE/edit?usp=sharing)
