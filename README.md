@@ -34,13 +34,13 @@ The system is designed with a modular architecture, separating data handling, ba
 *   **Data Pipeline:** Responsible for fetching, cleaning, and storing financial data (e.g., stock prices, news) likely into the configured SQL database.
 *   **Backend Server (Python/FastAPI):** Serves as the API endpoint, orchestrates agent tasks, interacts with the database, and communicates with the frontend. 
 *   **AI/LLM Core (LangChain/LangGraph):** Manages interactions with LLMs (OpenAI, Google), integrates tools (Tavily for search), and defines the agent logic.
-*   **Insight Generation (`run_insight.py`):** Potentially a separate process for running heavier analysis, generating periodic reports, or updating insights asynchronously. *(Needs clarification on its exact role)*
+*   **Insight Generation (`run_insight.py`):** A module for generating investment advice based on real-time hot topics.
 *   **Frontend (Next.js / Streamlit):** Provides the user interface for interaction, displaying data, insights, and recommendations.
 
 ## Technology Stack
 
 *   **Backend:** Python 3.x
-*   **AI / LLM:** LangChain, OpenAI API, Google Generative AI API
+*   **AI / LLM:** LangChain/LangGraph, OpenAI API, Google Generative AI API
 *   **Frontend:** Next.js (React), Streamlit
 *   **Database:** MySQL
 *   **Observability:** LangSmith
