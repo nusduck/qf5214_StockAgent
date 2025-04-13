@@ -91,22 +91,22 @@ def create_fundamentals_agent(state: StockAnalysisState) -> Any:
     
     # 收入相关
     "revenue": financial_metrics.get("total_revenue", "N/A"),  # 映射为revenue
-    "revenue_yoy": financial_metrics.get("total_revenue_yoy", "N/A"),  # 映射为revenue_yoy
+    "revenue_yoy": 100*financial_metrics.get("total_revenue_yoy", "N/A"),  # 映射为revenue_yoy
     
     # 每股指标
-    "basic_eps": financial_metrics.get("basic_eps", "N/A"),
+    "basic_eps": 100*financial_metrics.get("basic_eps", "N/A"),
     "net_asset_ps": financial_metrics.get("net_asset_ps", "N/A"),
     "capital_reserve_ps": financial_metrics.get("capital_reserve_ps", "N/A"),
     "retained_earnings_ps": financial_metrics.get("retained_earnings_ps", "N/A"),
     "op_cash_flow_ps": financial_metrics.get("op_cash_flow_ps", "N/A"),
     
     # 利润率指标
-    "net_margin": financial_metrics.get("net_margin", "N/A"),
-    "gross_margin": financial_metrics.get("gross_margin", "N/A"),
+    "net_margin": 100*financial_metrics.get("net_margin", "N/A"),
+    "gross_margin": 100*financial_metrics.get("gross_margin", "N/A"),
     
     # 回报率指标
-    "roe": financial_metrics.get("roe", "N/A"),
-    "roe_diluted": financial_metrics.get("roe_diluted", "N/A"),
+    "roe": 100*financial_metrics.get("roe", "N/A"),
+    "roe_diluted": 100*financial_metrics.get("roe_diluted", "N/A"),
     
     # 经营周期指标
     "op_cycle": financial_metrics.get("op_cycle", "N/A"),
@@ -120,7 +120,7 @@ def create_fundamentals_agent(state: StockAnalysisState) -> Any:
     "con_quick_ratio": financial_metrics.get("con_quick_ratio", "N/A"),
     
     # 负债指标
-    "debt_ratio": financial_metrics.get("debt_asset_ratio", "N/A"),  # 映射为debt_ratio
+    "debt_ratio": 100*financial_metrics.get("debt_asset_ratio", "N/A"),  # 映射为debt_ratio
     "debt_eq_ratio": financial_metrics.get("debt_eq_ratio", "N/A"),
     
     # 以下是原需求中有但工具返回中没有的指标，需要另外获取或计算
