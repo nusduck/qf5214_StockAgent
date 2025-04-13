@@ -7,7 +7,7 @@ import requests
 import httpx
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-#加入redis配置和链接
+#加入redis配置和链接 这里的redis设置缓存时间1分钟
 import redis
 from dotenv import load_dotenv
 
