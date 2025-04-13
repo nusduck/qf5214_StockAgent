@@ -1384,3 +1384,735 @@ During task with name 'visualization' and id '7d8887b2-d742-ef06-69ce-ffd1d3345f
 2025-04-09 18:51:17,366 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
 2025-04-09 18:51:17,367 - helpers.logger - INFO - technical_node开始进行技术分析
 2025-04-09 18:52:09,324 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-10 12:04:40,012 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 12:11:32,906 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 16:26:03,812 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 16:26:14,864 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-10 16:26:14,886 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-10 16:26:14,887 - helpers.logger - ERROR - Error in async data acquisition: name 'logger' is not defined
+2025-04-10 16:26:14,894 - helpers.logger - ERROR - 任务 d7a21b7f-6858-4ba5-a58c-7b89a96907b7 处理失败: name 'logger' is not defined
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/melodytang/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2069, in invoke
+    for chunk in self.stream(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 1724, in stream
+    for _ in runner.tick(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 230, in tick
+    run_with_retry(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 506, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 270, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 99, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+  File "/usr/lib/python3.9/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 83, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 49, in save_state_to_database
+    logger.warning(f"trade_data is not a DataFrame: {type(state.market_data.trade_data)}")
+NameError: name 'logger' is not defined
+
+2025-04-10 16:26:14,895 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 17:00:10,814 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 17:00:20,048 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-10 17:00:20,087 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-10 17:00:20,087 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-10 17:00:20,088 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-10 17:00:20,098 - helpers.logger - ERROR - 任务 0f6ceacb-9bad-435b-af2e-add1fce18fcd 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 102, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-10 17:00:20,098 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 17:01:26,217 - helpers.logger - INFO - 创建新任务ID: 1f453d4e-bc60-4367-871a-c016f3467bd8
+2025-04-10 17:01:26,217 - helpers.logger - INFO - 创建任务 1f453d4e-bc60-4367-871a-c016f3467bd8 - 公司: 工商银行
+2025-04-10 17:01:26,217 - helpers.logger - INFO - 开始处理任务 1f453d4e-bc60-4367-871a-c016f3467bd8 - 公司: 工商银行
+2025-04-10 17:01:26,218 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-10 17:01:26,228 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 17:01:36,579 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-10 17:01:36,592 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-10 17:01:36,599 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-10 17:01:36,599 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-10 17:01:36,606 - helpers.logger - ERROR - 任务 1f453d4e-bc60-4367-871a-c016f3467bd8 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 102, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-10 17:01:36,607 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 17:02:19,764 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 17:02:30,612 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-10 17:02:30,626 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-10 17:02:30,627 - helpers.logger - ERROR - Error in async data acquisition: name 'logger' is not defined
+2025-04-10 17:02:30,632 - helpers.logger - ERROR - 任务 3535ea2e-3479-49f4-9baa-f35a3112e4ee 处理失败: name 'logger' is not defined
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/melodytang/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2069, in invoke
+    for chunk in self.stream(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 1724, in stream
+    for _ in runner.tick(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 230, in tick
+    run_with_retry(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 506, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 270, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 99, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+  File "/usr/lib/python3.9/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 83, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 49, in save_state_to_database
+    logger.warning(f"trade_data is not a DataFrame: {type(state.market_data.trade_data)}")
+NameError: name 'logger' is not defined
+
+2025-04-10 17:02:30,634 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 17:38:38,101 - helpers.logger - INFO - 创建新任务ID: 2a5e258c-535c-4506-98b6-1c31ffa16596
+2025-04-10 17:38:38,103 - helpers.logger - INFO - 创建任务 2a5e258c-535c-4506-98b6-1c31ffa16596 - 公司: 工商银行
+2025-04-10 17:38:38,103 - helpers.logger - INFO - 开始处理任务 2a5e258c-535c-4506-98b6-1c31ffa16596 - 公司: 工商银行
+2025-04-10 17:38:38,105 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-10 17:38:38,187 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 17:38:59,346 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-10 17:38:59,357 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-10 17:38:59,358 - helpers.logger - ERROR - Error in async data acquisition: name 'logger' is not defined
+2025-04-10 17:38:59,367 - helpers.logger - ERROR - 任务 2a5e258c-535c-4506-98b6-1c31ffa16596 处理失败: name 'logger' is not defined
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/melodytang/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2069, in invoke
+    for chunk in self.stream(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 1724, in stream
+    for _ in runner.tick(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 230, in tick
+    run_with_retry(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 506, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 270, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 99, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+  File "/usr/lib/python3.9/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 83, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 49, in save_state_to_database
+    print(f"WARNING: trade_data is not a DataFrame: {type(state.market_data.trade_data)}")
+NameError: name 'logger' is not defined
+
+2025-04-10 17:38:59,367 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 17:51:38,176 - helpers.logger - INFO - 创建新任务ID: 5749a13f-a5b7-41f5-a3cd-d62ba7c500a0
+2025-04-10 17:51:38,176 - helpers.logger - INFO - 创建任务 5749a13f-a5b7-41f5-a3cd-d62ba7c500a0 - 公司: 美团
+2025-04-10 17:51:38,178 - helpers.logger - INFO - 开始处理任务 5749a13f-a5b7-41f5-a3cd-d62ba7c500a0 - 公司: 美团
+2025-04-10 17:51:38,179 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-10 17:51:38,192 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 17:51:57,828 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-10 17:51:57,840 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-10 17:51:57,840 - helpers.logger - ERROR - Error in async data acquisition: name 'logger' is not defined
+2025-04-10 17:51:57,842 - helpers.logger - ERROR - 任务 5749a13f-a5b7-41f5-a3cd-d62ba7c500a0 处理失败: name 'logger' is not defined
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/melodytang/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2069, in invoke
+    for chunk in self.stream(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 1724, in stream
+    for _ in runner.tick(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 230, in tick
+    run_with_retry(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 506, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 270, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 99, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+  File "/usr/lib/python3.9/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 83, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 49, in save_state_to_database
+    logger.warning(f"trade_data is not a DataFrame: {type(state.market_data.trade_data)}")
+NameError: name 'logger' is not defined
+
+2025-04-10 17:51:57,842 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 17:52:20,679 - helpers.logger - INFO - 创建新任务ID: 0fee54d3-09d3-4f67-a383-377408014b7b
+2025-04-10 17:52:20,679 - helpers.logger - INFO - 创建任务 0fee54d3-09d3-4f67-a383-377408014b7b - 公司: 300750
+2025-04-10 17:52:20,680 - helpers.logger - INFO - 开始处理任务 0fee54d3-09d3-4f67-a383-377408014b7b - 公司: 300750
+2025-04-10 17:52:20,681 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-10 17:52:20,696 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-10 17:52:29,687 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-10 17:52:29,697 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-10 17:52:29,698 - helpers.logger - ERROR - Error in async data acquisition: name 'logger' is not defined
+2025-04-10 17:52:29,699 - helpers.logger - ERROR - 任务 0fee54d3-09d3-4f67-a383-377408014b7b 处理失败: name 'logger' is not defined
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/melodytang/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2069, in invoke
+    for chunk in self.stream(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 1724, in stream
+    for _ in runner.tick(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 230, in tick
+    run_with_retry(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 506, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 270, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 99, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+  File "/usr/lib/python3.9/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 83, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 49, in save_state_to_database
+    logger.warning(f"trade_data is not a DataFrame: {type(state.market_data.trade_data)}")
+NameError: name 'logger' is not defined
+
+2025-04-10 17:52:29,700 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 04:34:46,649 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 04:34:55,759 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 04:34:55,773 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 04:34:55,773 - helpers.logger - ERROR - Error in async data acquisition: name 'logger' is not defined
+2025-04-11 04:34:55,780 - helpers.logger - ERROR - 任务 ad2f1b82-9d0c-4217-ae8b-2e62d548f33a 处理失败: name 'logger' is not defined
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/melodytang/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2069, in invoke
+    for chunk in self.stream(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 1724, in stream
+    for _ in runner.tick(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 230, in tick
+    run_with_retry(
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 506, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 270, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 99, in data_acquire_node
+    return asyncio.run(data_acquire_node_async(state))
+  File "/usr/lib/python3.9/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/usr/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/home/melodytang/qf5214_StockAgent/backend/node/data_acquire_node.py", line 83, in data_acquire_node_async
+    file_paths = save_state_to_database(state)
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 49, in save_state_to_database
+    logger.warning(f"trade_data is not a DataFrame: {type(state.market_data.trade_data)}")
+NameError: name 'logger' is not defined
+
+2025-04-11 04:34:55,780 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 04:44:12,578 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 04:44:19,611 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 04:44:19,626 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 04:44:19,626 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 04:44:19,626 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 04:44:19,636 - helpers.logger - ERROR - 任务 79d4c1c8-b54c-4c08-9fe0-f8555ba4fe3e 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 101, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-11 04:44:19,636 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 04:49:48,974 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 04:49:58,887 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 04:49:58,900 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 04:49:58,900 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 04:49:58,900 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 04:49:58,906 - helpers.logger - ERROR - 任务 19358d7c-6e79-4915-b63b-9002d8ba9111 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 101, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-11 04:49:58,906 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 04:52:56,286 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 04:53:03,275 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 04:53:03,289 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 04:53:03,289 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 04:53:03,290 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 04:53:03,295 - helpers.logger - ERROR - 任务 7d4ea6f9-8650-46bd-bdab-7e3e7ae86a93 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 101, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-11 04:53:03,296 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 05:06:50,976 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 05:06:57,992 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 05:06:58,011 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 05:06:58,011 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 05:06:58,011 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 05:06:58,019 - helpers.logger - ERROR - 任务 2416adc5-e73d-420b-a41b-fac88c3788ab 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 101, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-11 05:06:58,019 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 05:10:09,695 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 05:10:18,142 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 05:10:18,155 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 05:10:18,155 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 05:10:18,155 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 05:10:18,162 - helpers.logger - ERROR - 任务 06dce384-03df-4f7b-86f8-8dc90d0d2b8b 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 101, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-11 05:10:18,162 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 05:13:43,370 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 05:13:53,258 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 05:13:53,271 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 05:13:53,272 - helpers.logger - WARNING - trade_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 05:13:53,272 - helpers.logger - WARNING - technical_data is not a DataFrame: <class 'ModuleNotFoundError'>
+2025-04-11 05:13:53,278 - helpers.logger - ERROR - 任务 d0c33f0f-85c7-4a1f-9b39-2173224aca9f 处理失败: 'ModuleNotFoundError' object has no attribute 'index'
+Traceback (most recent call last):
+  File "/home/melodytang/qf5214_StockAgent/backend/server.py", line 412, in process_stock_analysis
+    "trade_data": dataframe_to_json_friendly(results["market_data"].trade_data) if results["market_data"].trade_data is not None else None,
+  File "/home/melodytang/qf5214_StockAgent/backend/helpers/utility.py", line 101, in dataframe_to_json_friendly
+    if hasattr(df.index, 'dtype') and 'datetime' in str(df.index.dtype):
+AttributeError: 'ModuleNotFoundError' object has no attribute 'index'
+
+2025-04-11 05:13:53,278 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-11 05:24:23,705 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 05:24:35,500 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 05:24:41,380 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 05:24:41,387 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-11 05:24:41,387 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-11 05:24:41,491 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 05:24:41,494 - helpers.logger - INFO - Start agent coder
+2025-04-11 05:24:41,520 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 05:24:41,520 - helpers.logger - INFO - Start agent coder
+2025-04-11 05:25:05,727 - helpers.logger - INFO - 找到 18 个可视化文件
+2025-04-11 05:25:07,857 - helpers.logger - INFO - 找到 19 个可视化文件
+2025-04-11 05:25:08,045 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 05:25:08,047 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 05:25:08,048 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 05:25:48,130 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 06:56:20,860 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 06:56:32,879 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 06:56:38,687 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 06:56:38,691 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-11 06:56:38,691 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-11 06:56:38,785 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 06:56:38,785 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 06:56:38,786 - helpers.logger - INFO - Start agent coder
+2025-04-11 06:56:38,786 - helpers.logger - INFO - Start agent coder
+2025-04-11 06:56:38,809 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 06:56:38,809 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 06:56:38,810 - helpers.logger - INFO - Start agent coder
+2025-04-11 06:56:38,810 - helpers.logger - INFO - Start agent coder
+2025-04-11 06:57:04,597 - helpers.logger - INFO - 找到 10 个可视化文件
+2025-04-11 06:57:04,597 - helpers.logger - INFO - 找到 10 个可视化文件
+2025-04-11 06:57:27,953 - helpers.logger - INFO - 找到 12 个可视化文件
+2025-04-11 06:57:27,953 - helpers.logger - INFO - 找到 12 个可视化文件
+2025-04-11 06:57:28,254 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 06:57:28,256 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 06:57:28,261 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 06:58:00,559 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 07:50:56,688 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 07:51:06,332 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 07:51:09,687 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 07:51:09,690 - helpers.logger - INFO - 保存trade_data数据到: database/data/300750/trade_data.csv
+2025-04-11 07:51:09,690 - helpers.logger - INFO - 保存technical_data数据到: database/data/300750/technical_data.csv
+2025-04-11 07:51:09,768 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 07:51:09,769 - helpers.logger - INFO - Start agent coder
+2025-04-11 07:51:09,806 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 07:51:09,806 - helpers.logger - INFO - Start agent coder
+2025-04-11 07:51:33,614 - helpers.logger - INFO - 找到 18 个可视化文件
+2025-04-11 07:54:38,156 - helpers.logger - ERROR - 可视化代理执行失败: Recursion limit of 100 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT
+2025-04-11 07:54:38,158 - helpers.logger - INFO - 找到 23 个可视化文件
+2025-04-11 07:54:38,381 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 07:54:38,381 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 07:54:38,381 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 07:55:05,611 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 09:03:59,320 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 09:04:14,789 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 09:04:19,531 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 09:04:19,536 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-11 09:04:19,536 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-11 09:04:19,641 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 09:04:19,641 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 09:04:19,642 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:04:19,642 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:04:19,664 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 09:04:19,664 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 09:04:19,665 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:04:19,665 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:04:48,255 - helpers.logger - INFO - 找到 14 个可视化文件
+2025-04-11 09:04:48,255 - helpers.logger - INFO - 找到 14 个可视化文件
+2025-04-11 09:04:53,717 - helpers.logger - INFO - 找到 13 个可视化文件
+2025-04-11 09:04:53,717 - helpers.logger - INFO - 找到 13 个可视化文件
+2025-04-11 09:04:54,068 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 09:04:54,071 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 09:04:54,071 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 09:04:54,071 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 09:04:54,071 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 09:06:50,255 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 09:21:26,263 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 09:21:35,367 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 09:21:38,675 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 09:21:38,681 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-11 09:21:38,681 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-11 09:21:38,786 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 09:21:38,786 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 09:21:38,788 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:21:38,788 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:21:41,911 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 09:21:41,911 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 09:21:41,911 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:21:41,911 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:22:08,112 - helpers.logger - INFO - 找到 17 个可视化文件
+2025-04-11 09:22:08,112 - helpers.logger - INFO - 找到 17 个可视化文件
+2025-04-11 09:22:26,128 - helpers.logger - INFO - 找到 14 个可视化文件
+2025-04-11 09:22:26,128 - helpers.logger - INFO - 找到 14 个可视化文件
+2025-04-11 09:22:26,415 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 09:22:26,415 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 09:22:26,418 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 09:23:01,094 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 09:29:40,190 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 09:29:51,627 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 09:29:52,529 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 09:29:55,844 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 09:29:55,876 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-11 09:29:55,876 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-11 09:29:56,169 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 09:29:56,169 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:29:56,194 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 09:29:56,194 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:30:02,514 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 09:30:02,517 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 09:30:05,826 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 09:30:05,830 - helpers.logger - INFO - 保存trade_data数据到: database/data/600036/trade_data.csv
+2025-04-11 09:30:05,830 - helpers.logger - INFO - 保存technical_data数据到: database/data/600036/technical_data.csv
+2025-04-11 09:30:05,967 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 09:30:05,968 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:30:05,985 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 09:30:05,985 - helpers.logger - INFO - Start agent coder
+2025-04-11 09:30:32,065 - helpers.logger - INFO - 找到 19 个可视化文件
+2025-04-11 09:30:32,788 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 09:30:33,415 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-11 09:30:33,848 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 09:30:33,850 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 09:30:33,866 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 09:30:35,296 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 09:30:35,301 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 09:30:35,316 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 09:31:13,679 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 09:31:16,171 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 12:12:21,234 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:12:32,976 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:12:36,632 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:12:36,667 - helpers.logger - INFO - 保存trade_data数据到: database/data/000001/trade_data.csv
+2025-04-11 12:12:36,667 - helpers.logger - INFO - 保存technical_data数据到: database/data/000001/technical_data.csv
+2025-04-11 12:12:36,840 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:12:36,842 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:12:36,868 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:12:36,869 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:13:18,885 - helpers.logger - INFO - 找到 22 个可视化文件
+2025-04-11 12:13:20,928 - helpers.logger - INFO - 找到 16 个可视化文件
+2025-04-11 12:13:21,306 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 12:13:21,308 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 12:13:21,311 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 12:13:57,219 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 12:46:23,919 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:46:35,514 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:46:38,838 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:46:38,866 - helpers.logger - INFO - 保存trade_data数据到: database/data/9988/trade_data.csv
+2025-04-11 12:46:38,866 - helpers.logger - INFO - 保存technical_data数据到: database/data/9988/technical_data.csv
+2025-04-11 12:46:39,040 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:46:39,041 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:46:39,040 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:46:39,041 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:46:39,043 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:46:39,044 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:46:39,043 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:46:39,044 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:47:33,593 - helpers.logger - INFO - 找到 1 个可视化文件
+2025-04-11 12:47:33,593 - helpers.logger - INFO - 找到 1 个可视化文件
+2025-04-11 12:48:51,456 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9988/visualizations/trade_data
+2025-04-11 12:48:51,456 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9988/visualizations/trade_data
+2025-04-11 12:48:51,766 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 12:48:51,766 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 12:48:51,777 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 12:49:23,104 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 12:50:41,606 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:51:28,508 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:51:38,344 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:51:42,294 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:51:42,314 - helpers.logger - INFO - 保存trade_data数据到: database/data/9888/trade_data.csv
+2025-04-11 12:51:42,314 - helpers.logger - INFO - 保存technical_data数据到: database/data/9888/technical_data.csv
+2025-04-11 12:51:42,518 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:51:42,518 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:51:42,520 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:51:42,520 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:51:42,523 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:51:42,523 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:51:42,525 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:51:42,525 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:51:52,898 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:51:52,898 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:51:52,904 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:51:55,979 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:51:55,982 - helpers.logger - INFO - 保存trade_data数据到: database/data/PDD/trade_data.csv
+2025-04-11 12:51:55,982 - helpers.logger - INFO - 保存technical_data数据到: database/data/PDD/technical_data.csv
+2025-04-11 12:51:56,006 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:51:56,007 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:51:56,010 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:51:56,015 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:52:07,197 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9888/visualizations/trade_data
+2025-04-11 12:52:38,077 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/PDD/visualizations/trade_data
+2025-04-11 12:52:39,358 - helpers.logger - INFO - 找到 4 个可视化文件
+2025-04-11 12:52:39,442 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 12:52:39,442 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 12:52:39,450 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 12:52:47,063 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:53:10,856 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:53:14,009 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:53:15,657 - helpers.logger - INFO - 保存trade_data数据到: database/data/PDD/trade_data.csv
+2025-04-11 12:53:15,657 - helpers.logger - INFO - 保存technical_data数据到: database/data/PDD/technical_data.csv
+2025-04-11 12:53:15,817 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:53:15,817 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:53:15,818 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:53:15,820 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:53:15,818 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:53:15,820 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:53:15,822 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:53:15,822 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:53:41,956 - helpers.logger - INFO - 基本面分析完成
+2025-04-11 12:53:41,958 - helpers.logger - INFO - 情感分析完成
+2025-04-11 12:53:41,956 - helpers.logger - INFO - 基本面分析完成
+2025-04-11 12:53:41,958 - helpers.logger - INFO - 情感分析完成
+2025-04-11 12:53:43,163 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 12:53:48,552 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 12:53:49,110 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 12:53:49,202 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 12:53:49,457 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 12:53:49,459 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 12:53:49,505 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 12:54:46,326 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 12:55:08,379 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 12:55:50,003 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:55:56,630 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:56:00,097 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 12:56:08,354 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:56:11,495 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:56:11,521 - helpers.logger - INFO - 保存trade_data数据到: database/data/00700/trade_data.csv
+2025-04-11 12:56:11,521 - helpers.logger - INFO - 保存technical_data数据到: database/data/00700/technical_data.csv
+2025-04-11 12:56:11,618 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:56:11,620 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:56:11,620 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:11,621 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:28,428 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:56:28,430 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:56:31,494 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:56:31,495 - helpers.logger - INFO - 保存trade_data数据到: database/data/9618/trade_data.csv
+2025-04-11 12:56:31,495 - helpers.logger - INFO - 保存technical_data数据到: database/data/9618/technical_data.csv
+2025-04-11 12:56:31,515 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:56:31,519 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:56:31,519 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:31,519 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:33,811 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:56:33,814 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 12:56:53,849 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 12:56:54,056 - helpers.logger - INFO - 保存trade_data数据到: database/data/NTES/trade_data.csv
+2025-04-11 12:56:54,057 - helpers.logger - INFO - 保存technical_data数据到: database/data/NTES/technical_data.csv
+2025-04-11 12:56:54,360 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:56:54,362 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:56:54,360 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 12:56:54,362 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 12:56:54,374 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:54,374 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:54,378 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:54,378 - helpers.logger - INFO - Start agent coder
+2025-04-11 12:56:59,649 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 12:56:59,649 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 12:57:03,919 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9618/visualizations/technical_data
+2025-04-11 12:57:03,919 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9618/visualizations/technical_data
+2025-04-11 12:57:12,939 - helpers.logger - INFO - 找到 4 个可视化文件
+2025-04-11 12:57:12,939 - helpers.logger - INFO - 找到 4 个可视化文件
+2025-04-11 12:57:12,967 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 12:57:12,968 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 12:57:12,968 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 12:57:45,080 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 12:57:45,080 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 12:57:45,082 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 12:58:02,038 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 12:58:20,023 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 13:00:06,098 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 13:00:06,098 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 13:00:06,098 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 13:00:06,098 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 13:00:06,098 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 13:00:06,098 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 13:00:06,098 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 13:00:50,901 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 14:55:30,602 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 14:55:41,560 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 14:55:45,045 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 14:55:45,053 - helpers.logger - INFO - 保存trade_data数据到: database/data/002594/trade_data.csv
+2025-04-11 14:55:45,053 - helpers.logger - INFO - 保存technical_data数据到: database/data/002594/technical_data.csv
+2025-04-11 14:55:45,181 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 14:55:45,181 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 14:55:45,184 - helpers.logger - INFO - Start agent coder
+2025-04-11 14:55:45,184 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 14:55:45,184 - helpers.logger - INFO - Start agent coder
+2025-04-11 14:55:45,184 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 14:55:45,185 - helpers.logger - INFO - Start agent coder
+2025-04-11 14:55:45,185 - helpers.logger - INFO - Start agent coder
+2025-04-11 14:56:21,715 - helpers.logger - INFO - 找到 6 个可视化文件
+2025-04-11 14:56:21,715 - helpers.logger - INFO - 找到 6 个可视化文件
+2025-04-11 14:56:25,068 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 14:56:25,068 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 14:56:25,374 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 14:56:25,377 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 14:56:25,381 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 14:57:26,443 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 15:06:08,334 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 15:06:18,672 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 15:06:21,878 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 15:06:21,884 - helpers.logger - INFO - 保存trade_data数据到: database/data/000063/trade_data.csv
+2025-04-11 15:06:21,884 - helpers.logger - INFO - 保存technical_data数据到: database/data/000063/technical_data.csv
+2025-04-11 15:06:21,969 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 15:06:21,969 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 15:06:21,970 - helpers.logger - INFO - Start agent coder
+2025-04-11 15:06:21,970 - helpers.logger - INFO - Start agent coder
+2025-04-11 15:06:22,007 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 15:06:22,007 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 15:06:22,007 - helpers.logger - INFO - Start agent coder
+2025-04-11 15:06:22,007 - helpers.logger - INFO - Start agent coder
+2025-04-11 15:06:45,492 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 15:06:45,492 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 15:07:06,026 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 15:07:06,026 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-11 15:07:06,356 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 15:07:06,357 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 15:07:06,358 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 15:07:53,226 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-11 17:04:46,907 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-11 17:04:58,711 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-11 17:05:03,286 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-11 17:05:03,329 - helpers.logger - INFO - 保存trade_data数据到: database/data/9988/trade_data.csv
+2025-04-11 17:05:03,329 - helpers.logger - INFO - 保存technical_data数据到: database/data/9988/technical_data.csv
+2025-04-11 17:05:03,660 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-11 17:05:03,662 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-11 17:05:03,662 - helpers.logger - INFO - Start agent coder
+2025-04-11 17:05:03,662 - helpers.logger - INFO - Start agent coder
+2025-04-11 17:05:37,131 - helpers.logger - INFO - 找到 1 个可视化文件
+2025-04-11 17:05:51,241 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9988/visualizations/trade_data
+2025-04-11 17:05:51,257 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-11 17:05:51,258 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-11 17:05:51,259 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-11 17:06:55,725 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-12 14:10:06,790 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-12 14:10:21,410 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-12 14:10:27,923 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-12 14:10:27,930 - helpers.logger - INFO - 保存trade_data数据到: database/data/JD/trade_data.csv
+2025-04-12 14:10:27,930 - helpers.logger - INFO - 保存technical_data数据到: database/data/JD/technical_data.csv
+2025-04-12 14:10:27,997 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-12 14:10:27,997 - helpers.logger - INFO - Start agent coder
+2025-04-12 14:10:28,001 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-12 14:10:28,004 - helpers.logger - INFO - Start agent coder
+2025-04-12 14:10:46,400 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-12 14:10:51,237 - helpers.logger - INFO - 找到 1 个可视化文件
+2025-04-12 14:10:51,252 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-12 14:10:51,254 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-12 14:10:51,262 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-12 14:11:25,802 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-13 07:27:42,542 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-13 07:27:46,120 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-13 07:27:57,246 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-13 07:28:02,249 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-13 07:28:02,252 - helpers.logger - INFO - 保存trade_data数据到: database/data/03690/trade_data.csv
+2025-04-13 07:28:02,252 - helpers.logger - INFO - 保存technical_data数据到: database/data/03690/technical_data.csv
+2025-04-13 07:28:02,290 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-13 07:28:02,291 - helpers.logger - INFO - Start agent coder
+2025-04-13 07:28:09,095 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-13 07:28:09,097 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-13 07:28:12,165 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-13 07:28:12,165 - helpers.logger - INFO - 保存trade_data数据到: database/data/9999/trade_data.csv
+2025-04-13 07:28:12,165 - helpers.logger - INFO - 保存technical_data数据到: database/data/9999/technical_data.csv
+2025-04-13 07:28:12,177 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-13 07:28:12,178 - helpers.logger - INFO - Start agent coder
+2025-04-13 07:28:12,181 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-13 07:28:12,183 - helpers.logger - INFO - Start agent coder
+2025-04-13 07:28:25,108 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/03690/visualizations/trade_data
+2025-04-13 07:28:40,004 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9999/visualizations/trade_data
+2025-04-13 07:28:46,581 - helpers.logger - WARNING - 未找到可视化文件，目录: database/data/9999/visualizations/technical_data
+2025-04-13 07:28:46,594 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-13 07:28:46,595 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-13 07:28:46,595 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-13 07:28:46,595 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-13 07:29:20,369 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-13 07:30:21,448 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-13 07:30:21,449 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-13 07:30:21,449 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-13 07:30:21,449 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-13 07:30:21,449 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-13 07:30:52,762 - helpers.logger - INFO - adversarial_node 开始执行
+2025-04-13 08:21:04,353 - helpers.logger - INFO - start_node开始处理公司信息
+2025-04-13 08:21:18,558 - helpers.logger - INFO - data_acquire_node开始异步获取数据
+2025-04-13 08:21:21,727 - helpers.logger - INFO - data_acquire_node异步获取数据完成
+2025-04-13 08:21:21,731 - helpers.logger - INFO - 保存trade_data数据到: database/data/600487/trade_data.csv
+2025-04-13 08:21:21,731 - helpers.logger - INFO - 保存technical_data数据到: database/data/600487/technical_data.csv
+2025-04-13 08:21:21,794 - helpers.logger - INFO - graph_node开始生成可视化trade_data图表
+2025-04-13 08:21:21,794 - helpers.logger - INFO - Start agent coder
+2025-04-13 08:21:21,819 - helpers.logger - INFO - graph_node开始生成可视化technical_data图表
+2025-04-13 08:21:21,819 - helpers.logger - INFO - Start agent coder
+2025-04-13 08:21:50,427 - helpers.logger - INFO - 找到 3 个可视化文件
+2025-04-13 08:21:52,110 - helpers.logger - INFO - 找到 4 个可视化文件
+2025-04-13 08:21:52,282 - helpers.logger - INFO - fundamentals_node开始进行基本面分析
+2025-04-13 08:21:52,283 - helpers.logger - INFO - sentiment_node开始进行情感分析
+2025-04-13 08:21:52,283 - helpers.logger - INFO - technical_node开始进行技术分析
+2025-04-13 08:22:20,414 - helpers.logger - INFO - adversarial_node 开始执行

@@ -809,3 +809,219 @@ During task with name 'company_info' and id 'bb852a8d-f113-e97f-f639-4e93e9def9d
 2025-04-08 20:58:38,065 - helpers.logger - INFO - start_node处理公司信息完成
 2025-04-09 18:45:49,170 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
 2025-04-09 18:47:13,792 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-10 12:04:40,147 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 12:04:40,363 - helpers.logger - ERROR - 任务 e34bb649-8627-4246-8a2f-fc67109fe715 处理失败: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+Traceback (most recent call last):
+  File "/home/azureuser/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/azureuser/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2714, in invoke
+    for chunk in self.stream(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2353, in stream
+    for _ in runner.tick(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 158, in tick
+    run_with_retry(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 610, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 375, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/backend/node/start_node.py", line 23, in process_company_node
+    result = agent.invoke(state)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2714, in invoke
+    for chunk in self.stream(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2353, in stream
+    for _ in runner.tick(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 158, in tick
+    run_with_retry(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 610, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 367, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/prebuilt/chat_agent_executor.py", line 745, in call_model
+    response = cast(AIMessage, model_runnable.invoke(state, config))
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/runnables/base.py", line 3016, in invoke
+    input = context.run(step.invoke, input, config)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/runnables/base.py", line 5352, in invoke
+    return self.bound.invoke(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 284, in invoke
+    self.generate_prompt(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 860, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 690, in generate
+    self._generate_with_cache(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 925, in _generate_with_cache
+    result = self._generate(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_openai/chat_models/base.py", line 792, in _generate
+    response = self.client.create(**payload)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/resources/chat/completions.py", line 863, in create
+    return self._post(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.PermissionDeniedError: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+
+2025-04-10 12:04:40,364 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 12:11:32,891 - helpers.logger - INFO - 创建新任务ID: 4ccf01cb-8f7c-4623-8db9-a4a458ca572f
+2025-04-10 12:11:32,891 - helpers.logger - INFO - 创建任务 4ccf01cb-8f7c-4623-8db9-a4a458ca572f - 公司: 阿里巴巴
+2025-04-10 12:11:32,891 - helpers.logger - INFO - 开始处理任务 4ccf01cb-8f7c-4623-8db9-a4a458ca572f - 公司: 阿里巴巴
+2025-04-10 12:11:32,892 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/azureuser/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-10 12:11:32,948 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 12:11:33,014 - helpers.logger - ERROR - 任务 4ccf01cb-8f7c-4623-8db9-a4a458ca572f 处理失败: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+Traceback (most recent call last):
+  File "/home/azureuser/qf5214_StockAgent/backend/server.py", line 361, in process_stock_analysis
+    results = run_stock_analysis(company_name, recursion_limit=100, progress_callback=progress_callback)
+  File "/home/azureuser/qf5214_StockAgent/backend/core/workflow.py", line 174, in run_stock_analysis
+    return workflow.invoke(state, config=config_dict)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2714, in invoke
+    for chunk in self.stream(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2353, in stream
+    for _ in runner.tick(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 158, in tick
+    run_with_retry(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 610, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 375, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/backend/node/start_node.py", line 23, in process_company_node
+    result = agent.invoke(state)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2714, in invoke
+    for chunk in self.stream(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/__init__.py", line 2353, in stream
+    for _ in runner.tick(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/runner.py", line 158, in tick
+    run_with_retry(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/pregel/retry.py", line 40, in run_with_retry
+    return task.proc.invoke(task.input, config)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 610, in invoke
+    input = step.invoke(input, config, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/utils/runnable.py", line 367, in invoke
+    ret = context.run(self.func, *args, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langgraph/prebuilt/chat_agent_executor.py", line 745, in call_model
+    response = cast(AIMessage, model_runnable.invoke(state, config))
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/runnables/base.py", line 3016, in invoke
+    input = context.run(step.invoke, input, config)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/runnables/base.py", line 5352, in invoke
+    return self.bound.invoke(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 284, in invoke
+    self.generate_prompt(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 860, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 690, in generate
+    self._generate_with_cache(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 925, in _generate_with_cache
+    result = self._generate(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/langchain_openai/chat_models/base.py", line 792, in _generate
+    response = self.client.create(**payload)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_utils/_utils.py", line 279, in wrapper
+    return func(*args, **kwargs)
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/resources/chat/completions.py", line 863, in create
+    return self._post(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_base_client.py", line 1283, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_base_client.py", line 960, in request
+    return self._request(
+  File "/home/azureuser/qf5214_StockAgent/melody/lib/python3.9/site-packages/openai/_base_client.py", line 1064, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.PermissionDeniedError: Error code: 403 - {'error': {'code': 'unsupported_country_region_territory', 'message': 'Country, region, or territory not supported', 'param': None, 'type': 'request_forbidden'}}
+
+2025-04-10 12:11:33,014 - helpers.logger - ERROR - 保存任务存储失败: 'str' object has no attribute 'isoformat'
+2025-04-10 16:26:04,029 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 16:26:14,859 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-10 17:00:10,863 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 17:00:20,043 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-10 17:01:26,271 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 17:01:36,575 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-10 17:02:19,874 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 17:02:30,608 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-10 17:38:38,285 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 17:38:59,342 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-10 17:51:38,275 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 17:51:57,824 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-10 17:52:20,792 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-10 17:52:29,684 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 04:34:46,710 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 04:34:55,754 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 04:44:12,638 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 04:44:19,609 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 04:49:49,033 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 04:49:58,883 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 04:52:56,344 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 04:53:03,272 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 05:06:51,040 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 05:06:57,988 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 05:10:09,753 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 05:10:18,139 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 05:13:43,425 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 05:13:53,255 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 05:24:23,766 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 05:24:35,496 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 06:56:20,925 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 06:56:32,877 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 07:50:56,732 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 07:51:06,328 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 09:03:59,368 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 09:04:14,786 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 09:21:26,488 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 09:21:35,363 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 09:29:40,496 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 09:29:51,605 - helpers.logger - INFO - 创建新任务ID: 46ff6bad-8c94-4f97-ac0d-eaae7a930a97
+2025-04-11 09:29:51,605 - helpers.logger - INFO - 创建任务 46ff6bad-8c94-4f97-ac0d-eaae7a930a97 - 公司: 招商银行
+2025-04-11 09:29:51,606 - helpers.logger - INFO - 开始处理任务 46ff6bad-8c94-4f97-ac0d-eaae7a930a97 - 公司: 招商银行
+2025-04-11 09:29:51,607 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-11 09:29:51,715 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 09:29:52,522 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:12:21,610 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:12:32,970 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:46:24,705 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:46:35,500 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:50:48,205 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:51:23,806 - helpers.logger - INFO - 创建新任务ID: 79cac013-96e3-4bc2-a16f-ac35e95cf205
+2025-04-11 12:51:23,902 - helpers.logger - INFO - 创建任务 79cac013-96e3-4bc2-a16f-ac35e95cf205 - 公司: 拼多多
+2025-04-11 12:51:23,955 - helpers.logger - INFO - 开始处理任务 79cac013-96e3-4bc2-a16f-ac35e95cf205 - 公司: 拼多多
+2025-04-11 12:51:24,191 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-11 12:51:33,120 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:51:38,209 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:52:47,211 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:52:59,287 - helpers.logger - INFO - 技术分析完成
+2025-04-11 12:53:10,852 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 12:55:50,107 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:55:56,610 - helpers.logger - INFO - 创建新任务ID: e8d514fb-7afc-40e7-9054-83e9e1c42b73
+2025-04-11 12:55:56,610 - helpers.logger - INFO - 创建任务 e8d514fb-7afc-40e7-9054-83e9e1c42b73 - 公司: 京东
+2025-04-11 12:55:56,612 - helpers.logger - INFO - 开始处理任务 e8d514fb-7afc-40e7-9054-83e9e1c42b73 - 公司: 京东
+2025-04-11 12:55:56,612 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-11 12:55:56,747 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:56:00,052 - helpers.logger - INFO - 创建新任务ID: f03f79e4-be0c-48ba-96a7-60aac597536b
+2025-04-11 12:56:00,052 - helpers.logger - INFO - 创建任务 f03f79e4-be0c-48ba-96a7-60aac597536b - 公司: 网易
+2025-04-11 12:56:00,053 - helpers.logger - INFO - 开始处理任务 f03f79e4-be0c-48ba-96a7-60aac597536b - 公司: 网易
+2025-04-11 12:56:00,053 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-11 12:56:00,143 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 12:56:08,318 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 14:55:31,147 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 14:55:41,555 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 15:06:08,385 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 15:06:18,669 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-11 17:04:47,285 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-11 17:04:58,707 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-12 14:10:06,884 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-12 14:10:21,406 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-13 07:27:42,630 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-13 07:27:46,105 - helpers.logger - INFO - 创建新任务ID: 201b810e-7cae-457b-80cb-ce9e73ef3ed4
+2025-04-13 07:27:46,105 - helpers.logger - INFO - 创建任务 201b810e-7cae-457b-80cb-ce9e73ef3ed4 - 公司: 网易
+2025-04-13 07:27:46,106 - helpers.logger - INFO - 开始处理任务 201b810e-7cae-457b-80cb-ce9e73ef3ed4 - 公司: 网易
+2025-04-13 07:27:46,107 - helpers.logger - WARNING - 获取股票代码失败: cannot import name 'get_stock_code_by_name' from 'tools.stock_info_tools' (/home/melodytang/qf5214_StockAgent/backend/tools/stock_info_tools.py)
+2025-04-13 07:27:46,209 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-13 07:27:57,244 - helpers.logger - INFO - start_node处理公司信息完成
+2025-04-13 08:21:07,583 - helpers.logger - INFO - 创建股票代码搜索和基本信息获取代理
+2025-04-13 08:21:18,556 - helpers.logger - INFO - start_node处理公司信息完成

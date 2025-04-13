@@ -1,0 +1,30 @@
+{
+  "basic_info": {
+    "stock_code": "600036",
+    "stock_name": "招商银行",
+    "industry": "货币金融服务",
+    "company_info": null
+  },
+  "market_data": {
+    "trade_data": {
+      "columns": [
+        "index",
+        "Date",
+        "Stock_Code",
+        "Open",
+        "Close",
+        "High",
+        "Low",
+        "Volume",
+        "Amount_100M",
+        "Amplitude",
+        "Price_Change_percent",
+        "Price_Change",
+        "Turnover_Rate"
+      ],
+      "data": [
+        {
+          "index": 0,
+          "Date": "2025-04-10",
+          "Stock_Code": "600036",
+          "Open": 

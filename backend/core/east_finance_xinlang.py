@@ -7,34 +7,32 @@ import requests
 import httpx
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+#加入redis配置和链接
+import redis
 from dotenv import load_dotenv
 
-#你可用akshare快速获得全市场股票列表和行业列表
-import akshare as ak
-df_stocks = ak.stock_info_a_code_name()
-df_stocks.to_csv("all_a_shares.csv", encoding="utf-8", index=False)
+# 加载环境变量（使用绝对路径确保在任何工作目录下都能正确加载）
+env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.env')
+load_dotenv(dotenv_path=env_path)
+print(f"🔧 正在加载环境变量文件: {env_path}")
 
-df_sectors = ak.stock_board_industry_name_em()
-df_sectors.to_csv("all_sectors.csv", encoding="utf-8", index=False)
+# 获取Redis配置
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+REDIS_DB = int(os.getenv("REDIS_DB", 0))
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", "")
+REDIS_CACHE_TTL = int(os.getenv("REDIS_CACHE_TTL", 86400))
 
-import pandas as pd
 
-stocks_df = pd.read_csv("all_a_shares.csv")
-sectors_df = pd.read_csv("all_sectors.csv")
+# ✅ 初始化 Redis 客户端
+redis_client = redis.StrictRedis(
+    host=REDIS_HOST,
+    port=REDIS_PORT,
+    db=REDIS_DB,
+    password=REDIS_PASSWORD,
+    decode_responses=True  # 自动解码为字符串
+)
 
-# 限制只保留前500家公司
-stocks_df = stocks_df.head(500)
-
-# 提取公司和板块名字的列表
-stock_names = stocks_df['name'].tolist()
-stock_codes = stocks_df['code'].tolist()
-
-# 只保留前20个板块
-sector_names = sectors_df['板块名称'].tolist()[:20]
-sector_info_str = ", ".join(sector_names)
-
-# 构建prompt的公司板块信息字符串（简洁版）
-stock_info_str = "\n".join([f"{name} ({code})" for name, code in zip(stock_names, stock_codes)])
 
 # ✅ 强制设置 UTF-8 编码（防止 Windows 中文系统报错）
 if sys.platform == "win32":
@@ -46,15 +44,19 @@ if sys.platform == "win32":
     except:
         pass
 
-# ✅ OPENAI API Key 配置
-load_dotenv()
-
-# 从环境变量获取API Key
+# ✅ 获取 OpenAI API 密钥
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+print(f"🔑 API密钥状态: {'已设置' if OPENAI_API_KEY else '未设置'}")
 if not OPENAI_API_KEY:
-    raise ValueError("未找到 OPENAI_API_KEY 环境变量，请在 .env 文件中配置")
+    print("❌ 错误: 未找到 OPENAI_API_KEY 环境变量，请在 .env 文件中设置")
+    # 显示可用的环境变量列表（仅显示部分关键字，不显示实际值）
+    print("可用的环境变量列表：")
+    for key in os.environ:
+        if "KEY" in key or "API" in key:
+            print(f"  - {key}")
 
-OPENAI_MODEL = "gpt-3.5-turbo"  # ✅ 使用 GPT-3.5-turbo 模型
+# 设置 OpenAI 相关配置
+OPENAI_MODEL = "gpt-3.5-turbo" # 使用的是GPT3.5-turbo模型
 
 # ✅ 财联社新闻抓取
 def fetch_cls_news():
@@ -141,6 +143,8 @@ def gather_news():
 # ✅ OpenAI 请求
 import httpx
 import json
+
+import re
 import json
 import httpx
 
@@ -151,84 +155,60 @@ def call_openai_with_tools(prompt: str):
         "Content-Type": "application/json"
     }
 
+    # 调试信息 - 显示API密钥的前几个字符（不显示完整密钥）
+    if OPENAI_API_KEY:
+        masked_key = OPENAI_API_KEY[:5] + "..." + OPENAI_API_KEY[-4:] if len(OPENAI_API_KEY) > 10 else "**未正确设置**"
+        print(f"🔑 使用API密钥（部分）: {masked_key}")
+    else:
+        print("❌ API密钥未设置")
+    
     # 在prompt中加入详细的说明文字
-# 假设你已经提前用akshare抓取好了板块和公司信息
-# sector_info_str = "半导体, 人工智能, 新能源汽车, 医药, 消费电子, 房地产, 金融, 消费..."
-# stock_info_str = "贵州茅台 (600519)\n宁德时代 (300750)\n比亚迪 (002594)\n恒瑞医药 (600276)..."
+    prompt = """
+    You are a professional financial market strategist, responsible for writing daily financial news analysis reports for institutional investors.
+You are skilled at extracting core insights from complex financial news, identifying market-driving logic, and forming investment recommendations that are in-depth, logically coherent, and operationally actionable.
 
-    additional_info = f"""
-    【A股板块列表】：
-    {sector_info_str}
-    【A股公司列表（名称及股票代码）】：
-    {stock_info_str}
-    请基于以上名单，结合以下财经新闻内容生成报告：
-    """
-    # 你原本的Prompt结构保留，整合在additional_info后
-    prompt = additional_info + """
-    You are a professional financial market strategist responsible for writing daily financial news interpretation reports for institutional investors. You are highly skilled at extracting key information from complex financial news, identifying underlying market drivers, and producing in-depth, logically coherent, and actionable investment recommendations.
+Please write a structured and system-parsable financial market insights report based on the following financial news content. Strictly adhere to the structure and formatting requirements below:
 
-    Based on the financial news content provided below, please generate a **structured and system-parsable Financial Market Insights Report**. You must strictly follow the structure and formatting guidelines outlined below:
+I. Executive Summary of Market Highlights (Approximately 300 words)
+- Briefly summarize the performance of global and Chinese markets up to the most recent trading day, including sentiment changes and policy movements;
+- Emphasize the core driving logic behind market volatility.
 
-    ---
+II. Sector Analysis:
+Please select 3 key sectors (such as Technology, New Energy, Healthcare, Automotive, Finance, etc.), and use the following structure to write each one:
 
-    1. **Financial Market Overview** (approx. 200 words)
-    - Briefly summarize the latest trading day's performance of global and Chinese markets, including sentiment shifts and key policy developments.
-    - Highlight the fundamental driving forces behind recent market fluctuations.
+【Sector Name】Sector:
 
-    ---
+1. Key News (Approximately 100 words):
+Summarize the most important recent news in the sector (e.g., policy announcements, corporate disclosures, macroeconomic events), highlighting specific event names and issuers.
 
-    2. **Sector Analysis**
+2. Driving Factors Analysis (Approximately 100 words):
+Choose 1–2 dimensions to analyze from the following: policy support, corporate actions (M&A, expansion, financing, etc.), data performance, macro environment, external shocks, etc.
 
-    Please select **three key sectors** (e.g., Technology, New Energy, Healthcare, Automotive, Finance, etc.) and analyze each using the following format:
+3. Market Impact Projection (Approximately 100 words):
+- Short-term: Impact on stock prices, valuations, capital flows, and sentiment (at least 50 words);
+- Mid-term: Impact on industry trends, earnings expectations, and policy dynamics (at least 50 words).
 
-    **[Sector Name] Sector:**
+4. Stock Performance Analysis and Recommendation (strictly follow the format below):
+Select 3 representative A-share listed companies in mainland China within this sector. Based on the key news background, provide the recommendation reason (at least 50 words) and one of the following position suggestions:
+"Mid-term Positioning" / "Short-term Watch" / "Cautious Observation"
+Format:
+Stock Name: xxx  Stock Code: xxx  Recommendation Reason: xxx  Investment Suggestion: xxx
 
-    1. **Key News** (approx. 100 words)  
-        Concisely summarize major recent events or announcements relevant to this sector, highlighting specific event names and issuing authorities.
+III. Current Market Focus (Approximately 300 words)
+- Summarize the events that investors are most concerned about (e.g., Fed policy, China-US relations, macroeconomic data releases);
+- Analyze market style preference changes and potential hot sector rotations;
+- Provide actionable suggestions (e.g., rebalancing, defensive strategies, focusing on undervalued sectors, waiting for clear signals, etc.).
 
-    2. **Drivers Analysis** (approx. 100 words)  
-        Choose 1–2 dimensions to analyze from the following: policy support, corporate behavior (M&A, expansion, financing, etc.), data performance, macroeconomic environment, external shocks.
+⚠️ Requirements:
+- Maintain clear logic and professional tone;
+- Clearly separate each part using the format 【Sector Name】;
+- Recommendations must be specific and actionable. Vague wording is strictly prohibited;
+- Output structure must be fixed, to support automatic parsing by front-end systems.
 
-    3. **Market Impact Forecast** (approx. 100 words)  
-    - **Short-term**: Impact on stock prices, valuation, fund flows, and investor sentiment. *(at least 50 words)*  
-    - **Mid-term**: Impact on industry trends, earnings outlook, and policy pacing. *(at least 50 words)*
+Below is the financial news content:
+    """ + prompt  # 将传入的prompt与固定模板合并
 
-    4. **Stock Picks & Investment Advice** (must strictly follow the format below):  
-    Choose **three representative A-share listed companies** from this sector, and for each provide a clear reason for recommendation (at least 50 words) and an investment suggestion. Use only one of the following three suggestions:
-        - Medium-Term Allocation  
-        - Short-Term Watch  
-        - Cautious Wait  
-
-    **Format** (repeat for each stock):
-    Stock Name: xxx  
-    Stock Code: xxx  
-    Recommendation Reason: xxx  
-    Investment Suggestion: xxx
-
-    ---
-
-    3. **Current Market Focus** (approx. 200 words)
-    - Summarize the issues that are currently top-of-mind for investors (e.g., Fed decisions, China–US relations, key economic data).
-    - Analyze shifts in market style preferences and potential sector rotations.
-    - Provide actionable investment guidance (e.g., rebalancing, defensive strategies, focus on undervalued assets, waiting for confirmation signals).
-
-    ---
-
-    ⚠️ Requirements:
-    - Content must be logically structured, professionally written, and clearly formatted.
-    - Use **[Sector Name]** style headings to clearly separate sector sections.
-    - Avoid vague language — all recommendations must be clear and actionable.
-    - The output format must remain fixed for ease of frontend parsing.
-    - All recommended stocks must be listed companies traded on mainland China's A-share market.
-    - The stock code for each recommended company must exactly match the official stock code used in mainland China's A-share market.
-
-    **Please respond in Chinese.**
-
-    以下是财经新闻内容：
-    """ + prompt  # 你原有的新闻内容prompt保持不变
-
-
-    # 修改后的 payload，包含三个板块，每个板块三个股票
+    # 修改后的 payload，包含五个板块，每个板块三个股票
     payload = {
         "model": OPENAI_MODEL,
         "temperature": 0.3,
@@ -291,7 +271,7 @@ def call_openai_with_tools(prompt: str):
             }
         ]
     }
-    print("Prompt长度: ", len(prompt))
+
     try:
         print("📤 正在请求 OpenAI tools 接口...")
         response = httpx.post(url, headers=headers, json=payload, timeout=60)
@@ -309,12 +289,23 @@ def call_openai_with_tools(prompt: str):
 
 
     
-# ✅ 主函数
 def main():
     print("📡 正在抓取财经新闻...")
     news_text = gather_news()
-    print("🤖 正在调用大模型分析...\n")
-    result = call_openai_with_tools(news_text)
+
+    # ✅ 生成缓存 key（可以哈希或直接取前 N 个字）
+    cache_key = "financial_news_analysis"
+
+    # ✅ 检查 Redis 是否已有缓存
+    if redis_client.exists(cache_key):
+        print("🔁 从 Redis 缓存中读取分析结果...")
+        result = json.loads(redis_client.get(cache_key))
+    else:
+        print("🤖 正在调用大模型分析...\n")
+        result = call_openai_with_tools(news_text)
+        print("✅ 分析完成，写入 Redis 缓存...")
+        redis_client.setex(cache_key, REDIS_CACHE_TTL, json.dumps(result))
+
     print("\n===== 综合财经热点分析结果 =====\n")
     print(result)
 

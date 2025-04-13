@@ -1,0 +1,30 @@
+{
+  "basic_info": {
+    "stock_code": "002594",
+    "stock_name": "比亚迪",
+    "industry": "汽车制造",
+    "company_info": null
+  },
+  "market_data": {
+    "trade_data": {
+      "columns": [
+        "index",
+        "Date",
+        "Stock_Code",
+        "Open",
+        "Close",
+        "High",
+        "Low",
+        "Volume",
+        "Amount_100M",
+        "Amplitude",
+        "Price_Change_percent",
+        "Price_Change",
+        "Turnover_Rate"
+      ],
+      "data": [
+        {
+          "index": 0,
+          "Date": "2025-04-10",
+          "Stock_Code": "002594",
+          "Open": 

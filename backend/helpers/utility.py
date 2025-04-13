@@ -6,6 +6,9 @@ import numpy as np
 import math
 from langchain_core.messages import  ToolMessage
 import pandas as pd
+from helpers.logger import setup_logger
+
+logger = setup_logger("data_keep")
 
 def extract_specific_tool_message(messages, tool_name=None, tool_call_id=None):
     """
