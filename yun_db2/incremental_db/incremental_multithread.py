@@ -73,14 +73,14 @@ def main():
     
     # 每个模块执行的函数和名称
     tasks = [
-        # (download_company_info_incremental, "公司信息增量"),
-        # (download_finance_info_incremental, "财务信息增量"),
-        # (download_individual_stock_incremental, "个股历史数据增量"),
+        (download_company_info_incremental, "公司信息增量"),
+        (download_finance_info_incremental, "财务信息增量"),
+        (download_individual_stock_incremental, "个股历史数据增量"),
         (download_stock_news_incremental, "股票新闻增量"),
-        # # (download_sector_data_incremental, "行业数据增量"),
-        # (download_analyst_ratings_incremental, "分析师评级增量"),
-        # (download_tech_indicators_incremental, "技术指标增量"),
-        # (download_stock_a_indicator_incremental, "股票指标增量")
+        (download_sector_data_incremental, "行业数据增量"),
+        (download_analyst_ratings_incremental, "分析师评级增量"),
+        (download_tech_indicators_incremental, "技术指标增量"),
+        (download_stock_a_indicator_incremental, "股票指标增量")
     ]
 
     max_symbols = args.max_symbols  # 可按需调整抓取的股票数量上限
