@@ -85,9 +85,9 @@ def create_fundamentals_agent(state: StockAnalysisState) -> Any:
     
     # 利润相关
     "net_profit": financial_metrics.get("net_profit", "N/A"),
-    "net_profit_yoy": financial_metrics.get("net_profit_yoy", "N/A"),
+    "net_profit_yoy": 100*financial_metrics.get("net_profit_yoy", "N/A"),
     "net_profit_excl_nr": financial_metrics.get("net_profit_excl_nr", "N/A"),
-    "net_profit_excl_nr_yoy": financial_metrics.get("net_profit_excl_nr_yoy", "N/A"),
+    "net_profit_excl_nr_yoy": 100*financial_metrics.get("net_profit_excl_nr_yoy", "N/A"),
     
     # 收入相关
     "revenue": financial_metrics.get("total_revenue", "N/A"),  # 映射为revenue
