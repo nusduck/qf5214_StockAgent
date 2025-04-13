@@ -1252,6 +1252,16 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
     logger.info("开始下载股票交易指标数据增量...")
     
     try:
+        # 确保连接有效
+        if not connection.is_connected():
+            logger.warning("初始数据库连接已断开，尝试重新连接")
+            try:
+                connection.reconnect(attempts=3, delay=1)
+                logger.info("数据库重新连接成功")
+            except Exception as e:
+                logger.error(f"数据库重新连接失败: {e}")
+                return 0
+        
         # 获取最新的交易日期
         latest_trade_date = get_latest_date(connection, 'stock_a_indicator', 'trade_date')
         
@@ -1273,6 +1283,10 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
         
         if max_symbols and len(symbols) > max_symbols:
             symbols = symbols[:max_symbols]
+            
+        # 计算未处理的股票数量
+        unprocessed_symbols = [symbol for symbol in symbols if symbol not in processed_stocks]
+        logger.info(f"总股票数: {len(symbols)}, 已处理: {len(processed_stocks)}, 未处理: {len(unprocessed_symbols)}")
         
         # 处理每只股票
         total = len(symbols)
@@ -1281,25 +1295,66 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
         
         for i, symbol in enumerate(symbols):
             try:
+                # 检查连接状态，必要时重新连接
+                if not connection.is_connected():
+                    logger.warning(f"处理股票 {symbol} 前检测到数据库连接已断开，尝试重新获取连接")
+                    try:
+                        # 尝试释放旧连接并获取新连接
+                        release_connection(connection)
+                        connection = get_connection()
+                        if not connection or not connection.is_connected():
+                            logger.error("无法获取有效数据库连接，跳过此股票")
+                            continue
+                        logger.info("成功获取新的数据库连接")
+                    except Exception as e:
+                        logger.error(f"重新获取数据库连接失败: {e}")
+                        continue
+                
                 # 确定此股票的起始日期
                 if latest_trade_date and symbol in processed_stocks:
-                    # 已处理过的股票，从最新日期后一天开始增量获取
+                    # 已处理过的股票，检查最新日期是否小于今天
                     latest_date_dt = pd.to_datetime(latest_trade_date)
+                    today_dt = pd.to_datetime(TODAY_DATE)
+                    
+                    if latest_date_dt >= today_dt:
+                        logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 已在数据库中且日期是最新的，跳过")
+                        continue
+                        
+                    # 从最新日期后一天开始增量获取
                     next_day = latest_date_dt + timedelta(days=1)
                     start_date = next_day.strftime('%Y%m%d')
                     logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 已在数据库中，从 {start_date} 获取增量数据")
                 else:
                     # 未处理过的股票，从固定起始日期开始获取
                     start_date = fixed_start_date
-                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 新股票，从 {start_date} 获取指标数据")
+                    logger.info(f"处理 [{i+1}/{total}] 股票 {symbol} - 新股票或未在最新日期处理，从 {start_date} 获取历史数据")
                 
                 # 如果起始日期已经超过今天，跳过这只股票
                 if pd.to_datetime(start_date) > pd.to_datetime(TODAY_DATE):
                     logger.info(f"股票 {symbol} 的起始日期 {start_date} 超过今天 {TODAY_DATE}，跳过")
                     continue
                 
-                # 获取股票指标数据
-                indicator_df = ak.stock_a_indicator_lg(symbol=symbol)
+                # 获取股票指标数据 - 添加重试机制
+                max_retries = 3
+                retry_count = 0
+                indicator_df = pd.DataFrame()
+                
+                while retry_count < max_retries and indicator_df.empty:
+                    try:
+                        indicator_df = ak.stock_a_indicator_lg(symbol=symbol)
+                        if indicator_df.empty:
+                            retry_count += 1
+                            logger.warning(f"获取股票 {symbol} 的指标数据为空，第 {retry_count} 次尝试")
+                            time.sleep(2)
+                        else:
+                            break
+                    except Exception as e:
+                        retry_count += 1
+                        logger.warning(f"获取股票 {symbol} 的指标数据第 {retry_count} 次尝试失败: {e}")
+                        if retry_count < max_retries:
+                            time.sleep(2)  # 等待一段时间再重试
+                        else:
+                            logger.error(f"获取股票 {symbol} 的指标数据失败，已重试 {max_retries} 次")
                 
                 if not indicator_df.empty:
                     # 添加股票代码和名称
@@ -1313,14 +1368,19 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
                     # 日期格式化与过滤
                     indicator_df['trade_date'] = pd.to_datetime(indicator_df['trade_date'])
                     
+                    # 保存原始数据量，用于日志记录
+                    original_len = len(indicator_df)
+                    
                     # 日期过滤，根据不同情况应用不同的过滤条件
-                    if symbol in processed_stocks:
+                    if latest_trade_date and symbol in processed_stocks:
                         # 对已处理股票，只获取最新日期之后的数据
                         latest_date_dt = pd.to_datetime(latest_trade_date)
                         indicator_df = indicator_df[indicator_df['trade_date'] > latest_date_dt]
+                        logger.info(f"股票 {symbol} 的增量数据: 从 {latest_trade_date} 后的 {len(indicator_df)}/{original_len} 条")
                     else:
                         # 对未处理股票，确保只处理2024-09-24之后的数据
                         indicator_df = indicator_df[indicator_df['trade_date'] >= fixed_start_date_dt]
+                        logger.info(f"股票 {symbol} 的新数据: 从 {fixed_start_date} 后的 {len(indicator_df)}/{original_len} 条")
                     
                     if not indicator_df.empty:
                         # 将总市值转换为亿元单位
@@ -1343,24 +1403,147 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
                         if 'pe' in indicator_df.columns and 'pb' in indicator_df.columns:
                             indicator_df['graham_index'] = indicator_df.apply(
                                 lambda row: round(row['pe'] * row['pb'], 2) 
-                                if row['pe'] and row['pb'] and row['pe'] > 0 and row['pb'] > 0 
+                                if pd.notna(row['pe']) and pd.notna(row['pb']) and row['pe'] > 0 and row['pb'] > 0 
                                 else None,
                                 axis=1
                             )
                         
                         # 添加ETL日期
-                        indicator_df['etl_date'] = datetime.now().date()
+                        today_str = datetime.now().strftime('%Y-%m-%d')
+                        indicator_df['etl_date'] = today_str
                         
                         # 转换日期为字符串，避免timestamp类型转换问题
                         indicator_df['trade_date'] = indicator_df['trade_date'].dt.strftime('%Y-%m-%d')
                         
-                        # 使用批处理插入数据库，使用传入的batch_size
-                        if insert_dataframe_in_batches(connection, indicator_df, 'stock_a_indicator', batch_size=batch_size):
-                            processed_count += 1
-                            total_data_count += len(indicator_df)
-                            logger.info(f"成功插入股票 {symbol} 的交易指标: {len(indicator_df)} 条")
-                        else:
-                            logger.warning(f"插入股票 {symbol} 的交易指标全部或部分失败")
+                        # 处理NaN值，转换为None，避免数据库错误
+                        indicator_df = indicator_df.replace({np.nan: None})
+                        
+                        # 获取表的列名，确保只插入表中存在的列
+                        valid_columns = []
+                        try:
+                            # 检查连接状态
+                            if not connection.is_connected():
+                                logger.warning("获取表列名时连接已断开，尝试重新连接")
+                                connection.reconnect(attempts=3, delay=1)
+                            
+                            cursor = connection.cursor()
+                            cursor.execute("DESCRIBE stock_a_indicator")
+                            table_columns = [column[0] for column in cursor.fetchall()]
+                            cursor.close()
+                            
+                            # 只保留表中存在的列
+                            valid_columns = [col for col in indicator_df.columns if col in table_columns]
+                            indicator_df = indicator_df[valid_columns]
+                            
+                            logger.debug(f"最终使用的列: {valid_columns}")
+                        except Exception as e:
+                            logger.warning(f"获取表列名时出错: {e}")
+                            # 如果获取表列名失败，但有有效的连接，继续尝试处理
+                            if not valid_columns and connection.is_connected():
+                                # 使用常见列名，避免biz_date
+                                common_columns = ['stock_code', 'stock_name', 'trade_date', 'etl_date',
+                                                 'total_mv_100M', 'earnings_yield', 'pb_inverse', 'graham_index']
+                                valid_columns = [col for col in common_columns if col in indicator_df.columns]
+                                indicator_df = indicator_df[valid_columns]
+                                logger.info(f"使用常见列名: {valid_columns}")
+                            
+                        # 数据处理和插入前，先清除该日期范围内的数据，避免主键冲突
+                        try:
+                            # 检查连接状态
+                            if not connection.is_connected():
+                                logger.warning("删除现有数据时连接已断开，尝试重新连接")
+                                connection.reconnect(attempts=3, delay=1)
+                            
+                            # 获取要处理的日期范围
+                            min_date = indicator_df['trade_date'].min()
+                            max_date = indicator_df['trade_date'].max()
+                            
+                            cursor = connection.cursor()
+                            # 使用IGNORE关键字，忽略不存在的记录
+                            delete_query = f"""
+                            DELETE IGNORE FROM stock_a_indicator 
+                            WHERE stock_code = '{symbol}' 
+                            AND trade_date >= '{min_date}' 
+                            AND trade_date <= '{max_date}'
+                            """
+                            cursor.execute(delete_query)
+                            connection.commit()
+                            
+                            deleted_count = cursor.rowcount
+                            if deleted_count > 0:
+                                logger.info(f"已删除股票 {symbol} 从 {min_date} 到 {max_date} 的 {deleted_count} 条现有记录")
+                                
+                            cursor.close()
+                        except Exception as e:
+                            logger.warning(f"删除现有数据时出错: {e}")
+                            # 不要回滚，继续尝试插入
+                            # 检查连接状态
+                            if not connection.is_connected():
+                                logger.warning("删除操作后连接已断开，尝试重新连接")
+                                try:
+                                    # 尝试释放旧连接并获取新连接
+                                    release_connection(connection)
+                                    connection = get_connection()
+                                    if not connection:
+                                        logger.error("无法获取新的数据库连接，跳过此股票")
+                                        continue
+                                    logger.info("成功获取新的数据库连接")
+                                except Exception as conn_err:
+                                    logger.error(f"重新获取连接失败: {conn_err}")
+                                    continue
+                        
+                        # 转换为记录列表
+                        records = indicator_df.to_dict('records')
+                        
+                        # 使用批处理插入
+                        try:
+                            # 每批次插入前检查连接状态
+                            if not connection.is_connected():
+                                logger.warning(f"批量插入前连接已断开，尝试重新连接")
+                                try:
+                                    # 尝试释放旧连接并获取新连接
+                                    release_connection(connection)
+                                    connection = get_connection()
+                                    if not connection:
+                                        logger.error("无法获取新的数据库连接，跳过此股票")
+                                        continue
+                                    logger.info("成功获取新的数据库连接")
+                                except Exception as conn_err:
+                                    logger.error(f"重新获取连接失败: {conn_err}")
+                                    continue
+                            
+                            # 使用INSERT IGNORE语法避免主键冲突
+                            inserted = 0
+                            try:
+                                # 每次只插入一条记录，使用INSERT IGNORE
+                                cursor = connection.cursor()
+                                for record in records:
+                                    columns = ", ".join([f"`{k}`" for k in record.keys()])
+                                    placeholders = ", ".join(["%s"] * len(record))
+                                    values = list(record.values())
+                                    
+                                    insert_query = f"INSERT IGNORE INTO stock_a_indicator ({columns}) VALUES ({placeholders})"
+                                    
+                                    try:
+                                        cursor.execute(insert_query, values)
+                                        connection.commit()
+                                        if cursor.rowcount > 0:
+                                            inserted += 1
+                                    except Exception as insert_err:
+                                        logger.warning(f"插入单条记录失败: {insert_err}")
+                                        # 尝试继续处理其他记录
+                                cursor.close()
+                            except Exception as batch_err:
+                                logger.error(f"批量处理记录失败: {batch_err}")
+                            
+                            if inserted > 0:
+                                processed_count += 1
+                                total_data_count += inserted
+                                logger.info(f"成功插入股票 {symbol} 的交易指标: {inserted}/{len(records)} 条")
+                            else:
+                                logger.warning(f"插入股票 {symbol} 的交易指标全部失败")
+                        except Exception as db_error:
+                            logger.error(f"数据库操作失败: {db_error}")
                     else:
                         logger.info(f"过滤后股票 {symbol} 没有符合条件的数据")
                 else:
@@ -1369,18 +1552,44 @@ def download_stock_a_indicator_incremental(connection, max_symbols=None, batch_s
             except Exception as e:
                 logger.error(f"处理股票 {symbol} 的交易指标时出错: {e}")
                 logger.error(traceback.format_exc())
+                
+                # 检查是否是连接断开的错误，如果是则尝试重新获取连接
+                if "MySQL Connection not available" in str(e) or "Lost connection" in str(e):
+                    logger.warning("检测到数据库连接问题，尝试获取新的连接")
+                    try:
+                        # 尝试释放旧连接并获取新连接
+                        release_connection(connection)
+                        connection = get_connection()
+                        if connection and connection.is_connected():
+                            logger.info("成功获取新的数据库连接")
+                        else:
+                            logger.error("无法获取有效的数据库连接")
+                    except Exception as conn_err:
+                        logger.error(f"重新获取连接失败: {conn_err}")
             
-            # 每处理10个股票暂停1秒，避免API限制
+            # 每处理10个股票暂停1秒，避免API限制，对失败的请求增加额外延迟
+            delay = 1 if indicator_df is not None and not indicator_df.empty else 3
             if (i + 1) % 10 == 0:
-                time.sleep(1)
+                time.sleep(delay)
         
         logger.info(f"股票交易指标数据增量下载完成，成功处理 {processed_count}/{total} 只股票，总计 {total_data_count} 条数据")
+        return total_data_count  # 返回成功插入的记录数
     
     except Exception as e:
         logger.error(f"下载股票交易指标数据增量时出错: {e}")
         traceback.print_exc()
+        return 0  # 出错返回0
     
-    logger.info("股票交易指标数据增量下载完成")
+    finally:
+        # 尝试安全释放连接
+        try:
+            if connection and connection.is_connected():
+                release_connection(connection)
+                logger.info("数据库连接已释放")
+        except Exception as e:
+            logger.warning(f"释放数据库连接时出错: {e}")
+        
+        logger.info("股票交易指标数据增量下载完成")
 
 def download_tech_indicators_incremental(connection, max_symbols=None, batch_size=300):
     """下载技术指标数据增量并存储到数据库"""
