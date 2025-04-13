@@ -1,4 +1,4 @@
-# run_insight.py
+# run_insight.py as the main py file of he recommandation page 
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI
