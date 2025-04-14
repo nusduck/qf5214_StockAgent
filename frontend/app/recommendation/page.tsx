@@ -1,164 +1,244 @@
 'use client'
-#recommendation
 
-import { useEffect, useRef, useState } from 'react'
+import {useState, useEffect} from 'react'
+import {Button, Skeleton, Card, Tabs, Table, Badge, Empty, Alert, Spin} from 'antd'
+import {ReloadOutlined, StockOutlined, BarChartOutlined, InfoCircleOutlined} from '@ant-design/icons'
+import styles from '../styles/recommendation.module.css'
+import type {TabsProps} from 'antd'
+import type {ColumnsType} from 'antd/es/table'
 
-
-
-type StockItem = {
-  name: string
-  code: string
-  reason: string
-  suggestion: string
+interface Company {
+  company_name: string
+  stock_code: string
+  association_logic: string
+  points_of_interest: string
 }
 
-type SectorItem = {
-  name: string
-  news: string
-  drivers: string
-  impact: {
-    short_term: string
-    mid_term: string
-  }
-  stocks: StockItem[]
+interface Hotspot {
+  hotspot_board: string
+  core_news: string
+  driving_factors_analysis: string
+  short_term_impact: string
+  medium_term_impact: string
+  related_companies: Company[]
 }
 
-type AnalysisData = {
-  overview: string
-  sectors: SectorItem[]
-  focus: string
+interface HotspotData {
+  hotspots: Hotspot[]
 }
 
-export default function NewsReportPage() {
-  const [analysis, setAnalysis] = useState<AnalysisData | null>(null)
-  const [error, setError] = useState('')
+export default function RecommendationPage() {
+  const [hotspotData, setHotspotData] = useState<HotspotData | null>(null)
   const [loading, setLoading] = useState(true)
-  // 用于防止重复请求的引用
-  const requestInProgress = useRef(false);
+  const [refreshing, setRefreshing] = useState(false)
+  const [error, setError] = useState('')
+  const [activeHotspotTab, setActiveHotspotTab] = useState('0')
+
+  const stockColumns: ColumnsType<Company> = [
+    {
+      title: '公司名称',
+      dataIndex: 'company_name',
+      key: 'company_name',
+      width: 120,
+      render: (text) => <strong style={{ color: "#ffffff" }}>{text}</strong>
+    },
+    {
+      title: '股票代码',
+      dataIndex: 'stock_code',
+      key: 'stock_code',
+      width: 140,
+      render: (text) => <span className={styles.stockCode}>{text}</span>
+    },
+    {
+      title: '关联逻辑',
+      dataIndex: 'association_logic',
+      key: 'association_logic',
+      className: styles.descriptionColumn,
+    },
+    {
+      title: '关注要点',
+      dataIndex: 'points_of_interest',
+      key: 'points_of_interest',
+      className: styles.descriptionColumn,
+    }
+  ]
+
+  const fetchHotspotData = async (forceRefresh = false) => {
+    try {
+      setRefreshing(true)
+      // 确保路径与后端API匹配
+      const url = forceRefresh 
+        ? `/api/hotspots?force_refresh=true` 
+        : `/api/hotspots`
+      
+      console.log("正在请求热点数据:", url)
+      const res = await fetch(url)
+      
+      if (!res.ok) {
+        console.error("请求失败:", res.status, res.statusText)
+        throw new Error(`HTTP error! Status: ${res.status}`)
+      }
+      
+      const data = await res.json()
+      console.log("获取到数据:", data)
+      
+      if (data?.data?.hotspots) {
+        setHotspotData(data.data)
+        setError('')
+      } else {
+        console.error("数据结构异常:", data)
+        setError('返回数据结构异常')
+      }
+    } catch (err: any) {
+      console.error("请求异常:", err)
+      setError('接口请求失败: ' + (err.message || '未知错误'))
+    } finally {
+      setLoading(false)
+      setRefreshing(false)
+    }
+  }
 
   useEffect(() => {
-    // API 请求，假设后端接口返回的数据结构符合要求
-    setLoading(true);
-    fetch('http://localhost:8001/api/insight/news-analysis')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`API响应错误: ${res.status} ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log('API 返回的数据：', data);  // 调试日志
-        
-        // 确保数据结构是符合预期的
-        if (data?.analysis) {
-          // 使用默认值防止缺失字段
-          const processedData = {
-            overview: data.analysis.overview || '暂无分析综述',
-            sectors: Array.isArray(data.analysis.sectors) ? data.analysis.sectors : [],
-            focus: data.analysis.focus || '暂无市场焦点分析'
-          };
-          setAnalysis(processedData);
-        } else {
-          setError('接口返回数据结构不符合预期');
-        }
-      })
-      .catch(err => {
-        console.error('API请求错误:', err);
-        setError('接口请求失败: ' + err.message);
-      })
-      .finally(() => setLoading(false));
+    fetchHotspotData()
   }, [])
 
-  const renderStockTable = (stocks: StockItem[]) => {
-    // 确保stocks是数组且不为空
-    if (!stocks || !Array.isArray(stocks) || stocks.length === 0) {
-      return (
-        <div className="p-4 text-white/70 italic">
-          暂无推荐股票信息
-        </div>
-      );
-    }
-    
-    return (
-      <table className="w-full text-sm text-left text-white border border-white/20 my-4">
-        <thead className="text-xs uppercase bg-white/10 text-white border-b border-white/20">
-          <tr>
-            <th className="px-4 py-2">股票名称</th>
-            <th className="px-4 py-2">股票代码</th>
-            <th className="px-4 py-2">推荐理由</th>
-            <th className="px-4 py-2">推荐建议</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stocks.map((stock, idx) => (
-            <tr key={idx} className="border-t border-white/10">
-              <td className="px-4 py-2">{stock.name}</td>
-              <td className="px-4 py-2">{stock.code}</td>
-              <td className="px-4 py-2">{stock.reason}</td>
-              <td className="px-4 py-2">{stock.suggestion}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
+  const onRefresh = () => {
+    fetchHotspotData(true)
   }
 
-  return (
-    <div className="max-w-5xl mx-auto p-8">
-      <h1 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
-        <span>📊</span>
-        财经热点分析报告
-      </h1>
-
-      {loading ? (
-        <p className="text-gray-400">正在加载财经热点分析...</p>
-      ) : error ? (
-        <p className="text-red-500">{error}</p>
-      ) : analysis ? (
-        <div className="space-y-10">
-          {/* 财经热点分析综述 */}
-          <section className="bg-white/10 text-white rounded-xl p-6 border border-white/20 backdrop-blur-md">
-            <h2 className="text-2xl font-bold mb-4">📌 财经热点分析综述</h2>
-            <p className="whitespace-pre-wrap text-sm text-gray-200 leading-relaxed">
-              {analysis.overview}
-            </p>
-          </section>
-
-          {/* 行业板块分析 */}
-          <section className="bg-white/10 text-white rounded-xl p-6 border border-white/20 backdrop-blur-md">
-            <h2 className="text-2xl font-bold mb-4">📌 行业板块分析</h2>
-            {analysis.sectors && Array.isArray(analysis.sectors) ? (
-              analysis.sectors.map((sector, idx) => (
-                <div key={idx} className="mb-6">
-                  <h3 className="text-xl font-semibold text-teal-300 mb-2">{sector.name || '未命名'}板块</h3>
-                  <p className="text-sm text-gray-200 mb-1">
-                    <strong>核心新闻：</strong> {sector.news || '暂无数据'}
-                  </p>
-                  <p className="text-sm text-gray-200 mb-1">
-                    <strong>驱动因素分析：</strong> {sector.drivers || '暂无数据'}
-                  </p>
-                  <p className="text-sm text-gray-200 mb-1">
-                    <strong>市场影响推演：</strong>
-                  </p>
-                  <ul className="text-sm text-gray-200 mb-2 list-disc list-inside pl-4">
-                    <li><strong>短期：</strong>{sector.impact?.short_term || '暂无数据'}</li>
-                    <li><strong>中期：</strong>{sector.impact?.mid_term || '暂无数据'}</li>
-                  </ul>
-                  {renderStockTable(sector.stocks || [])}
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-400">暂无行业板块分析数据</p>
-            )}
-          </section>
-
-          {/* 当前市场关注焦点 */}
-          <section className="bg-white/10 text-white rounded-xl p-6 border border-white/20 backdrop-blur-md">
-            <h2 className="text-2xl font-bold mb-4">📌 当前市场关注焦点</h2>
-            <p className="whitespace-pre-wrap text-sm text-gray-200 leading-relaxed">{analysis.focus}</p>
-          </section>
+  // 根据热点数据生成Tabs配置
+  const generateHotspotTabs = () => {
+    if (!hotspotData || !hotspotData.hotspots) return []
+    
+    return hotspotData.hotspots.map((hotspot, index) => ({
+      key: index.toString(),
+      label: (
+        <span className={styles.tabLabel}>
+          <StockOutlined />
+          {hotspot.hotspot_board}
+        </span>
+      ),
+      children: (
+        <div className={styles.hotspotTabContent}>
+          <HotspotDetail hotspot={hotspot} />
         </div>
-      ) : null}
+      )
+    }))
+  }
+
+  // 热点详情组件
+  const HotspotDetail = ({hotspot}: {hotspot: Hotspot}) => (
+    <div className={styles.hotspotDetail}>
+      <div className={styles.hotspotSection}>
+        <h3 className={styles.sectionTitle}>
+          <Badge status="processing" text={<span style={{ color: "#ffffff" }}>核心新闻</span>} />
+        </h3>
+        <div className={styles.sectionContent}>{hotspot.core_news}</div>
+      </div>
+      
+      <div className={styles.hotspotSection}>
+        <h3 className={styles.sectionTitle}>
+          <Badge status="success" text={<span style={{ color: "#ffffff" }}>驱动因素分析</span>} />
+        </h3>
+        <div className={styles.sectionContent}>{hotspot.driving_factors_analysis}</div>
+      </div>
+      
+      <div className={styles.impactSection}>
+        <div className={styles.impactItem}>
+          <h3 className={styles.sectionTitle}>
+            <Badge status="warning" text={<span style={{ color: "#ffffff" }}>短期影响</span>} />
+          </h3>
+          <div className={styles.sectionContent}>{hotspot.short_term_impact}</div>
+        </div>
+        
+        <div className={styles.impactItem}>
+          <h3 className={styles.sectionTitle}>
+            <Badge status="default" text={<span style={{ color: "#ffffff" }}>中期影响</span>} /> 
+          </h3>
+          <div className={styles.sectionContent}>{hotspot.medium_term_impact}</div>
+        </div>
+      </div>
+      
+      <div className={styles.stocksTableSection}>
+        <h3 className={styles.sectionTitle}>
+          <Badge status="error" text={<span style={{ color: "#ffffff" }}>相关股票</span>} />
+        </h3>
+        <Table 
+          dataSource={hotspot.related_companies} 
+          columns={stockColumns} 
+          rowKey="company_name"
+          pagination={false}
+          size="small"
+          className={styles.stocksTable}
+        />
+      </div>
+    </div>
+  )
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>
+          <BarChartOutlined className={styles.titleIcon} />
+          市场热点分析报告
+        </h1>
+        <Button 
+          type="primary" 
+          style={{ background: "#9c27b0", borderColor: "#9c27b0" }}
+          icon={<ReloadOutlined spin={refreshing} />} 
+          onClick={onRefresh}
+          loading={refreshing}
+          className={styles.refreshButton}
+        >
+          刷新分析
+        </Button>
+      </div>
+      
+      {error && (
+        <Alert
+          message="加载失败"
+          description={error}
+          type="error"
+          showIcon
+          className={styles.errorAlert}
+          action={
+            <Button size="small" danger onClick={onRefresh}>
+              重试
+            </Button>
+          }
+        />
+      )}
+      
+      <div className={styles.content}>
+        {loading ? (
+          <div className={styles.loadingContainer}>
+            <Card>
+              <Skeleton active paragraph={{ rows: 10 }} />
+            </Card>
+          </div>
+        ) : hotspotData && hotspotData.hotspots?.length > 0 ? (
+          <Tabs
+            defaultActiveKey="0"
+            activeKey={activeHotspotTab}
+            onChange={setActiveHotspotTab}
+            className={styles.hotspotTabs}
+            items={generateHotspotTabs() as TabsProps['items']}
+          />
+        ) : (
+          <Empty
+            description="暂无热点数据"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          />
+        )}
+      </div>
+      
+      {!loading && !error && hotspotData && (
+        <div className={styles.footer}>
+          <div className={styles.disclaimer}>
+            <InfoCircleOutlined /> 免责声明：本分析仅供参考，不构成投资建议。投资有风险，入市需谨慎。
+          </div>
+        </div>
+      )}
     </div>
   )
 }
