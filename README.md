@@ -53,8 +53,8 @@ Follow these steps to set up the project environment locally.
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/nusduck/qf5214_StockAgent.git
-    cd qf5214_StockAgent
+    git clone git@github.com:nusduck/QF5214_2025_G7_StockAgent.git
+    cd QF5214_2025_G7_StockAgent
     ```
 
 2.  **Backend Setup (Python):**
