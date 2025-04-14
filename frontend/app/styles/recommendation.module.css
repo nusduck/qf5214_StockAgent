@@ -1,0 +1,222 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    background-color: #0a0a0a;
+    min-height: 100vh;
+    color: #ffffff;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, #9c27b0 0%, #e384ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 2px rgba(136, 38, 156, 0.2);
+  }
+  
+  .titleIcon {
+    margin-right: 8px;
+    font-size: 28px;
+    color: #9c27b0;
+  }
+  
+  .refreshButton {
+    display: flex;
+    align-items: center;
+  }
+  
+  .content {
+    background-color: #121212;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    border: 1px solid #222;
+  }
+  
+  .loadingContainer {
+    padding: 24px;
+    min-height: 300px;
+  }
+  
+  .errorAlert {
+    margin-bottom: 16px;
+  }
+  
+  .hotspotTabs {
+    margin-top: 0;
+  }
+  
+  .hotspotTabs :global(.ant-tabs-nav) {
+    background-color: #1a1a1a;
+    margin-bottom: 0;
+    padding: 0 16px;
+  }
+  
+  .hotspotTabs :global(.ant-tabs-tab) {
+    color: #dadada;
+  }
+  
+  .hotspotTabs :global(.ant-tabs-tab-active) {
+    color: #ffffff;
+  }
+  
+  .hotspotTabs :global(.ant-tabs-ink-bar) {
+    background-color: #9c27b0;
+  }
+  
+  .tabLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+  
+  .hotspotTabContent {
+    padding: 16px;
+    background-color: #121212;
+  }
+  
+  .hotspotDetail {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .hotspotSection {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    border: 1px solid #2a2a2a;
+  }
+  
+  .sectionTitle {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: #ffffff;
+  }
+  
+  .sectionContent {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #e0e0e0;
+  }
+  
+  .impactSection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  
+  .impactItem {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #2a2a2a;
+  }
+  
+  .stocksTableSection {
+    margin-top: 8px;
+  }
+  
+  .stocksTable {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .stocksTable :global(.ant-table) {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .stocksTable :global(.ant-table-thead > tr > th) {
+    background-color: #222;
+    color: #ffffff;
+    border-bottom: 1px solid #333;
+  }
+  
+  .stocksTable :global(.ant-table-tbody > tr > td) {
+    border-bottom: 1px solid #333;
+    color: #e0e0e0;
+  }
+  
+  .stocksTable :global(.ant-table-tbody > tr:hover > td) {
+    background-color: rgba(156, 39, 176, 0.5) !important;
+    color: #ffffff;
+  }
+  
+  .stocksTable :global(.ant-table-tbody > tr:hover) .stockCode {
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .descriptionColumn {
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+  
+  .footer {
+    margin-top: 24px;
+    padding: 16px;
+    font-size: 12px;
+    color: #aaaaaa;
+    text-align: center;
+  }
+  
+  .disclaimer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  /* 股票代码样式增强 */
+  .stockCode {
+    font-family: 'Courier New', monospace;
+    background-color: transparent;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+  }
+  
+  @media (max-width: 768px) {
+    .impactSection {
+      grid-template-columns: 1fr;
+    }
+    
+    .title {
+      font-size: 24px;
+    }
+    
+    .titleIcon {
+      font-size: 24px;
+    }
+    
+    .refreshButton {
+      padding: 4px 12px;
+    }
+    
+    .descriptionColumn {
+      max-width: 200px;
+    }
+  } 
