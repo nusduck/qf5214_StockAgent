@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import { Bot } from "lucide-react"
+import { Bot, Github } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { STOCK_CONFIG } from '@/lib/constants'
@@ -54,16 +54,18 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" className="text-white hover:text-purple-400">
-              Sign In
-            </Button>
-            <Button className="bg-purple-600 hover:bg-purple-700 text-white">
-              Get Started
-            </Button>
+            <a 
+              href="https://github.com/nusduck/qf5214_StockAgent" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 text-white hover:text-purple-400"
+            >
+              <Github className="w-6 h-6" />
+              <span className="hidden sm:inline">GitHub</span>
+            </a>
           </div>
         </div>
       </div>
     </nav>
   );
 }
-
