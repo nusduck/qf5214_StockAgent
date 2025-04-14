@@ -61,13 +61,6 @@ def analyze_stock_indicators(symbol: str, start_date: str, end_date: str) -> pd.
     if indicator_data.empty:
         return pd.DataFrame({"error": ["在指定日期范围内未获取到交易指标数据"]})
 
-    # 获取个股基本信息
-    try:
-        stock_info = ak.stock_individual_info_em(symbol=symbol)
-        stock_name = stock_info.get("股票简称", [None])[0] if stock_info is not None else "未知"
-    except:
-        stock_name = "未知"
-
     # 构建指标映射
     metrics_list = []
     for i in range(len(indicator_data)):
@@ -83,7 +76,6 @@ def analyze_stock_indicators(symbol: str, start_date: str, end_date: str) -> pd.
 
         metrics = {
         'stock_code': symbol,
-        'stock_name': stock_name,
         'trade_date': indicator_data['trade_date'].iloc[i],
         'pe': pe,           # 市盈率
         'pe_ttm': pe_ttm,   # 市盈率TTM
