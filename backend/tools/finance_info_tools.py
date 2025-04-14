@@ -57,10 +57,6 @@ def analyze_stock_financial(symbol: str, start_date: str, end_date: str) -> pd.D
         if (col in financial_data.columns):
             financial_data[col] = financial_data[col].apply(parse_financial_value)
 
-    # 获取个股基本信息
-    stock_info = ak.stock_individual_info_em(symbol=symbol)
-    stock_name = stock_info.get("股票简称", [None])[0] if stock_info is not None else "未知"
-
     # 构建指标映射
     metrics_list = []
     for i in range(len(financial_data)):
@@ -71,7 +67,6 @@ def analyze_stock_financial(symbol: str, start_date: str, end_date: str) -> pd.D
 
         metrics = {
             'stock_code': symbol,
-            'stock_name': stock_name,
             'report_date': financial_data['报告期'].iloc[i],
             'net_profit': net_profit,
             'net_profit_yoy': safe_get_value(financial_data, '净利润同比增长率', i),
