@@ -94,7 +94,7 @@ def create_fundamentals_agent(state: StockAnalysisState) -> Any:
     "revenue_yoy": 100*financial_metrics.get("total_revenue_yoy", "N/A"),  # 映射为revenue_yoy
     
     # 每股指标
-    "basic_eps": 100*financial_metrics.get("basic_eps", "N/A"),
+    "basic_eps": financial_metrics.get("basic_eps", "N/A"),
     "net_asset_ps": financial_metrics.get("net_asset_ps", "N/A"),
     "capital_reserve_ps": financial_metrics.get("capital_reserve_ps", "N/A"),
     "retained_earnings_ps": financial_metrics.get("retained_earnings_ps", "N/A"),
